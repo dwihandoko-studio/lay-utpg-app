@@ -5,7 +5,7 @@
             <label for="_fullname_edit" class="col-form-label">NAMA LENGKAP</label>
             <select style="width: 100%" class="form-control filter-fullname-edit" id="_fullname_edit" name="_fullname_edit" data-id="1" onchange="changePegawaiEditNew(this)" required>
                 <option value="">&nbsp;</option>
-                <option value="<?= $value->id_pegawai; ?>" selected><?= $value->nama; ?></option>
+                <option value="<?= $data->id_pegawai; ?>" selected><?= $data->nama; ?></option>
             </select>
             <script>
                 $('#_fullname_edit').select2({
