@@ -852,6 +852,7 @@ extends BaseController
                         'jumlah_tagihan' => $jumlah_tagihan,
                         'jumlah_bulan_angsuran' => $jumlah_bulan_angsuran,
                         'angsuran_ke' => $angsuran_ke,
+                        'status_ajuan' => 0,
                         'updated_at' => date('Y-m-d H:i:s'),
                     ]);
                     if ($this->_db->affectedRows() > 0) {
