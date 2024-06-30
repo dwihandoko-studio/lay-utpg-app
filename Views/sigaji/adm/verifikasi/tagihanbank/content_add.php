@@ -122,7 +122,6 @@
                 textareaChanged.placeholder = 'Keterangan penolakan...';
                 textareaChanged.value = ''; // Set your desired value here
                 textareaChanged.name = 'keterangan[]'; // Set the name attribute for the new field
-                textareaChanged.name = "new_textarea[]"; // Adjust the name as needed
 
                 // Add the textarea to the new table cell
                 newTdChanged.appendChild(textareaChanged);
