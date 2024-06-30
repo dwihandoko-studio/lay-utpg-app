@@ -85,34 +85,6 @@
 </form>
 
 <script>
-    function formatRepoEdit(repo) {
-        if (repo.loading) {
-            return repo.text;
-        }
-
-        var $container = $(
-            "<div class='select2-result-repository clearfix'>" +
-            "<div class='select2-result-repository__meta'>" +
-            "<div class='select2-result-repository__title'></div>" +
-            "<div class='select2-result-repository__description'></div>" +
-            "</div>" +
-            "</div>"
-        );
-
-        $container.find(".select2-result-repository__title").text(repo.nama);
-        $container.find(".select2-result-repository__description").text(repo.nip + " - " + repo.nama_instansi + " ( Kec. " + repo.nama_kecamatan + ")");
-
-        return $container;
-    }
-
-    function formatRepoSelectionEdit(repo) {
-        $(repo.element).attr('data-custom-idpegawai-edit', repo.id);
-        $(repo.element).attr('data-custom-nip-edit', repo.nip);
-        $(repo.element).attr('data-custom-instansi-edit', repo.nama_instansi);
-        $(repo.element).attr('data-custom-kecamatan-edit', repo.nama_kecamatan);
-        return repo.nama || repo.text;
-    }
-
     function changePegawaiEditNew(event) {
         const selectedOption = $('#_fullname_edit').find(':selected');
 
