@@ -105,7 +105,7 @@
 </table>
 <?= form_close(); ?>
 <script>
-    function chagedChecked(event) {
+    function changedChecked(event) {
         console.log(event);
         // checkboxhijau.checked = true; // Set the checkbox to checked
 
