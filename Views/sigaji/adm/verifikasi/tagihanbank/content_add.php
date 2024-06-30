@@ -106,7 +106,31 @@
 <?= form_close(); ?>
 <script>
     function changedChecked(event) {
-        console.log(event);
+        const parentTrChanged = event.parentElement.parentElement; // Get the parent table row (<tr>)
+        const hasTextareaTdChanged = parentTrChanged.querySelector('td.textarea-td'); // Check if textarea TD exists
+
+        if (event.checked) {
+            if (!hasTextareaTdChanged) {
+                // Create a new table cell (<td>) for the textarea
+                const newTdChanged = document.createElement('td');
+                newTdChanged.classList.add('textarea-td');
+
+                // Create a textarea element
+                const textareaChanged = document.createElement('textarea');
+                textareaChanged.className = 'form-control keteranganPenolakan';
+                textareaChanged.rows = '3';
+                textareaChanged.placeholder = 'Keterangan penolakan...';
+                textareaChanged.value = ''; // Set your desired value here
+                textareaChanged.name = 'keterangan[]'; // Set the name attribute for the new field
+                textareaChanged.name = "new_textarea[]"; // Adjust the name as needed
+
+                // Add the textarea to the new table cell
+                textareaChanged.appendChild(textareaChanged);
+
+                // Append the new table cell to the parent table row
+                parentTrChanged.appendChild(newTdChanged);
+            }
+        }
         // checkboxhijau.checked = true; // Set the checkbox to checked
 
         // const ketCell = document.createElement('td');
