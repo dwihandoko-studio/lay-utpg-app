@@ -479,10 +479,10 @@ extends BaseController
                 // $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                $response->message = "Data berhasil diverifikasi.";
+                $response->message = "Data berhasil ditolak verifikasi.";
                 $response->sended_data = $jmlData;
 
-                $response->data = "Jumlah data yang diverifikasi adalah " . count($dataInserts);
+                $response->data = "Jumlah data yang ditolak verifikasi adalah " . count($dataInserts);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
