@@ -205,7 +205,7 @@ extends BaseController
             ->countAllResults();
 
         // var_dump($data);
-        // die;
+        // die; 
 
         return view('sigaji/bank/tagihan/antrian/index_detail', $data);
     }
@@ -322,6 +322,7 @@ extends BaseController
                 ->orderBy('b.nama', 'ASC')
                 ->get()->getResult();
             $d['prosesed_ajuan'] = $this->_db->table('tb_tagihan_bank_antrian')->where(['dari_bank' => $id_bank, 'tahun' => $id, 'status_ajuan' => 1])->countAllResults();
+            $d['prosesed_ajuan_tambahan'] = $this->_db->table('tb_tagihan_bank_antrian')->where(['dari_bank' => $id_bank, 'tahun' => $id, 'status_ajuan' => 0])->countAllResults();
 
             $response = new \stdClass;
             $response->status = 200;

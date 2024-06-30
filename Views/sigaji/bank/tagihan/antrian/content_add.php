@@ -6,6 +6,12 @@
         <?php if (isset($prosesed_ajuan)) { ?>
             <?php if ($prosesed_ajuan > 0) { ?>
                 <a class="btn btn-sm btn-primary waves-effect waves-light" target="_blank" href="./download?tb=<?= $tw_active ?>"><i class="fas fa-download font-size-16 align-middle me-2"></i> DOWNLOAD DATA USULAN TAGIHAN</a>
+                <button type="button" class="btn btn-sm btn-primary waves-effect waves-light btnaddtagihan"><i class="fas fa-plus-circle font-size-16 align-middle me-2"></i> TAMBAH</button> &nbsp;&nbsp;
+                <?php if (isset($prosesed_ajuan_tambahan)) { ?>
+                    <?php if ($prosesed_ajuan_tambahan > 0) { ?>
+                        <a class="btn btn-sm btn-warning waves-effect waves-light" href="javascript:actionAjukanProsesTagihan(this, '<?= $tw->tahun ?>', '<?= $tw->bulan ?>', '<?= $tw_active ?>');"><i class="fas fa-map-signs font-size-16 align-middle me-2"></i> AJUKAN PROSES TAGIHAN</a>
+                    <?php } ?>
+                <?php } ?>
             <?php } else { ?>
                 <!-- <button type="submit" class="btn btn-sm btn-success waves-effect waves-light btnsimpanbanyak"><i class="bx bx-save font-size-16 align-middle me-2"></i> SIMPAN</button> &nbsp;&nbsp; -->
                 <button type="button" class="btn btn-sm btn-primary waves-effect waves-light btnaddtagihan"><i class="fas fa-plus-circle font-size-16 align-middle me-2"></i> TAMBAH</button> &nbsp;&nbsp;
