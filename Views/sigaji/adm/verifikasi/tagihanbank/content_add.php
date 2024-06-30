@@ -201,13 +201,13 @@
                 return;
             }
             Swal.fire({
-                title: 'Apakah anda yakin ingin menyetujui verifikasi proses tagihan data ini?',
-                text: `Setujui Proses tagihan : <?= $tw->tahun ?> - <?= $tw->bulan ?> untuk Bank <?= getNamaBank($id_bank) ?> Sejumlah ${checkedBoxesKirimTolak.length} data`,
+                title: 'Apakah anda yakin ingin menolak verifikasi proses tagihan data ini?',
+                text: `Tolak Proses tagihan : <?= $tw->tahun ?> - <?= $tw->bulan ?> untuk Bank <?= getNamaBank($id_bank) ?> Sejumlah ${checkedBoxesKirimTolak.length} data`,
                 showCancelButton: true,
                 icon: 'question',
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Stujui Proses Tagihan!'
+                confirmButtonText: 'Ya, Tolak Proses Tagihan!'
             }).then((result) => {
                 if (result.value) {
                     // const formData = $(this).serializeArray();
