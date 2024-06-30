@@ -804,7 +804,7 @@ extends BaseController
                 return json_encode($response);
             }
 
-            $cekAnyData = $this->_db->table('tb_tagihan_bank_antrian')->where(['id_pegawai' => $pegawai_id])->get()->getRowObject();
+            $cekAnyData = $this->_db->table('tb_tagihan_bank_antrian')->where(['id_pegawai' => $pegawai_id, 'tahun' => $oldData->tahun])->get()->getRowObject();
             if ($cekAnyData) {
                 if (!($cekAnyData->id === $oldData->id)) {
                     $response = new \stdClass;
