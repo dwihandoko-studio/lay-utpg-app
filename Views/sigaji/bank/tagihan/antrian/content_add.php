@@ -35,6 +35,7 @@
 <table id="data-datatables" class="table table-bordered w-100 tb-datatables">
     <thead>
         <tr>
+            <th data-orderable="false" width="19%">Action</th>
             <th data-orderable="false" width="19%">Nama</th>
             <th data-orderable="false" width="14.5%">NIP</th>
             <th data-orderable="false">Instansi</th>
@@ -52,6 +53,9 @@
                 <?php foreach ($datas as $key => $value) { ?>
                     <?php if ($key < 1) { ?>
                         <tr data-id="<?= $value->id; ?>" data-fullname="<?= $value->nama; ?>">
+                            <td>
+                                <a href="javascript:actionEditTagihan('<?= $value->id; ?>', <?= $value->status_ajuan ?>);" class="btn btn-sm btn-primary waves-effect waves-light"><i class="fas fa-edit font-size-16 align-middle me-2"></i> Edit</a> &nbsp;&nbsp;
+                            </td>
                             <td>
                                 <select class="form-control filter-pegawai" id="_filter_pegawai_<?= $key + 1; ?>" name="_filter_pegawai[]" data-id="<?= $key + 1; ?>" onchange="changePegawai(this)" aria-readonly="">
                                     <option value="<?= $value->id_pegawai; ?>" selected><?= $value->nama; ?></option>
@@ -551,6 +555,59 @@
 
         });
     });
+
+    function actionEditTagihan(id, status) {
+        if (status === 0 || status === 3) {
+            $.ajax({
+                url: "./editTagihan",
+                type: 'POST',
+                data: {
+                    id: id,
+                    status: status,
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $('div.main-content').block({
+                        message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                    });
+                },
+                complete: function() {
+                    $('div.main-content').unblock();
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        $('#content-detailModalLabel').html('EDIT TAGIHAN BARU');
+                        $('.contentBodyModal').html(response.data);
+                        $('.content-detailModal').modal({
+                            backdrop: 'static',
+                            keyboard: false,
+                        });
+                        $('.content-detailModal').modal('show');
+                    } else {
+                        Swal.fire(
+                            'Failed!',
+                            response.message,
+                            'warning'
+                        );
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire(
+                        'Failed!',
+                        "gagal mengambil data (" + xhr.status.toString + ")",
+                        'warning'
+                    );
+                }
+
+            });
+        } else {
+            Swal.fire(
+                'Peringatan!',
+                "Pengajuan tidak dapat di ubah, karena masih dalam proses ajuan atau sudah di verifikasi oleh admin.",
+                'warning'
+            );
+        }
+    }
 
     $(document).on('click', '.btnaddtagihan', function(e) {
         e.preventDefault();
