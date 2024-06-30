@@ -33,7 +33,7 @@
                     <?php if (($value->jumlah_transfer - ($value->jumlah_tagihan + $value->jumlah_potongan)) > 0) { ?>
                         <tr class="lolosVerifikasi">
                             <td>
-                                <input class="form-check-input centangIdTag" type="checkbox" name="id_tag[]" value="<?= $value->id ?>">
+                                <input class="form-check-input centangIdTag" type="checkbox" onchange="changedChecked(this)" name="id_tag[]" value="<?= $value->id ?>">
                             </td>
                             <td style="padding: 0 !important;">
                                 <select class="form-control filter-pegawai" id="_filter_pegawai_<?= $key + 1; ?>" name="_filter_pegawai[]" data-id="<?= $key + 1; ?>" onchange="changePegawai(this)" aria-readonly="">
@@ -105,6 +105,27 @@
 </table>
 <?= form_close(); ?>
 <script>
+    function chagedChecked(event) {
+        console.log(event);
+        // checkboxhijau.checked = true; // Set the checkbox to checked
+
+        // const ketCell = document.createElement('td');
+
+        // // const newCell = checkboxhijau.insertCell();
+
+        // // Create the input element for the new field
+        // const newInput = document.createElement('textarea');
+        // newInput.className = 'form-control keteranganPenolakan';
+        // newInput.rows = '3';
+        // newInput.placeholder = 'Keterangan penolakan...';
+        // newInput.value = ''; // Set your desired value here
+        // newInput.name = 'keterangan[]'; // Set the name attribute for the new field
+
+        // // Append the input element to the new cell
+        // ketCell.appendChild(newInput);
+        // rowhijau.appendChild(ketCell);
+    }
+
     function tolakAjuanProses() {
         // e.preventDefault();
 
