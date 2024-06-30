@@ -99,7 +99,9 @@
                         </tr>
                     <?php } else { ?>
                         <tr data-id="<?= $value->id; ?>" data-fullname="<?= $value->nama; ?>">
-
+                            <td>
+                                <a href="javascript:actionEditTagihan('<?= $value->id; ?>', <?= $value->status_ajuan ?>);" class="btn btn-sm btn-primary waves-effect waves-light"><i class="fas fa-edit font-size-16 align-middle me-2"></i> Edit</a> &nbsp;&nbsp;
+                            </td>
                             <td>
                                 <select class="form-control filter-pegawai" id="_filter_pegawai_<?= $key + 1; ?>" name="_filter_pegawai[]" data-id="<?= $key + 1; ?>" onchange="changePegawai(this)" aria-readonly="">
                                     <option value="<?= $value->id_pegawai; ?>" selected><?= $value->nama; ?></option>
