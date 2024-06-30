@@ -125,7 +125,7 @@
                 textareaChanged.name = "new_textarea[]"; // Adjust the name as needed
 
                 // Add the textarea to the new table cell
-                textareaChanged.appendChild(textareaChanged);
+                newTdChanged.appendChild(textareaChanged);
 
                 // Append the new table cell to the parent table row
                 parentTrChanged.appendChild(newTdChanged);
