@@ -74,7 +74,7 @@
         </div>
         <div class="mb-3">
             <label for="_angsuran_ke_edit" class="form-label">Angsuran Ke</label>
-            <input type="number" class="form-control angsuran_ke_edit" id="_angsuran_ke_edit" name="_angsuran_ke_edit" value="<?= $data->ansuran_ke ?>" required>
+            <input type="number" class="form-control angsuran_ke_edit" id="_angsuran_ke_edit" name="_angsuran_ke_edit" value="<?= $data->angsuran_ke ?>" required>
             <div class="help-block _angsuran_ke_edit"></div>
         </div>
     </div>
