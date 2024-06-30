@@ -892,6 +892,85 @@ extends BaseController
         }
     }
 
+    public function hapusTagihanPegawai()
+    {
+        if ($this->request->isAJAX()) {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "User not authenticated.";
+                return json_encode($response);
+            }
+
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $pegawai = htmlspecialchars($this->request->getVar('pegawai'), true);
+
+            $oldData = $this->_db->table('tb_tagihan_bank_antrian')->where(['id' => $id])->get()->getRowObject();
+            if (!$oldData) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tagihan tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $keterangan = "Menghapus Tagihan untuk Pegawai NIP: $oldData->nip ";
+
+            $uuidLib = new Uuid();
+
+            $this->_db->transBegin();
+            $dataRow = [
+                'id' => $uuidLib->v4(),
+                'user_id' => $user->data->id,
+                'keterangan' => $keterangan,
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+
+            try {
+                $this->_db->table('riwayat_system')->insert($dataRow);
+                if ($this->_db->affectedRows() > 0) {
+
+                    $this->_db->table('tb_tagihan_bank_antrian')->where('id', $oldData->id)->delete();
+                    if ($this->_db->affectedRows() > 0) {
+                        // try {
+                        //     $this->_db->table('tb_tagihan_gagal_upload')->where(['dari_bank' => $id_bank, 'tahun' => $tahun, 'nip' => $pegawai->nip])->delete();
+                        // } catch (\Throwable $th) {
+                        // }
+                        $this->_db->transCommit();
+                        $response = new \stdClass;
+                        $response->status = 200;
+                        $response->message = "Data berhasil dihapus.";
+                        return json_encode($response);
+                    } else {
+                        $this->_db->transRollback();
+                        $response = new \stdClass;
+                        $response->status = 400;
+                        $response->message = "Gagal menghapus data. 1";
+                        return json_encode($response);
+                    }
+                } else {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal menghapus data. 2";
+                    return json_encode($response);
+                }
+            } catch (\Throwable $th) {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->error = var_dump($th);
+                $response->message = "Gagal menghapus data. 3";
+                return json_encode($response);
+            }
+        } else {
+            exit('Maaf tidak dapat diproses');
+        }
+    }
+
     public function savetagihan()
     {
         if ($this->request->isAJAX()) {

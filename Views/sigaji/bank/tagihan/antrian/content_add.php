@@ -54,7 +54,13 @@
                     <?php if ($key < 1) { ?>
                         <tr data-id="<?= $value->id; ?>" data-fullname="<?= $value->nama; ?>">
                             <td>
-                                <a href="javascript:actionEditTagihan('<?= $value->id; ?>', <?= $value->status_ajuan ?>);" class="btn btn-sm btn-primary waves-effect waves-light"><i class="fas fa-edit font-size-16 align-middle me-2"></i> Edit</a> &nbsp;&nbsp;
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:actionEditTagihan('<?= $value->id; ?>', <?= $value->status_ajuan ?>);"><i class="fas fa-edit font-size-16 align-middle"></i> &nbsp;Edit</a>
+                                        <a class="dropdown-item" href="javascript:actionHapus('<?= $value->id; ?>', <?= $value->status_ajuan ?>, '<?= $value->nama; ?>');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
+                                    </div>
+                                </div>
                             </td>
                             <td>
                                 <select class="form-control filter-pegawai" id="_filter_pegawai_<?= $key + 1; ?>" name="_filter_pegawai[]" data-id="<?= $key + 1; ?>" onchange="changePegawai(this)" aria-readonly="">
@@ -100,7 +106,13 @@
                     <?php } else { ?>
                         <tr data-id="<?= $value->id; ?>" data-fullname="<?= $value->nama; ?>">
                             <td>
-                                <a href="javascript:actionEditTagihan('<?= $value->id; ?>', <?= $value->status_ajuan ?>);" class="btn btn-sm btn-primary waves-effect waves-light"><i class="fas fa-edit font-size-16 align-middle me-2"></i> Edit</a> &nbsp;&nbsp;
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:actionEditTagihan('<?= $value->id; ?>', <?= $value->status_ajuan ?>);"><i class="fas fa-edit font-size-16 align-middle"></i> &nbsp;Edit</a>
+                                        <a class="dropdown-item" href="javascript:actionHapus('<?= $value->id; ?>', <?= $value->status_ajuan ?>, '<?= $value->nama; ?>');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
+                                    </div>
+                                </div>
                             </td>
                             <td>
                                 <select class="form-control filter-pegawai" id="_filter_pegawai_<?= $key + 1; ?>" name="_filter_pegawai[]" data-id="<?= $key + 1; ?>" onchange="changePegawai(this)" aria-readonly="">
@@ -606,6 +618,72 @@
             Swal.fire(
                 'Peringatan!',
                 "Pengajuan tidak dapat di ubah, karena masih dalam proses ajuan atau sudah di verifikasi oleh admin.",
+                'warning'
+            );
+        }
+    }
+
+    function actionHapus(id, status, pegawai) {
+        if (status === 0 || status === 3) {
+            Swal.fire({
+                title: 'Apakah anda yakin ingin menghapus data ini?',
+                text: "Hapus Tagihan : " + pegawai,
+                showCancelButton: true,
+                icon: 'question',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "./hapusTagihanPegawai",
+                        type: 'POST',
+                        data: {
+                            id: id,
+                            status: status,
+                            pegawai: pegawai,
+                        },
+                        dataType: 'JSON',
+                        beforeSend: function() {
+                            $('div.main-content').block({
+                                message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                            });
+                        },
+                        success: function(resul) {
+                            $('div.main-content').unblock();
+
+                            if (resul.status !== 200) {
+                                Swal.fire(
+                                    'Failed!',
+                                    resul.message,
+                                    'warning'
+                                );
+                            } else {
+                                Swal.fire(
+                                    'SELAMAT!',
+                                    resul.message,
+                                    'success'
+                                ).then((valRes) => {
+                                    reloadPage();
+                                })
+                            }
+                        },
+                        error: function() {
+                            $('div.main-content').unblock();
+                            Swal.fire(
+                                'Failed!',
+                                "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                                'warning'
+                            );
+                        }
+                    });
+                }
+            })
+
+        } else {
+            Swal.fire(
+                'Peringatan!',
+                "Pengajuan tidak dapat di hapus, karena masih dalam proses ajuan atau sudah di verifikasi oleh admin.",
                 'warning'
             );
         }
