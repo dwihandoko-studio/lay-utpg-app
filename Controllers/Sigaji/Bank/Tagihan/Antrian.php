@@ -774,7 +774,7 @@ extends BaseController
         }
     }
 
-    public function editSaveDataTagihan()
+    public function editSaveDataTagihanNew()
     {
         if ($this->request->isAJAX()) {
             $Profilelib = new Profilelib();

@@ -1,4 +1,4 @@
-<form id="formEditModalData" class="formEditModalData" action="./editSaveDataTagihan" method="post">
+<form id="formEditModalData" class="formEditModalData" action="./editSaveDataTagihanNew" method="post">
     <input type="hidden" id="_id_tagihan_edit" name="_id_tagihan_edit" value="<?= $data->id ?>" />
     <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
         <div class="mb-3">
@@ -148,7 +148,7 @@
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "./editSaveDataTagihan",
+                    url: "./editSaveDataTagihanNew",
                     type: 'POST',
                     data: {
                         id: id_tagihan,
