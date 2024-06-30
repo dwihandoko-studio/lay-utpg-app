@@ -65,7 +65,7 @@
                     <?php } else { ?>
                         <tr class="gagalVerifikasi">
                             <td>
-                                <input class="form-check-input centangIdTag" type="checkbox" name="id_tag[]" value="<?= $value->id ?>">
+                                <input class="form-check-input centangIdTag" onchange="changedChecked(this)" type="checkbox" name="id_tag[]" value="<?= $value->id ?>">
                             </td>
                             <td style="padding: 0 !important;">
                                 <select class="form-control filter-pegawai" id="_filter_pegawai_<?= $key + 1; ?>" name="_filter_pegawai[]" data-id="<?= $key + 1; ?>" onchange="changePegawai(this)" aria-readonly="">
