@@ -685,7 +685,9 @@ extends BaseController
             $jumlah_bulan_angsuran = htmlspecialchars($this->request->getVar('jumlah_bulan_angsuran'), true);
             $angsuran_ke = htmlspecialchars($this->request->getVar('angsuran_ke'), true);
 
-            $oldData = $this->_db->table('tb_tagihan_bank_antrian')->where(['tahun' => $tahun, 'id_pegawai' => $pegawai_id])->countAllResults();
+            $id_bank = $this->_helpLib->getIdBank($user->data->id);
+
+            $oldData = $this->_db->table('tb_tagihan_bank_antrian')->where(['tahun' => $tahun, 'id_pegawai' => $pegawai_id, 'dari_bank' => $id_bank])->countAllResults();
             if ($oldData > 0) {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -697,7 +699,6 @@ extends BaseController
             $jumlah_tagihan = str_replace(".", "", $jumlah_tagihan);
 
             $keterangan = "Menambah Tagihan Baru untuk Pegawai NIP: $nip ";
-            $id_bank = $this->_helpLib->getIdBank($user->data->id);
 
             $pegawai = getPegawaiByIdSigaji($pegawai_id);
 
@@ -796,6 +797,8 @@ extends BaseController
             $jumlah_bulan_angsuran = htmlspecialchars($this->request->getVar('jumlah_bulan_angsuran'), true);
             $angsuran_ke = htmlspecialchars($this->request->getVar('angsuran_ke'), true);
 
+            $id_bank = $this->_helpLib->getIdBank($user->data->id);
+
             $oldData = $this->_db->table('tb_tagihan_bank_antrian')->where(['id' => $id])->get()->getRowObject();
             if (!$oldData) {
                 $response = new \stdClass;
@@ -804,7 +807,7 @@ extends BaseController
                 return json_encode($response);
             }
 
-            $cekAnyData = $this->_db->table('tb_tagihan_bank_antrian')->where(['id_pegawai' => $pegawai_id, 'tahun' => $oldData->tahun])->get()->getRowObject();
+            $cekAnyData = $this->_db->table('tb_tagihan_bank_antrian')->where(['id_pegawai' => $pegawai_id, 'tahun' => $oldData->tahun, 'dari_bank' => $id_bank])->get()->getRowObject();
             if ($cekAnyData) {
                 if (!($cekAnyData->id === $oldData->id)) {
                     $response = new \stdClass;
