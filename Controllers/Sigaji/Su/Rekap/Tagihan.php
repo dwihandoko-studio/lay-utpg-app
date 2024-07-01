@@ -220,8 +220,8 @@ extends BaseController
             $result = $apiLib->downloadLaporanAll($tahun, $type_file);
 
             if ($result) {
-                // var_dump($result);
-                // die;
+                var_dump($result);
+                die;
                 if ($result->status == 200) {
                     $response = new \stdClass;
                     $response->status = 200;
