@@ -31,6 +31,22 @@
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
+                                    <label for="_filter_tw" class="col-form-label">Filter TW:</label>
+                                    <select class="form-control filter-tw" id="_filter_tw" name="_filter_tw" required>
+                                        <option value="">--Pilih--</option>
+                                        <?php if (isset($tws)) {
+                                            if (count($tws) > 0) {
+                                                foreach ($tws as $key => $value) { ?>
+                                                    <option value="<?= $value->id ?>">Tahun <?= $value->tahun ?> - TW. <?= $value->tw ?></option>
+                                        <?php }
+                                            }
+                                        } ?>
+                                    </select>
+                                    <div class="help-block _filter_tw"></div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-6">
+                                <div class="mb-3">
                                     <label for="_filter_tw" class="col-form-label">Filter Status:</label>
                                     <select class="form-control filter-tw" id="_filter_tw" name="_filter_tw" required>
                                         <option value="">--Pilih--</option>
@@ -40,7 +56,7 @@
                                     </select>
                                     <div class="help-block _filter_tw"></div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="card-body">
@@ -203,7 +219,9 @@
                 "url": "./getAll",
                 "type": "POST",
                 "data": function(data) {
-                    data.tw = '<?= $tw->id ?>';
+                    // data.tw = '<?= $tw->id ?>';
+                    data.tw_active = '<?= $tw->id ?>';
+                    data.tw = $('#_filter_tw').val();
                 }
             },
             language: {
@@ -215,6 +233,9 @@
             }],
         });
 
+        $('#_filter_tw').change(function() {
+            tableDatatables.draw();
+        });
     });
 </script>
 <?= $this->endSection(); ?>

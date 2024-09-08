@@ -12,7 +12,7 @@
                         <div class="col-6">
                             <h4 class="mb-sm-0 font-size-18">DATA USULAN TPG PROSES TRANSFER</h4>
                         </div>
-                        <div class="col-6">
+                        <!-- <div class="col-6">
                             <div class="mb-3">
                                 <label for="_filter_tw" class="col-form-label">Filter TW:</label>
                                 <select class="form-control filter-tw" id="_filter_tw" name="_filter_tw" required>
@@ -27,7 +27,7 @@
                                 </select>
                                 <div class="help-block _filter_tw"></div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -50,6 +50,22 @@
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
+                                    <label for="_filter_tw" class="col-form-label">Filter TW:</label>
+                                    <select class="form-control filter-tw" id="_filter_tw" name="_filter_tw" required>
+                                        <option value="">--Pilih--</option>
+                                        <?php if (isset($tws)) {
+                                            if (count($tws) > 0) {
+                                                foreach ($tws as $key => $value) { ?>
+                                                    <option value="<?= $value->id ?>">Tahun <?= $value->tahun ?> - TW. <?= $value->tw ?></option>
+                                        <?php }
+                                            }
+                                        } ?>
+                                    </select>
+                                    <div class="help-block _filter_tw"></div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-6">
+                                <div class="mb-3">
                                     <label for="_filter_tw" class="col-form-label">Filter Status:</label>
                                     <select class="form-control filter-tw" id="_filter_tw" name="_filter_tw" required>
                                         <option value="">--Pilih--</option>
@@ -59,7 +75,7 @@
                                     </select>
                                     <div class="help-block _filter_tw"></div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="card-body">
