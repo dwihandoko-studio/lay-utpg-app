@@ -355,11 +355,16 @@ class Ptk extends BaseController
                 }
             }
 
+            var_dump(getenv('be.default.url'));
+            die;
+
             if ($checkAnySynToday == date('Y-m-d')) {
                 $resultBack = true;
             } else {
                 $resultBack = $apiLib->syncPtkGetBackbone($npsn, $sekolahId);
             }
+
+
 
             if ($resultBack) {
                 $result = $apiLib->syncPtk($npsn, $tw);
