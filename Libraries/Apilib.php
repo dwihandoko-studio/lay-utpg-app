@@ -16,7 +16,7 @@ class Apilib
 
     private function _send_get_backbone($methode, $npsn, $sekolahId)
     {
-        $urlendpoint = 'http://192.168.33.12:1992/' . $methode;
+        $urlendpoint = 'http://192.168.33.243:1992/' . $methode;
         $apiToken = '0b4e06f30dc26c36f322580591e0a07b';
 
         $curlHandle = curl_init($urlendpoint);
