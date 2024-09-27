@@ -365,6 +365,8 @@ class Ptk extends BaseController
                 $result = $apiLib->syncPtk($npsn, $tw);
 
                 if ($result) {
+                    var_dump($result);
+                    die;
                     if ($result->status == 200) {
                         $response = new \stdClass;
                         $response->status = 200;
