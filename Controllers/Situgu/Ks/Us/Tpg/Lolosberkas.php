@@ -3,7 +3,7 @@
 namespace App\Controllers\Situgu\Ks\Us\Tpg;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Adm\Tpg\LolosberkasModel;
+use App\Models\Situgu\Ks\Us\Tpg\LolosberkasModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;

@@ -3,7 +3,7 @@
 namespace App\Controllers\Situgu\Ks\Us\Tpg;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Ks\Tpg\SiapskModel;
+use App\Models\Situgu\Ks\Us\Tpg\SiapskModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;

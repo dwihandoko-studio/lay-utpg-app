@@ -3,7 +3,7 @@
 namespace App\Controllers\Situgu\Ks\Us\Tpg;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Ks\Tpg\ProsestransferModel;
+use App\Models\Situgu\Ks\Us\Tpg\ProsestransferModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;

@@ -3,7 +3,7 @@
 namespace App\Controllers\Situgu\Ks\Us\Tpg;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Ks\Tpg\AntrianModel;
+use App\Models\Situgu\Ks\Us\Tpg\AntrianModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
