@@ -128,7 +128,7 @@ class Lolosberkas extends BaseController
         $id = $this->_helpLib->getPtkId($user->data->id);
         $data['user'] = $user->data;
         $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
-        $data['tws'] = $this->_db->table('_ref_tahun_tw')->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
+        $data['tws'] = $this->_db->table('_ref_tahun_tw')->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getResult();
         return view('situgu/opk/us/tamsil/lolosberkas/index', $data);
     }
 
