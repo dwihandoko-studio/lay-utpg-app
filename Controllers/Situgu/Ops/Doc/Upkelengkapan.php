@@ -379,10 +379,10 @@ class Upkelengkapan extends BaseController
                 ]
             ],
             '_file' => [
-                'rules' => 'uploaded[_file]|max_size[_file,3072]|mime_in[_file,image/jpeg,image/jpg,image/png,application/pdf]',
+                'rules' => 'uploaded[_file]|max_size[_file,5120]|mime_in[_file,image/jpeg,image/jpg,image/png,application/pdf]',
                 'errors' => [
                     'uploaded' => 'Pilih file terlebih dahulu. ',
-                    'max_size' => 'Ukuran file terlalu besar, Maximum 3Mb. ',
+                    'max_size' => 'Ukuran file terlalu besar, Maximum 5Mb. ',
                     'mime_in' => 'Ekstensi yang anda upload harus berekstensi gambar dan pdf. '
                 ]
             ],
