@@ -38,7 +38,7 @@
                                         <?php if (isset($tws)) {
                                             if (count($tws) > 0) {
                                                 foreach ($tws as $key => $value) { ?>
-                                                    <option value="<?= $value->id ?>">Tahun <?= $value->tahun ?> - TW. <?= $value->tw ?></option>
+                                                    <option value="<?= $value->id ?>" <?= $value->id == $tw->id ? ' selected' : '' ?>>Tahun <?= $value->tahun ?> - TW. <?= $value->tw ?></option>
                                         <?php }
                                             }
                                         } ?>
@@ -245,7 +245,9 @@
                 "orderable": false,
             }],
         });
-
+        $('#filter_tw').change(function() {
+            tableDatatables.draw();
+        });
     });
 </script>
 <?= $this->endSection(); ?>
