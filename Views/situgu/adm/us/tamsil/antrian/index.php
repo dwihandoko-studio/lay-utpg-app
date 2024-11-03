@@ -31,12 +31,15 @@
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
-                                    <label for="_filter_tw" class="col-form-label">Filter Status:</label>
+                                    <label for="_filter_tw" class="col-form-label">Filter TW:</label>
                                     <select class="form-control filter-tw" id="_filter_tw" name="_filter_tw" required>
-                                        <option value="">--Pilih--</option>
-                                        <option value="0">Antrian</option>
-                                        <option value="1">Ditolak</option>
-                                        <option value="pghm">PGHM</option>
+                                        <?php if (isset($tws)) {
+                                            if (count($tws) > 0) {
+                                                foreach ($tws as $key => $value) { ?>
+                                                    <option value="<?= $value->id ?>" <?= $value->id == $tw->id ? ' selected' : '' ?>>Tahun <?= $value->tahun ?> - TW. <?= $value->tw ?></option>
+                                        <?php }
+                                            }
+                                        } ?>
                                     </select>
                                     <div class="help-block _filter_tw"></div>
                                 </div>
@@ -204,7 +207,8 @@
                 "url": "./getAll",
                 "type": "POST",
                 "data": function(data) {
-                    data.tw = '<?= $tw->id ?>';
+                    data.tw_active = '<?= $tw->id ?>';
+                    data.tw = $('#filter_tw').val();
                 }
             },
             language: {
@@ -215,7 +219,9 @@
                 "orderable": false,
             }],
         });
-
+        $('#filter_tw').change(function() {
+            tableDatatables.draw();
+        });
     });
 </script>
 <?= $this->endSection(); ?>
