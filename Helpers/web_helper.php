@@ -2498,7 +2498,7 @@ function getStatusIndikatorUsulan($data_antrian_tamsil_transfer, $data_antrian_t
 
 function checkIsLockedCetakSPJ($id)
 {
-	$db      = \Config\Database::connect();
+	$db      = \Config\Database::connect('sigaji');
 
 	$limit = $db->table('tb_gaji_sipd')
 		->where('tahun', $id)
