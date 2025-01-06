@@ -39,7 +39,7 @@ class Refbulan extends BaseController
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu" style="">
                             <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . $list->tahun . '\', \'' . $list->bulan . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>' .
-                ((int)checkIsLockedCetakSPJ($list->id) == 0 ? '' : '<a class="dropdown-item" href="javascript:actionLocked(\'' . $list->id . '\', \'' . $list->tahun . '\', \'' . $list->bulan . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Kunci Untuk Cetak SPJ</a>') .
+                ((int)checkIsLockedCetakSPJ($list->id) == 0 ? '' : '<a class="dropdown-item" href="javascript:actionLocked(\'' . $list->id . '\', \'' . $list->tahun . '\', \'' . $list->bulan . '\');"><i class="fas fa-lock font-size-16 align-middle"></i> &nbsp;Kunci Untuk Cetak SPJ</a>') .
                 ((int)$list->is_current == 1 ? '' : '<a class="dropdown-item" href="javascript:actionActived(\'' . $list->id . '\', \'' . $list->tahun . '\', \'' . $list->bulan . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Aktifkan Tahun Bulan</a>') . '
                             <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . $list->tahun . '\', \'' . $list->bulan . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
                         </div>
