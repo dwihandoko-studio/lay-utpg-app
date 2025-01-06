@@ -10,7 +10,7 @@ class LolosberkasModel extends Model
     protected $table = "_tb_usulan_detail_tamsil a";
     protected $column_order = array(null, null, 'a.kode_usulan', 'b.nama', 'b.nik', 'b.nuptk', 'b.jenis_ptk', 'a.admin_approve');
     protected $column_search = array('b.nik', 'b.nuptk', 'b.nama');
-    protected $order = array('a.admin_approve' => 'asc');
+    protected $order = array('a.date_approve' => 'asc');
     protected $request;
     protected $db;
     protected $dt;

@@ -135,6 +135,63 @@
         });
     }
 
+    function actionLocked(id, tahun, bulan) {
+        Swal.fire({
+            title: 'Apakah anda yakin ingin mengunci Tahun Bulan ini Untuk Cetak SPJ?',
+            text: "Kunci Cetak SPJ Tahun Bulan : " + tahun + "/" + bulan,
+            showCancelButton: true,
+            icon: 'question',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Kunci!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "./lockedspj",
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        tahun: tahun,
+                        bulan: bulan,
+                    },
+                    dataType: 'JSON',
+                    beforeSend: function() {
+                        $('div.main-content').block({
+                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                        });
+                    },
+                    success: function(resul) {
+                        $('div.main-content').unblock();
+
+                        if (resul.status !== 200) {
+                            Swal.fire(
+                                'Failed!',
+                                resul.message,
+                                'warning'
+                            );
+                        } else {
+                            Swal.fire(
+                                'SELAMAT!',
+                                resul.message,
+                                'success'
+                            ).then((valRes) => {
+                                reloadPage();
+                            })
+                        }
+                    },
+                    error: function() {
+                        $('div.main-content').unblock();
+                        Swal.fire(
+                            'Failed!',
+                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                            'warning'
+                        );
+                    }
+                });
+            }
+        })
+    }
+
     function actionActived(id, tahun, bulan) {
         Swal.fire({
             title: 'Apakah anda yakin ingin mengaktifkan Tahun Bulan ini?',

@@ -13,7 +13,7 @@ class AntrianModel extends Model
     // protected $order = array('created_at' => 'asc', 'nama' => 'asc');
     protected $table = "_tb_usulan_detail_tamsil a";
     protected $column_order = array(null, null, 'a.kode_usulan', 'b.nama', 'b.nik', 'b.nuptk', 'b.jenis_ptk', 'a.date_approve_sptjm');
-    protected $column_search = array('b.nama', 'b.nuptk', 'a.kode_usulan');
+    protected $column_search = array('b.nik', 'b.nuptk', 'b.nama');
     protected $order = array('a.date_approve_sptjm' => 'asc');
     protected $request;
     protected $db;
@@ -29,8 +29,8 @@ class AntrianModel extends Model
     }
     private function _get_datatables_query()
     {
-        $this->dt->select("a.id as id_usulan, a.id_ptk, a.id_tahun_tw, a.kode_usulan, a.date_approve_sptjm, b.nama, b.npsn, b.nik, b.nuptk, b.jenis_ptk");
-        $this->dt->join('_ptk_tb b', "b.id = a.id_ptk");
+        // $this->dt->select("a.id as id_usulan, a.id_ptk, a.id_tahun_tw, a.kode_usulan, a.date_approve_sptjm, b.nama, b.npsn, b.nik, b.nuptk, b.jenis_ptk");
+        // $this->dt->join('_ptk_tb b', "b.id = a.id_ptk");
         $i = 0;
         foreach ($this->column_search as $item) {
             if ($this->request->getPost('search')['value']) {
@@ -55,6 +55,9 @@ class AntrianModel extends Model
     }
     function get_datatables()
     {
+        $this->dt->select("a.id as id_usulan, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
+        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        $this->dt->where('a.status_usulan', 0);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
@@ -69,6 +72,9 @@ class AntrianModel extends Model
     }
     function count_filtered()
     {
+        $this->dt->select("a.id as id_usulan, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
+        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        $this->dt->where('a.status_usulan', 0);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
@@ -81,6 +87,9 @@ class AntrianModel extends Model
     }
     public function count_all()
     {
+        $this->dt->select("a.id as id_usulan, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
+        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        $this->dt->where('a.status_usulan', 0);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 

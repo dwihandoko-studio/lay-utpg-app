@@ -7,10 +7,10 @@ use CodeIgniter\Model;
 
 class ProsestransferModel extends Model
 {
-    protected $table = "v_prosestransfer_usulan_tamsil";
-    protected $column_order = array(null, null, 'kode_usulan', 'nama', 'nik', 'nuptk', 'jenis_ptk', 'created_at');
-    protected $column_search = array('nik', 'nuptk', 'nama', 'kode_usulan');
-    protected $order = array('updated_at' => 'desc', 'nama' => 'asc');
+    protected $table = "_tb_usulan_tamsil_transfer a";
+    protected $column_order = array(null, null, 'b.nama', 'b.nik', 'b.nuptk', 'b.jenis_ptk', 'a.date_prosestransfer');
+    protected $column_search = array('b.nik', 'b.nuptk', 'b.nama');
+    protected $order = array('a.date_prosestransfer' => 'asc');
     protected $request;
     protected $db;
     protected $dt;
@@ -49,10 +49,26 @@ class ProsestransferModel extends Model
     }
     function get_datatables()
     {
+        $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, a.date_matching, a.date_prosestransfer");
+        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        $this->dt->whereIn('a.status_usulan', [5]);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
+                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
+            } else {
+                if ($this->request->getPost('tw_active')) {
+                    if ($this->request->getPost('tw_active') !== "") {
 
-                $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
+                        $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+                    }
+                }
+            }
+        } else {
+            if ($this->request->getPost('tw_active')) {
+                if ($this->request->getPost('tw_active') !== "") {
+
+                    $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+                }
             }
         }
         $this->_get_datatables_query();
@@ -63,10 +79,26 @@ class ProsestransferModel extends Model
     }
     function count_filtered()
     {
+        $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, a.date_matching, a.date_prosestransfer");
+        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        $this->dt->whereIn('a.status_usulan', [5]);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
+                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
+            } else {
+                if ($this->request->getPost('tw_active')) {
+                    if ($this->request->getPost('tw_active') !== "") {
 
-                $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
+                        $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+                    }
+                }
+            }
+        } else {
+            if ($this->request->getPost('tw_active')) {
+                if ($this->request->getPost('tw_active') !== "") {
+
+                    $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+                }
             }
         }
         $this->_get_datatables_query();
@@ -75,10 +107,26 @@ class ProsestransferModel extends Model
     }
     public function count_all()
     {
+        $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, a.date_matching, a.date_prosestransfer");
+        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        $this->dt->whereIn('a.status_usulan', [5]);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
+                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
+            } else {
+                if ($this->request->getPost('tw_active')) {
+                    if ($this->request->getPost('tw_active') !== "") {
 
-                $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
+                        $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+                    }
+                }
+            }
+        } else {
+            if ($this->request->getPost('tw_active')) {
+                if ($this->request->getPost('tw_active') !== "") {
+
+                    $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+                }
             }
         }
         $this->_get_datatables_query();

@@ -238,7 +238,13 @@ function nama_bulan($tgl)
 function hari($tgl)
 {
 	$hari = array(
-		0 => 'Minggu', 1 => 'Senin', 2 => 'Selasa', 3 => 'Rabu', 4 => 'Kamis', 5 => 'Jumat', 6 => 'Sabtu'
+		0 => 'Minggu',
+		1 => 'Senin',
+		2 => 'Selasa',
+		3 => 'Rabu',
+		4 => 'Kamis',
+		5 => 'Jumat',
+		6 => 'Sabtu'
 	);
 	$dayofweek = date('w', $tgl);
 	return $hari[$dayofweek];
@@ -2487,5 +2493,20 @@ function getStatusIndikatorUsulan($data_antrian_tamsil_transfer, $data_antrian_t
 		return $response;
 	} else {
 		return null;
+	}
+}
+
+function checkIsLockedCetakSPJ($id)
+{
+	$db      = \Config\Database::connect();
+
+	$limit = $db->table('tb_gaji_sipd')
+		->where('tahun', $id)
+		->where('is_locked', 0)
+		->countAllResults();
+	if ($limit > 0) {
+		return 1;
+	} else {
+		return 0;
 	}
 }
