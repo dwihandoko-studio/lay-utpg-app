@@ -1,0 +1,34 @@
+{
+	"folders": [
+		{
+			"path": "../../../../.."
+		},
+		{
+			"path": "../../../../../../../../api-login"
+		},
+		{
+			"path": "../../../../../.."
+		},
+		{
+			"path": "../../../../../../../../go-notif-tele"
+		},
+		{
+			"path": "../../../../../../../../go-bot-tele"
+		},
+		{
+			"path": "../../../../../../../../backbone-dapodik"
+		},
+		{
+			"path": "../../../../../../../../../../DOCKER/erapot"
+		},
+		{
+			"path": "../../../../../../../../../../DOCKER/GAJI/api-gaji"
+		},
+		{
+			"path": "../../../../../../../../cron_backbone"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "api-gaji"
+	}
+}

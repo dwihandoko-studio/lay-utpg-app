@@ -378,7 +378,7 @@ class Refbulan extends BaseController
                     $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
-                    $response->message = "Data gagal dikunci.";
+                    $response->message = "Data gagal dikunci. 1";
                     return json_encode($response);
                 }
             } else {
