@@ -360,7 +360,7 @@ class Refbulan extends BaseController
             if ($current > 0) {
                 $this->_db->transBegin();
                 try {
-                    $this->_db->table('tb_gaji_sipd')->where([['tahun' => $id, 'is_locked' => 0]])->update(['is_locked' => 1]);
+                    $this->_db->table('tb_gaji_sipd')->where(['tahun' => $id, 'is_locked' => 0])->update(['is_locked' => 1]);
                     if ($this->_db->affectedRows() > 0) {
                         $this->_db->transCommit();
                         $response = new \stdClass;
