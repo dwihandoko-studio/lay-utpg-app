@@ -43,8 +43,8 @@
                                     <th>NIP</th>
                                     <th>GOLONGAN</th>
                                     <th>MK GOLONGAN</th>
-                                    <!-- <th>KECAMATAN</th>
-                                    <th>NPSN</th> -->
+                                    <th>KECAMATAN</th>
+                                    <th>Kode Instansi</th>
                                 </tr>
                             </thead>
                         </table>
