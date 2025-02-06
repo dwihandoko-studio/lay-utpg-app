@@ -8,7 +8,7 @@ use CodeIgniter\Model;
 class PegawaiModel extends Model
 {
     protected $table = "tb_pegawai_";
-    protected $column_order = array(null, null, 'nama', 'nip', 'nik', 'golongan', 'mk_golongan');
+    protected $column_order = array(null, null, 'nama', 'nip', 'nik', 'golongan', 'mk_golongan', null, null);
     protected $column_search = array('nik', 'nip', 'nama', 'kode_instansi');
     protected $order = array('nama' => 'asc');
     protected $request;
@@ -40,12 +40,14 @@ class PegawaiModel extends Model
             $i++;
         }
 
-        if ($this->request->getPost('order')) {
-            $this->dt->orderBy($this->column_order[$this->request->getPost('order')['0']['column']], $this->request->getPost('order')['0']['dir']);
-        } else if (isset($this->order)) {
-            $order = $this->order;
-            $this->dt->orderBy(key($order), $order[key($order)]);
-        }
+        $this->dt->orderBy('kode_instansi', 'ASC');
+
+        // if ($this->request->getPost('order')) {
+        //     $this->dt->orderBy($this->column_order[$this->request->getPost('order')['0']['column']], $this->request->getPost('order')['0']['dir']);
+        // } else if (isset($this->order)) {
+        //     $order = $this->order;
+        //     $this->dt->orderBy(key($order), $order[key($order)]);
+        // }
     }
     function get_datatables()
     {

@@ -67,8 +67,8 @@ extends BaseController
             $row[] = $list->nip;
             $row[] = $list->golongan;
             $row[] = $list->mk_golongan;
-            // $row[] = $list->nama_kecamatan;
-            // $row[] = $list->kode_instansi; 
+            $row[] = $list->nama_kecamatan;
+            $row[] = $list->kode_instansi;
 
             $data[] = $row;
         }
