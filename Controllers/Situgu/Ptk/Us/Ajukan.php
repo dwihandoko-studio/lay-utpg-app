@@ -591,7 +591,7 @@ class Ajukan extends BaseController
                     'us_pang_mk_tahun' => $ptk->pang_tahun,
                     'us_pang_mk_bulan' => $ptk->pang_bulan,
                     'us_pang_jenis' => $ptk->pang_jenis,
-                    'us_gaji_pokok' => $ptk->gajiPokok ? ($ptk->gajiPokok > 0 ? $ptk->gajiPokok : 1500000) : 1500000,
+                    'us_gaji_pokok' => $ptk->gajiPokok ? ($ptk->gajiPokok > 0 ? $ptk->gajiPokok : 2000000) : 2000000,
                     'status_usulan' => 0,
                     'created_at' => date('Y-m-d H:i:s')
                 ];
