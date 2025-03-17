@@ -107,7 +107,7 @@
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "<?= base_url('situgu/su/masterdata/ptk/kembalikan') ?>",
+                    url: "./kembalikan",
                     type: 'POST',
                     data: {
                         id: id,
