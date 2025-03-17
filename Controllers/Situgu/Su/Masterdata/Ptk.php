@@ -1154,37 +1154,46 @@ class Ptk extends BaseController
                 $response->message = "Permintaan diizinkan";
                 return json_encode($response);
             }
-            $current = $this->_db->table('_users_tb')
-                ->where('uid', $id)->get()->getRowObject();
+
+            $current = $this->_db->table('_ptk_tb')
+                ->where('id', $id)->get()->getRowObject();
 
             if ($current) {
                 $this->_db->transBegin();
                 try {
-                    $this->_db->table('_users_tb')->where('uid', $id)->delete();
+                    $date = date('Y-m-d H:i:s');
+                    $this->_db->query("INSERT INTO _ptk_tb_hapus(id, id_ptk, email, nama, gelar_depan, gelar_belakang, nik, nuptk, nip, nrg, no_peserta, npwp, no_rekening, cabang_bank, jenis_kelamin, tempat_lahir, tgl_lahir, status_tugas, tempat_tugas, npsn, kecamatan, id_kecamatan, no_hp, sk_cpns, tgl_cpns, sk_pengangkatan, tmt_pengangkatan, jenis_ptk, pendidikan, bidang_studi_pendidikan, bidang_studi_sertifikasi, status_kepegawaian, mapel_diajarkan, jam_mengajar_perminggu, jabatan_kepsek, jabatan_ks_plt, pangkat_golongan, nomor_sk_pangkat, tgl_sk_pangkat, tmt_pangkat, masa_kerja_tahun, masa_kerja_bulan, gaji_pokok, sk_kgb, tgl_sk_kgb, tmt_sk_kgb, masa_kerja_tahun_kgb, masa_kerja_bulan_kgb, gaji_pokok_kgb, mengajar_lain_satmikal, nomor_sk_impassing, tgl_sk_impassing, tmt_sk_impassing, jabatan_angka_kredit, pangkat_golongan_ruang, masa_kerja_tahun_impassing, masa_kerja_bulan_impassing, jumlah_tunjangan_pokok_impassing, lampiran_impassing, lampiran_foto, lampiran_karpeg, lampiran_ktp, lampiran_nrg, lampiran_nuptk, lampiran_serdik, lampiran_npwp, lampiran_buku_rekening, lampiran_ijazah, jenis_tunjangan, is_locked, created_at, updated_at, last_sync, created_ajuan)
+                                        SELECT id, id_ptk, email, nama, gelar_depan, gelar_belakang, nik, nuptk, nip, nrg, no_peserta, npwp, no_rekening, cabang_bank, jenis_kelamin, tempat_lahir, tgl_lahir, status_tugas, tempat_tugas, npsn, kecamatan, id_kecamatan, no_hp, sk_cpns, tgl_cpns, sk_pengangkatan, tmt_pengangkatan, jenis_ptk, pendidikan, bidang_studi_pendidikan, bidang_studi_sertifikasi, status_kepegawaian, mapel_diajarkan, jam_mengajar_perminggu, jabatan_kepsek, jabatan_ks_plt, pangkat_golongan, nomor_sk_pangkat, tgl_sk_pangkat, tmt_pangkat, masa_kerja_tahun, masa_kerja_bulan, gaji_pokok, sk_kgb, tgl_sk_kgb, tmt_sk_kgb, masa_kerja_tahun_kgb, masa_kerja_bulan_kgb, gaji_pokok_kgb, mengajar_lain_satmikal, nomor_sk_impassing, tgl_sk_impassing, tmt_sk_impassing, jabatan_angka_kredit, pangkat_golongan_ruang, masa_kerja_tahun_impassing, masa_kerja_bulan_impassing, jumlah_tunjangan_pokok_impassing, lampiran_impassing, lampiran_foto, lampiran_karpeg, lampiran_ktp, lampiran_nrg, lampiran_nuptk, lampiran_serdik, lampiran_npwp, lampiran_buku_rekening, lampiran_ijazah, jenis_tunjangan, is_locked, created_at, updated_at, last_sync, CONCAT('$date', '') AS created_ajuan
+                                        FROM _ptk_tb
+                                        WHERE id = '$id'");
 
                     if ($this->_db->affectedRows() > 0) {
-                        try {
-                            $dir = FCPATH . "uploads/user";
-                            unlink($dir . '/' . $current->image);
-                        } catch (\Throwable $err) {
+                        $this->_db->table('_ptk_tb')->where('id', $id)->delete();
+                        if ($this->_db->affectedRows() > 0) {
+                            $this->_db->transCommit();
+                            $response = new \stdClass;
+                            $response->status = 200;
+                            $response->message = "Berhasil hapus data.";
+                            return json_encode($response);
+                        } else {
+                            $this->_db->transRollback();
+                            $response = new \stdClass;
+                            $response->status = 400;
+                            $response->message = "Gagal hapus data.";
+                            return json_encode($response);
                         }
-                        $this->_db->transCommit();
-                        $response = new \stdClass;
-                        $response->status = 200;
-                        $response->message = "Data berhasil dihapus.";
-                        return json_encode($response);
                     } else {
                         $this->_db->transRollback();
                         $response = new \stdClass;
                         $response->status = 400;
-                        $response->message = "Data gagal dihapus.";
+                        $response->message = "Gagal mengajukan hapus data.";
                         return json_encode($response);
                     }
                 } catch (\Throwable $th) {
                     $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
-                    $response->message = "Data gagal dihapus.";
+                    $response->message = "Gagal mengajukan hapus data.";
                     return json_encode($response);
                 }
             } else {
