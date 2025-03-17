@@ -21,6 +21,7 @@
                                 <a href="<?= base_url('situgu/su/masterdata/refgaji') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "refgaji") ? ' active-menu-href' : '' ?>" key="t-masterdata-refgaji">Referensi Gaji</a>
                                 <a href="<?= base_url('situgu/su/masterdata/reftw') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "reftw") ? ' active-menu-href' : '' ?>" key="t-masterdata-reftw">Referensi Tahun TW</a>
                                 <a href="<?= base_url('situgu/su/masterdata/pengguna') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "pengguna") ? ' active-menu-href' : '' ?>" key="t-masterdata-pengguna">Pengguna</a>
+                                <a href="<?= base_url('situgu/su/masterdata/ptkterhapus') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "ptkterhapus") ? ' active-menu-href' : '' ?>" key="t-masterdata-ptkterhapus">PTK Terhapus</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
