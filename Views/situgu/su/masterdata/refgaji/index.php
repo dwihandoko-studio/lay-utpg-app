@@ -179,7 +179,7 @@
                                 'warning'
                             );
                         } else {
-                            $('#content-detailModalLabel').html('EDIT REFERENSI ' + title);
+                            $('#content-detailModalLabel').html('EDIT REFERENSI GAJI ' + pangkat + ' Masa Kerja ' + mk);
                             $('.contentBodyModal').html(resul.data);
                             $('.content-detailModal').modal({
                                 backdrop: 'static',
