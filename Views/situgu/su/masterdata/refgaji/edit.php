@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-lg-6">
                     <label for="_gaji_pokok" class="col-form-label">Gaji Pokok:</label>
-                    <input type="number" class="form-control gaji_pokok" value="<?= $data->no_hp ?>" id="_gaji_pokok" name="_gaji_pokok" onfocusin="inputFocus(this);" required />
+                    <input type="number" class="form-control gaji_pokok" value="<?= $data->gaji_pokok ?>" id="_gaji_pokok" name="_gaji_pokok" onfocusin="inputFocus(this);" required />
                     <div class="help-block _gaji_pokok"></div>
                 </div>
             </div>
