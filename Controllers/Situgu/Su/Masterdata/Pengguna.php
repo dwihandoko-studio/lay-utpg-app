@@ -326,12 +326,12 @@ class Pengguna extends BaseController
                     'required' => 'Email tidak boleh kosong. ',
                 ]
             ],
-            'npsn' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'NPSN tidak boleh kosong. ',
-                ]
-            ],
+            // 'npsn' => [
+            //     'rules' => 'required|trim',
+            //     'errors' => [
+            //         'required' => 'NPSN tidak boleh kosong. ',
+            //     ]
+            // ],
             'password' => [
                 'rules' => 'required|trim',
                 'errors' => [
@@ -345,13 +345,13 @@ class Pengguna extends BaseController
             $response->status = 400;
             $response->message = $this->validator->getError('id')
                 . $this->validator->getError('nama')
-                . $this->validator->getError('npsn')
+                // . $this->validator->getError('npsn')
                 . $this->validator->getError('password')
                 . $this->validator->getError('email');
             return json_encode($response);
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
-            $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
+            // $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
             $email = htmlspecialchars($this->request->getVar('email'), true);
             $password = htmlspecialchars($this->request->getVar('password'), true);
