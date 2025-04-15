@@ -1299,7 +1299,7 @@ class Tpg extends BaseController
                 $ptks = explode(",", $current->id_ptks);
                 $dataPtks = [];
                 foreach ($ptks as $key => $value) {
-                    $ptk = $this->_db->table('_tb_temp_usulan_detail')->where(['id_ptk' => $value, 'status_usulan' => 5, 'jenis_tunjangan' => 'tpg'])->get()->getRowObject();
+                    $ptk = $this->_db->table('_tb_temp_usulan_detail')->where(['id_ptk' => $value, 'status_usulan' => 5, 'jenis_tunjangan' => 'tpg', 'id_tahun_tw' => $current->id_tahun_tw])->get()->getRowObject();
                     if ($ptk) {
                         $this->_db->table('_tb_usulan_detail_tpg')->insert([
                             'id' => $ptk->id,
@@ -1319,7 +1319,7 @@ class Tpg extends BaseController
                             'created_at' => $ptk->created_at,
                         ]);
                         if ($this->_db->affectedRows() > 0) {
-                            $this->_db->table('_tb_temp_usulan_detail')->where(['id' => $ptk->id, 'status_usulan' => 5, 'jenis_tunjangan' => 'tpg'])->delete();
+                            $this->_db->table('_tb_temp_usulan_detail')->where(['id' => $ptk->id, 'status_usulan' => 5, 'jenis_tunjangan' => 'tpg', 'id_tahun_tw' => $current->id_tahun_tw])->delete();
                             if ($this->_db->affectedRows() > 0) {
                                 continue;
                             } else {
