@@ -344,8 +344,8 @@ class Ptk extends BaseController
 
             $checkAnySynToday = $this->_helpLib->checkAnySyncToday($npsn);
 
-            var_dump($checkAnySynToday);
-            die;
+            // var_dump($checkAnySynToday);
+            // die;
 
             $apiLib = new Apilib();
             if (!$checkAnySynToday) {
