@@ -343,6 +343,10 @@ class Ptk extends BaseController
             }
 
             $checkAnySynToday = $this->_helpLib->checkAnySyncToday($npsn);
+
+            var_dump($checkAnySynToday);
+            die;
+
             $apiLib = new Apilib();
             if (!$checkAnySynToday) {
                 $resultBack = $apiLib->syncPtkGetBackbone($npsn, $sekolahId);
@@ -354,9 +358,6 @@ class Ptk extends BaseController
                     return json_encode($response);
                 }
             }
-
-            // var_dump(getenv('be.default.url'));
-            // die;
 
             if ($checkAnySynToday == date('Y-m-d')) {
                 $resultBack = true;
