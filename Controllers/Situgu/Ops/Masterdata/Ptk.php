@@ -348,22 +348,22 @@ class Ptk extends BaseController
             // die;
 
             $apiLib = new Apilib();
-            if (!$checkAnySynToday) {
-                $resultBack = $apiLib->syncPtkGetBackbone($npsn, $sekolahId);
-                $insertAnySynToday = $this->_helpLib->insertSyncToday($npsn);
-                if (!$insertAnySynToday) {
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Data syncrone tidak ditemukan.";
-                    return json_encode($response);
-                }
-            }
+            // if (!$checkAnySynToday) {
+            //     $resultBack = $apiLib->syncPtkGetBackbone($npsn, $sekolahId);
+            //     $insertAnySynToday = $this->_helpLib->insertSyncToday($npsn);
+            //     if (!$insertAnySynToday) {
+            //         $response = new \stdClass;
+            //         $response->status = 400;
+            //         $response->message = "Data syncrone tidak ditemukan.";
+            //         return json_encode($response);
+            //     }
+            // }
 
-            if ($checkAnySynToday == date('Y-m-d')) {
-                $resultBack = true;
-            } else {
-                $resultBack = $apiLib->syncPtkGetBackbone($npsn, $sekolahId);
-            }
+            // if ($checkAnySynToday == date('Y-m-d')) {
+            $resultBack = true;
+            // } else {
+            //     $resultBack = $apiLib->syncPtkGetBackbone($npsn, $sekolahId);
+            // }
 
 
 
