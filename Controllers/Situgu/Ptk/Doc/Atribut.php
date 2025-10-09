@@ -1620,7 +1620,7 @@ class Atribut extends BaseController
 
 
             if ($lampiran->isValid() && !$lampiran->hasMoved()) {
-                $minioClient = new Minio_client();
+                $minioClient = new MinioClient();
 
                 // $filesNamelampiran = $lampiran->getName();
 

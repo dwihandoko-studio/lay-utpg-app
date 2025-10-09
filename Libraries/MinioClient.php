@@ -6,7 +6,7 @@
 use Aws\S3\S3Client;
 use Aws\S3\Exception\S3Exception;
 
-class Minio_client
+class MinioClient
 {
     protected $client;
     protected $region;
