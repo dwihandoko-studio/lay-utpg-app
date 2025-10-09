@@ -2,6 +2,7 @@
 
 // Pastikan autoloading Composer sudah dimuat (biasanya di index.php atau boot-up)
 // require 'vendor/autoload.php'; 
+namespace App\Libraries;
 
 use Aws\S3\S3Client;
 use Aws\S3\Exception\S3Exception;
