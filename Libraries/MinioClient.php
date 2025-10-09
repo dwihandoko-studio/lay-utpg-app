@@ -27,6 +27,7 @@ class MinioClient
                 'endpoint' => $endpoint,
                 'version' => 'latest', // Atau '2006-03-01'
                 'region'  => $this->region,
+                'suppress_php_deprecation_warning' => true,
                 'use_path_style_endpoint' => true, // Wajib untuk MinIO
                 'credentials' => [
                     'key'    => $accessKey,
