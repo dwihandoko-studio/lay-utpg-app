@@ -103,6 +103,7 @@ class Atribut extends BaseController
                     $row[] = $list->pangkat_terakhir ? '<a href="' . base_url('upload/ptk/pangkat') . '/' . $list->pangkat_terakhir . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pangkat</span></a>' : '-';
                     $row[] = $list->kgb_terakhir ? '<a href="' . base_url('upload/ptk/kgb') . '/' . $list->kgb_terakhir . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran KGB</span></a>' : '-';
                     $row[] = $list->pernyataan_24jam ? '<a href="' . base_url('upload/ptk/pernyataanindividu') . '/' . $list->pernyataan_24jam . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pernyataan</span></a>' : '-';
+                    $row[] = $list->skp_pkg ? '<a href="' . base_url('upload/ptk/skp_kpg') . '/' . $list->skp_pkg . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran SKP / PKG</span></a>' : '-';
                     $row[] = $list->cuti ? '<a href="' . base_url('upload/ptk/keterangancuti') . '/' . $list->cuti . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Cuti</span></a>' : '-';
                     $row[] = $list->pensiun ? '<a href="' . base_url('upload/ptk/pensiun') . '/' . $list->pensiun . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pensiun</span></a>' : '-';
                     $row[] = $list->kematian ? '<a href="' . base_url('upload/ptk/kematian') . '/' . $list->kematian . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Kematian</span></a>' : '-';
@@ -142,6 +143,15 @@ class Atribut extends BaseController
                         <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
                     </a>' :
                             '<a href="javascript:actionUpload(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
+                        <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+                    </a>';
+                        $row[] = $list->skp_pkg ? '<a target="_blank" href="' . base_url('upload/ptk/skp_pkg') . '/' . $list->skp_pkg . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                    </a>
+                    <a href="javascript:actionEditFile(\'SKP / PKG\',\'skp_pkg\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->skp_pkg . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                    </a>' :
+                            '<a href="javascript:actionUpload(\'SKP / PKG\',\'skp_pkg\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
                         $row[] = $list->cuti ? '<a target="_blank" href="' . base_url('upload/ptk/keterangancuti') . '/' . $list->cuti . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -214,6 +224,15 @@ class Atribut extends BaseController
                         <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
                     </a>' :
                             '<a href="javascript:actionUpload(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
+                        <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+                    </a>';
+                        $row[] = $list->skp_pkg ? '<a target="_blank" href="' . base_url('upload/ptk/skp_pkg') . '/' . $list->skp_pkg . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                    </a>
+                    <a href="javascript:actionEditFile(\'SKP / PKG\',\'skp_pkg\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->skp_pkg . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                    </a>' :
+                            '<a href="javascript:actionUpload(\'SKP / PKG\',\'skp_pkg\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
                         $row[] = $list->cuti ? '<a target="_blank" href="' . base_url('upload/ptk/keterangancuti') . '/' . $list->cuti . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -679,6 +698,11 @@ class Atribut extends BaseController
                     $field_db = 'pernyataan_24jam';
                     $table_db = '_upload_data_attribut';
                     break;
+                case 'skp_pkg':
+                    $dir = FCPATH . "upload/ptk/skp_pkg";
+                    $field_db = 'skp_pkg';
+                    $table_db = '_upload_data_attribut';
+                    break;
                 case 'cuti':
                     $dir = FCPATH . "upload/ptk/keterangancuti";
                     $field_db = 'cuti';
@@ -862,6 +886,11 @@ class Atribut extends BaseController
                 case 'pernyataan24':
                     $dir = base_url("upload/ptk/pernyataanindividu");
                     $field_db = 'pernyataan_24jam';
+                    $table_db = '_upload_data_attribut';
+                    break;
+                case 'skp_pkg':
+                    $dir = base_url("upload/ptk/skp_pkg");
+                    $field_db = 'skp_pkg';
                     $table_db = '_upload_data_attribut';
                     break;
                 case 'cuti':
@@ -1110,6 +1139,8 @@ class Atribut extends BaseController
                     break;
                 case 'pernyataan24':
                     $data['old_url'] = base_url('upload/ptk/pernyataanindividu') . '/' . $old;
+                case 'skp_pkg':
+                    $data['old_url'] = base_url('upload/ptk/skp_pkg') . '/' . $old;
                     break;
                 case 'cuti':
                     $data['old_url'] = base_url('upload/ptk/keterangancuti') . '/' . $old;
@@ -1222,6 +1253,11 @@ class Atribut extends BaseController
                 case 'pernyataan24':
                     $dir = FCPATH . "upload/ptk/pernyataanindividu";
                     $field_db = 'pernyataan_24jam';
+                    $table_db = '_upload_data_attribut';
+                    break;
+                case 'skp_pkg':
+                    $dir = FCPATH . "upload/ptk/skp_pkg";
+                    $field_db = 'skp_pkg';
                     $table_db = '_upload_data_attribut';
                     break;
                 case 'cuti':
@@ -1538,6 +1574,11 @@ class Atribut extends BaseController
                     $field_db = 'pernyataan_24jam';
                     $table_db = '_upload_data_attribut';
                     break;
+                case 'skp_pkg':
+                    $dir = FCPATH . "upload/ptk/skp_pkg";
+                    $field_db = 'skp_pkg';
+                    $table_db = '_upload_data_attribut';
+                    break;
                 case 'cuti':
                     $dir = FCPATH . "upload/ptk/keterangancuti";
                     $field_db = 'cuti';
@@ -1743,6 +1784,11 @@ class Atribut extends BaseController
                 case 'pernyataan24':
                     $dir = FCPATH . "upload/ptk/pernyataanindividu";
                     $field_db = 'pernyataan_24jam';
+                    $table_db = '_upload_data_attribut';
+                    break;
+                case 'skp_pkg':
+                    $dir = FCPATH . "upload/ptk/skp_pkg";
+                    $field_db = 'skp_pkg';
                     $table_db = '_upload_data_attribut';
                     break;
                 case 'cuti':

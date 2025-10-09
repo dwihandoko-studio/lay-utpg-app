@@ -504,7 +504,7 @@ class Tpg extends BaseController
             $id_ptk = htmlspecialchars($this->request->getVar('id_ptk'), true);
 
             $ptk = $this->_db->table('_upload_data_attribut a')
-                ->select("b.*, a.id_tahun_tw, a.pang_golongan, a.pang_no, a.pang_tmt, a.pang_tgl, a.pang_tahun, a.pang_bulan, a.pangkat_terakhir as lampiran_pangkat, a.kgb_terakhir as lampiran_kgb, a.pernyataan_24jam as lampiran_pernyataan24, a.cuti as lampiran_cuti, a.pensiun as lampiran_pensiun, a.kematian as lampiran_kematian, a.lainnya as lampiran_att_lain, c.bulan_1, c.bulan_2, c.bulan_3, c.lampiran_absen1, c.lampiran_absen2, c.lampiran_absen3, c.pembagian_tugas as lampiran_pembagian_tugas, c.slip_gaji as lampiran_slip_gaji, c.doc_lainnya as lampiran_doc_absen_lain")
+                ->select("b.*, a.id_tahun_tw, a.pang_golongan, a.pang_no, a.pang_tmt, a.pang_tgl, a.pang_tahun, a.pang_bulan, a.pangkat_terakhir as lampiran_pangkat, a.kgb_terakhir as lampiran_kgb, a.pernyataan_24jam as lampiran_pernyataan24, a.skp_pkg as lampiran_skp_pkg, a.cuti as lampiran_cuti, a.pensiun as lampiran_pensiun, a.kematian as lampiran_kematian, a.lainnya as lampiran_att_lain, c.bulan_1, c.bulan_2, c.bulan_3, c.lampiran_absen1, c.lampiran_absen2, c.lampiran_absen3, c.pembagian_tugas as lampiran_pembagian_tugas, c.slip_gaji as lampiran_slip_gaji, c.doc_lainnya as lampiran_doc_absen_lain")
                 ->join('_ptk_tb b', 'a.id_ptk = b.id')
                 ->join('_absen_kehadiran c', 'a.id_ptk = c.id_ptk AND c.id_tahun_tw = a.id_tahun_tw')
                 ->where(['a.id_ptk' => $id_ptk, 'a.id_tahun_tw' => $tw])
@@ -582,6 +582,12 @@ class Tpg extends BaseController
                 if ($ptk->lampiran_nrg === null || $ptk->lampiran_nrg === "" || $ptk->lampiran_nuptk === null || $ptk->lampiran_nuptk === "" || $ptk->lampiran_serdik === null || $ptk->lampiran_serdik === "") {
                     $response->status = 400;
                     $response->message = "Lampiran Dokumen Master NRG, NUPTK, dan Serdik tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
+                    return json_encode($response);
+                }
+
+                if ($ptk->lampiran_skp_pkg === null || $ptk->lampiran_skp_pkg === "") {
+                    $response->status = 400;
+                    $response->message = "Lampiran Dokumen Atribut SKP / PKG tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
                     return json_encode($response);
                 }
 
