@@ -3,6 +3,20 @@
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
+use App\Libraries\MinioClient;
+
+function getDokumentPreviewStorage($bucketName, $fileName)
+{
+	$minioClient = new MinioClient();
+	$presignedUrl = $minioClient->getPresignedUrl($bucketName, $fileName, 600);
+
+	if ($presignedUrl) {
+		// Sekarang, $presignedUrl dapat diakses publik selama 10 menit
+		return $presignedUrl;
+	}
+	return false;
+}
+
 function nested_array_search($needle, $array)
 {
 	foreach ($array as $key => $value) {

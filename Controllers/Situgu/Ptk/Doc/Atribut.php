@@ -1628,7 +1628,7 @@ class Atribut extends BaseController
                 // $newNamelampiran = time() . '_' . $filesNamelampiran;
 
                 // --- Konfigurasi MinIO ---
-                $bucketName = 'situgu';
+                $bucketName = 'situgu/' . $field_db;
                 // $field_db = 'file_path'; // Nama field di DB Anda
 
                 // 3. Ambil Path Sementara File
@@ -1656,7 +1656,7 @@ class Atribut extends BaseController
                     $response = new \stdClass;
                     $response->status = 200;
                     $response->message = "File berhasil diupload ke MinIO.";
-                    $response->filePath = $uploadResult;
+                    $response->filePath = getDokumentPreviewStorage("situgu", $newNamelampiran);
                     return json_encode($response);
                 } else {
                     // Gagal upload ke MinIO

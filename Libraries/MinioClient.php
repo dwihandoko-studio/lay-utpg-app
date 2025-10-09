@@ -91,4 +91,28 @@ class MinioClient
             return false;
         }
     }
+
+    /**
+     * Membuat URL Pre-signed untuk akses objek sementara.
+     * @param string $bucketName
+     * @param string $objectName
+     * @param int $expirySeconds Waktu kadaluarsa dalam detik (mis. 300 detik = 5 menit)
+     * @return string|false URL Pre-signed
+     */
+    public function getPresignedUrl(string $bucketName, string $objectName, int $expirySeconds = 300)
+    {
+        try {
+            $cmd = $this->client->getCommand('GetObject', [
+                'Bucket' => $bucketName,
+                'Key'    => $objectName
+            ]);
+
+            $request = $this->client->createPresignedRequest($cmd, "+{$expirySeconds} seconds");
+
+            return (string) $request->getUri();
+        } catch (S3Exception $e) {
+            log_message('error', 'Gagal membuat Pre-signed URL: ' . $e->getMessage());
+            return false;
+        }
+    }
 }
