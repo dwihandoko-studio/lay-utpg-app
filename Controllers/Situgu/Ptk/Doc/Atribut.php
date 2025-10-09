@@ -1722,7 +1722,21 @@ class Atribut extends BaseController
                     $this->_db->table($table_db)->insert($data);
                 }
             } catch (\Exception $e) {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    //code...
+                    if (strpos($newNamelampiran, '/') !== false) {
+
+
+                        $minioClient = new MinioClient();
+
+                        // 3. Hapus Objek dari MinIO
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
 
                 $this->_db->transRollback();
 
@@ -1741,7 +1755,21 @@ class Atribut extends BaseController
                 $response->message = "Data berhasil disimpan.";
                 return json_encode($response);
             } else {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    //code...
+                    if (strpos($newNamelampiran, '/') !== false) {
+
+
+                        $minioClient = new MinioClient();
+
+                        // 3. Hapus Objek dari MinIO
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
 
                 $this->_db->transRollback();
                 $response = new \stdClass;
@@ -1885,11 +1913,57 @@ class Atribut extends BaseController
 
             $lampiran = $this->request->getFile('_file');
             $filesNamelampiran = $lampiran->getName();
-            $newNamelampiran = _create_name_file($filesNamelampiran);
+            $newNamelampiran = $field_db . '/' . _create_name_file($filesNamelampiran);
 
             if ($lampiran->isValid() && !$lampiran->hasMoved()) {
-                $lampiran->move($dir, $newNamelampiran);
-                $data[$field_db] = $newNamelampiran;
+                $minioClient = new MinioClient();
+
+                // $filesNamelampiran = $lampiran->getName();
+
+                // Contoh penamaan file unik di MinIO
+                // $newNamelampiran = time() . '_' . $filesNamelampiran;
+
+                // --- Konfigurasi MinIO ---
+                $bucketName = 'situgu';
+                // $field_db = 'file_path'; // Nama field di DB Anda
+
+                // 3. Ambil Path Sementara File
+                // MinIO SDK perlu path file sementara (temp file) untuk di-upload
+                $tempFilePath = $lampiran->getTempName();
+
+                // 4. Proses Upload ke MinIO
+                // Panggil metode upload dari Minio_client
+                $uploadResult = $minioClient->uploadFile(
+                    $bucketName,
+                    $newNamelampiran, // objectName
+                    $tempFilePath,    // sourceFilePath
+                    [
+                        'x-amz-meta-uploader' => 'situgu-app',
+                        'Content-Type' => $lampiran->getMimeType()
+                    ]
+                );
+
+                if ($uploadResult) {
+                    // Upload berhasil. $uploadResult berisi URL atau path object
+                    $data[$field_db] = $newNamelampiran; // Simpan nama object MinIO di database
+
+                    // Lanjutkan ke proses penyimpanan data di database
+
+                    // $response = new \stdClass;
+                    // $response->status = 200;
+                    // $response->message = "File berhasil diupload ke MinIO.";
+                    // $response->filePath = getDokumentPreviewStorage("situgu", $field_db . '/' . $newNamelampiran);
+                    // return json_encode($response);
+                } else {
+                    // Gagal upload ke MinIO
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload file ke Storage.";
+                    return json_encode($response);
+                }
+
+                // $lampiran->move($dir, $newNamelampiran);
+                // $data[$field_db] = $newNamelampiran;
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -1917,7 +1991,21 @@ class Atribut extends BaseController
                 $data['pang_bulan'] = ($ptkNya->tmt_sk_kgb > $ptkNya->tmt_pangkat) ? ($ptkNya->masa_kerja_bulan_kgb !== null ? $ptkNya->masa_kerja_bulan_kgb : 0) : ($ptkNya->masa_kerja_bulan !== null ? $ptkNya->masa_kerja_bulan : 0);
                 $this->_db->table($table_db)->where(['id_tahun_tw' => $tw, 'id_ptk' => $id_ptk, 'is_locked' => 0])->update($data);
             } catch (\Exception $e) {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    //code...
+                    if (strpos($newNamelampiran, '/') !== false) {
+
+
+                        $minioClient = new MinioClient();
+
+                        // 3. Hapus Objek dari MinIO
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
 
                 $this->_db->transRollback();
 
@@ -1932,7 +2020,17 @@ class Atribut extends BaseController
                 createAktifitas($user->data->id, "Mengedit upload lampiran data atribut pada lampiran $field_db", "Edit Upload Lampiran Atribut $field_db", "edit", $tw);
                 $this->_db->transCommit();
                 try {
-                    unlink($dir . '/' . $old);
+                    //code...
+                    if (strpos($old, '/') !== false) {
+
+
+                        $minioClient = new MinioClient();
+
+                        // 3. Hapus Objek dari MinIO
+                        $isDeleted = $minioClient->deleteObject("situgu", $old);
+                    } else {
+                        unlink($dir . '/' . $old);
+                    }
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
@@ -1942,7 +2040,21 @@ class Atribut extends BaseController
                 $response->message = "Data berhasil diupdate.";
                 return json_encode($response);
             } else {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    //code...
+                    if (strpos($newNamelampiran, '/') !== false) {
+
+
+                        $minioClient = new MinioClient();
+
+                        // 3. Hapus Objek dari MinIO
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
 
                 $this->_db->transRollback();
                 $response = new \stdClass;
