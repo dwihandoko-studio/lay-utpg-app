@@ -93,6 +93,29 @@ class MinioClient
     }
 
     /**
+     * Menghapus objek dari MinIO.
+     * @param string $bucketName Nama bucket.
+     * @param string $objectName Key/path lengkap objek (contoh: 'skp_pkg/nama_file.pdf').
+     * @return bool True jika berhasil, False jika gagal.
+     */
+    public function deleteObject(string $bucketName, string $objectName): bool
+    {
+        try {
+            $this->client->deleteObject([
+                'Bucket' => $bucketName,
+                'Key'    => $objectName,
+            ]);
+
+            // Asumsi jika tidak ada exception, penghapusan berhasil
+            log_message('info', "Objek {$objectName} berhasil dihapus dari bucket {$bucketName}.");
+            return true;
+        } catch (S3Exception $e) {
+            log_message('error', "Gagal menghapus objek {$objectName}: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
      * Membuat URL Pre-signed untuk akses objek sementara.
      * @param string $bucketName
      * @param string $objectName

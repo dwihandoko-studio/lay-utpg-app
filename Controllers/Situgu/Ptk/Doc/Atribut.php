@@ -1316,9 +1316,15 @@ class Atribut extends BaseController
             }
 
             if ($this->_db->affectedRows() > 0) {
+
                 createAktifitas($user->data->id, "Menghapus lampiran data atribut pada lampiran $title", "Menghapus Lampiran Atribut $title", "delete", $tw);
                 $this->_db->transCommit();
                 try {
+                    $minioClient = new MinioClient();
+
+                    // 3. Hapus Objek dari MinIO
+                    $isDeleted = $minioClient->deleteObject("situgu", $currentFile->file);
+
                     unlink($dir . '/' . $currentFile->file);
                 } catch (\Throwable $th) {
                     //throw $th;
@@ -1615,7 +1621,7 @@ class Atribut extends BaseController
 
             $lampiran = $this->request->getFile('_file');
             $filesNamelampiran = $lampiran->getName();
-            $newNamelampiran = _create_name_file($filesNamelampiran);
+            $newNamelampiran = $field_db . '/' . _create_name_file($filesNamelampiran);
 
 
 
@@ -1639,7 +1645,7 @@ class Atribut extends BaseController
                 // Panggil metode upload dari Minio_client
                 $uploadResult = $minioClient->uploadFile(
                     $bucketName,
-                    $field_db . '/' . $newNamelampiran, // objectName
+                    $newNamelampiran, // objectName
                     $tempFilePath,    // sourceFilePath
                     [
                         'x-amz-meta-uploader' => 'situgu-app',
@@ -1653,16 +1659,16 @@ class Atribut extends BaseController
 
                     // Lanjutkan ke proses penyimpanan data di database
 
-                    $response = new \stdClass;
-                    $response->status = 200;
-                    $response->message = "File berhasil diupload ke MinIO.";
-                    $response->filePath = getDokumentPreviewStorage("situgu", $field_db . '/' . $newNamelampiran);
-                    return json_encode($response);
+                    // $response = new \stdClass;
+                    // $response->status = 200;
+                    // $response->message = "File berhasil diupload ke MinIO.";
+                    // $response->filePath = getDokumentPreviewStorage("situgu", $field_db . '/' . $newNamelampiran);
+                    // return json_encode($response);
                 } else {
                     // Gagal upload ke MinIO
                     $response = new \stdClass;
                     $response->status = 400;
-                    $response->message = "Gagal mengupload file ke MinIO.";
+                    $response->message = "Gagal mengupload file ke Storage.";
                     return json_encode($response);
                 }
 
