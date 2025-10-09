@@ -59,6 +59,7 @@
                                     <th rowspan="2">Pangkat</th>
                                     <th rowspan="2">KGB</th>
                                     <th rowspan="2">Pernyataan</th>
+                                    <th rowspan="2">SKP / PKG</th>
                                     <th rowspan="2">Cuti</th>
                                     <th rowspan="2">Pensiun</th>
                                     <th rowspan="2">Kematian</th>
