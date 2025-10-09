@@ -83,11 +83,11 @@ class MinioClient
                 'ContentType' => mime_content_type($sourceFilePath), // Ambil tipe konten otomatis
             ]);
 
-            echo "File {$sourceFilePath} berhasil diunggah sebagai {$objectName}.\n";
+            // echo "File {$sourceFilePath} berhasil diunggah sebagai {$objectName}.\n";
             // Kembalikan URL publik jika diperlukan
             return $result['ObjectURL'] ?? null;
         } catch (S3Exception $e) {
-            echo "Gagal mengunggah file: " . $e->getMessage() . "\n";
+            // echo "Gagal mengunggah file: " . $e->getMessage() . "\n";
             return false;
         }
     }

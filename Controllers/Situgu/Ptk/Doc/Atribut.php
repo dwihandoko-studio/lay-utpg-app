@@ -1681,7 +1681,7 @@ class Atribut extends BaseController
                 return json_encode($response);
             }
 
-            die;
+            // die;
 
             $ptkNya = $this->_db->table('_ptk_tb')->where('id', $id_ptk)->get()->getRowObject();
 
