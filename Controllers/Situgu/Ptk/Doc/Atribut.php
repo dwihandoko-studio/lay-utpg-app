@@ -147,10 +147,12 @@ class Atribut extends BaseController
                             '<a href="javascript:actionUpload(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                        $row[] = $list->skp_pkg ? '<a target="_blank" href="' . base_url('upload/ptk/skp_pkg') . '/' . $list->skp_pkg . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        $row[] = $list->skp_pkg ? (strpos($list->skp_pkg, '/') !== false ? '<a target="_blank" href="' . getDokumentPreviewStorage('situgu', $list->skp_pkg) . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'SKP / PKG\',\'skp_pkg\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->skp_pkg . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    </a>' : '<a target="_blank" href="' . base_url('upload/ptk/skp_pkg') . '/' . $list->skp_pkg . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                    </a>') .
+                            '<a href="javascript:actionEditFile(\'SKP / PKG\',\'skp_pkg\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->skp_pkg . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
                     </a>' :
                             '<a href="javascript:actionUpload(\'SKP / PKG\',\'skp_pkg\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
