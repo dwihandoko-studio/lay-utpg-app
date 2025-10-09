@@ -3,11 +3,11 @@
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-use App\Libraries\MinioClient;
+use App\Libraries\MinioClienturl;
 
 function getDokumentPreviewStorage($bucketName, $fileName)
 {
-	$minioClient = new MinioClient();
+	$minioClient = new MinioClienturl();
 	$presignedUrl = $minioClient->getPresignedUrl($bucketName, $fileName, 600);
 
 	if ($presignedUrl) {
