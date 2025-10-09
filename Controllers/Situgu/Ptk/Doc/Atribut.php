@@ -12,6 +12,8 @@ use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 use App\Libraries\Uuid;
 
+use App\Libraries\MinioClient;
+
 class Atribut extends BaseController
 {
     var $folderImage = 'masterdata';
@@ -1615,15 +1617,65 @@ class Atribut extends BaseController
             $filesNamelampiran = $lampiran->getName();
             $newNamelampiran = _create_name_file($filesNamelampiran);
 
+
+
             if ($lampiran->isValid() && !$lampiran->hasMoved()) {
-                $lampiran->move($dir, $newNamelampiran);
-                $data[$field_db] = $newNamelampiran;
+                $minioClient = new Minio_client();
+
+                // $filesNamelampiran = $lampiran->getName();
+
+                // Contoh penamaan file unik di MinIO
+                // $newNamelampiran = time() . '_' . $filesNamelampiran;
+
+                // --- Konfigurasi MinIO ---
+                $bucketName = 'situgu';
+                // $field_db = 'file_path'; // Nama field di DB Anda
+
+                // 3. Ambil Path Sementara File
+                // MinIO SDK perlu path file sementara (temp file) untuk di-upload
+                $tempFilePath = $lampiran->getTempName();
+
+                // 4. Proses Upload ke MinIO
+                // Panggil metode upload dari Minio_client
+                $uploadResult = $minioClient->uploadFile(
+                    $bucketName,
+                    $newNamelampiran, // objectName
+                    $tempFilePath,    // sourceFilePath
+                    [
+                        'x-amz-meta-uploader' => 'situgu-app',
+                        'Content-Type' => $lampiran->getMimeType()
+                    ]
+                );
+
+                if ($uploadResult) {
+                    // Upload berhasil. $uploadResult berisi URL atau path object
+                    $data[$field_db] = $newNamelampiran; // Simpan nama object MinIO di database
+
+                    // Lanjutkan ke proses penyimpanan data di database
+
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->message = "File berhasil diupload ke MinIO.";
+                    $response->filePath = $uploadResult;
+                    return json_encode($response);
+                } else {
+                    // Gagal upload ke MinIO
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload file ke MinIO.";
+                    return json_encode($response);
+                }
+
+                // $lampiran->move($dir, $newNamelampiran);
+                // $data[$field_db] = $newNamelampiran;
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Gagal mengupload file.";
                 return json_encode($response);
             }
+
+            die;
 
             $ptkNya = $this->_db->table('_ptk_tb')->where('id', $id_ptk)->get()->getRowObject();
 
