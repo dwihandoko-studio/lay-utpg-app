@@ -11,6 +11,8 @@ use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 
+use App\Libraries\MinioClient;
+
 class Upkelengkapan extends BaseController
 {
     var $folderImage = 'masterdata';
@@ -92,66 +94,78 @@ class Upkelengkapan extends BaseController
             $row[] = $list->tw;
             switch ($list->is_locked) {
                 case 1:
-                    $row[] = $list->lampiran_absen1 ? '<a href="' . base_url('upload/sekolah/kehadiran') . '/' . $list->lampiran_absen1 . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Absen 1</span></a>' : '-';
-                    $row[] = $list->lampiran_absen2 ? '<a href="' . base_url('upload/sekolah/kehadiran') . '/' . $list->lampiran_absen2 . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Absen 2</span></a>' : '-';
-                    $row[] = $list->lampiran_absen3 ? '<a href="' . base_url('upload/sekolah/kehadiran') . '/' . $list->lampiran_absen3 . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Absen 3</span></a>' : '-';
-                    $row[] = $list->pembagian_tugas ? '<a href="' . base_url('upload/sekolah/pembagian-tugas') . '/' . $list->pembagian_tugas . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pembagian Tugas</span></a>' : '-';
-                    $row[] = $list->slip_gaji ? '<a href="' . base_url('upload/sekolah/slip-gaji') . '/' . $list->slip_gaji . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Slip Gaji</span></a>' : '-';
-                    $row[] = $list->doc_lainnya ? '<a href="' . base_url('upload/sekolah/lainnya') . '/' . $list->doc_lainnya . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Doc Lainnya</span></a>' : '-';
+                    $row[] = $list->lampiran_absen1 ? (strpos($list->lampiran_absen1, '/') !== false ? '<a href="' . getDokumentPreviewStorage('situgu', $list->lampiran_absen1) . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Absen 1</span></a>' : '<a href="' . base_url('upload/sekolah/kehadiran') . '/' . $list->lampiran_absen1 . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Absen 1</span></a>') : '-';
+                    $row[] = $list->lampiran_absen2 ? (strpos($list->lampiran_absen2, '/') !== false ? '<a href="' . getDokumentPreviewStorage('situgu', $list->lampiran_absen2) . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Absen 2</span></a>' : '<a href="' . base_url('upload/sekolah/kehadiran') . '/' . $list->lampiran_absen2 . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Absen 2</span></a>') : '-';
+                    $row[] = $list->lampiran_absen3 ? (strpos($list->lampiran_absen3, '/') !== false ? '<a href="' . getDokumentPreviewStorage('situgu', $list->lampiran_absen3) . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Absen 3</span></a>' : '<a href="' . base_url('upload/sekolah/kehadiran') . '/' . $list->lampiran_absen3 . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Absen 3</span></a>') : '-';
+                    $row[] = $list->pembagian_tugas ? (strpos($list->pembagian_tugas, '/') !== false ? '<a href="' . getDokumentPreviewStorage('situgu', $list->pembagian_tugas) . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pembagian Tugas</span></a>' : '<a href="' . base_url('upload/sekolah/pembagian-tugas') . '/' . $list->pembagian_tugas . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pembagian Tugas</span></a>') : '-';
+                    $row[] = $list->slip_gaji ? (strpos($list->slip_gaji, '/') !== false ? '<a href="' . getDokumentPreviewStorage('situgu', $list->slip_gaji) . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Slip Gaji</span></a>' : '<a href="' . base_url('upload/sekolah/slip-gaji') . '/' . $list->slip_gaji . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Slip Gaji</span></a>') : '-';
+                    $row[] = $list->doc_lainnya ? (strpos($list->doc_lainnya, '/') !== false ? '<a href="' . getDokumentPreviewStorage('situgu', $list->doc_lainnya) . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Doc Lainnya</span></a>' : '<a href="' . base_url('upload/sekolah/lainnya') . '/' . $list->doc_lainnya . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Doc Lainnya</span></a>') : '-';
                     $row[] = '<div class="text-center">
                     <span class="badge rounded-pill badge-soft-success font-size-11">Terkunci</span>
                     </div>';
                     break;
                 default:
-                    $row[] = $list->lampiran_absen1 ? '<a target="_blank" href="' . base_url('upload/sekolah/kehadiran') . '/' . $list->lampiran_absen1 . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    $row[] = $list->lampiran_absen1 ? (strpos($list->lampiran_absen1, '/') !== false ? '<a target="_blank" href="' . getDokumentPreviewStorage('situgu', $list->lampiran_absen1) . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Absen Bulan 1\',\'bulan1\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\',\'' . $list->lampiran_absen1 . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    </a>' : '<a target="_blank" href="' . base_url('upload/sekolah/kehadiran') . '/' . $list->lampiran_absen1 . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                    </a>') .
+                        '<a href="javascript:actionEditFile(\'Absen Bulan 1\',\'bulan1\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\',\'' . $list->lampiran_absen1 . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
                     </a>' :
                         '<a href="javascript:actionUpload(\'Absen Bulan 1\',\'bulan1\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                    $row[] = $list->lampiran_absen2 ? '<a target="_blank" href="' . base_url('upload/sekolah/kehadiran') . '/' . $list->lampiran_absen2 . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    $row[] = $list->lampiran_absen2 ? (strpos($list->lampiran_absen2, '/') !== false ? '<a target="_blank" href="' . getDokumentPreviewStorage('situgu', $list->lampiran_absen2) . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Absen Bulan 2\',\'bulan2\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\',\'' . $list->lampiran_absen2 . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    </a>' : '<a target="_blank" href="' . base_url('upload/sekolah/kehadiran') . '/' . $list->lampiran_absen2 . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                    </a>') .
+                        '<a href="javascript:actionEditFile(\'Absen Bulan 2\',\'bulan2\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\',\'' . $list->lampiran_absen2 . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
                     </a>' :
                         '<a href="javascript:actionUpload(\'Absen Bulan 2\',\'bulan2\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                    $row[] = $list->lampiran_absen3 ? '<a target="_blank" href="' . base_url('upload/sekolah/kehadiran') . '/' . $list->lampiran_absen3 . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    $row[] = $list->lampiran_absen3 ? (strpos($list->lampiran_absen3, '/') !== false ? '<a target="_blank" href="' . getDokumentPreviewStorage('situgu', $list->lampiran_absen3) . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Absen Bulan 3\',\'bulan3\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\',\'' . $list->lampiran_absen3 . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    </a>' : '<a target="_blank" href="' . base_url('upload/sekolah/kehadiran') . '/' . $list->lampiran_absen3 . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                    </a>') .
+                        '<a href="javascript:actionEditFile(\'Absen Bulan 3\',\'bulan3\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\',\'' . $list->lampiran_absen3 . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
                     </a>' :
                         '<a href="javascript:actionUpload(\'Absen Bulan 3\',\'bulan3\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                    $row[] = $list->pembagian_tugas ? '<a target="_blank" href="' . base_url('upload/sekolah/pembagian-tugas') . '/' . $list->pembagian_tugas . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    $row[] = $list->pembagian_tugas ? (strpos($list->pembagian_tugas, '/') !== false ? '<a target="_blank" href="' . getDokumentPreviewStorage('situgu', $list->pembagian_tugas) . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Pembagian Tugas\',\'pembagian_tugas\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\',\'' . $list->pembagian_tugas . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    </a>' : '<a target="_blank" href="' . base_url('upload/sekolah/pembagian-tugas') . '/' . $list->pembagian_tugas . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                    </a>') .
+                        '<a href="javascript:actionEditFile(\'Pembagian Tugas\',\'pembagian_tugas\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\',\'' . $list->pembagian_tugas . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
                     </a>' :
                         '<a href="javascript:actionUpload(\'Pembagian Tugas\',\'pembagian_tugas\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                    $row[] = $list->slip_gaji ? '<a target="_blank" href="' . base_url('upload/sekolah/slip-gaji') . '/' . $list->slip_gaji . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    $row[] = $list->slip_gaji ? (strpos($list->slip_gaji, '/') !== false ? '<a target="_blank" href="' . getDokumentPreviewStorage('situgu', $list->slip_gaji) . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Slip Gaji\',\'slip_gaji\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\',\'' . $list->slip_gaji . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    </a>' : '<a target="_blank" href="' . base_url('upload/sekolah/slip-gaji') . '/' . $list->slip_gaji . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                    </a>') .
+                        '<a href="javascript:actionEditFile(\'Slip Gaji\',\'slip_gaji\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\',\'' . $list->slip_gaji . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
                     </a>' :
                         '<a href="javascript:actionUpload(\'Slip Gaji\',\'slip_gaji\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                    $row[] = $list->doc_lainnya ? '<a target="_blank" href="' . base_url('upload/sekolah/doc-lainnya') . '/' . $list->doc_lainnya . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    $row[] = $list->doc_lainnya ? (strpos($list->doc_lainnya, '/') !== false ? '<a target="_blank" href="' . getDokumentPreviewStorage('situgu', $list->doc_lainnya) . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Dokumen Lainnya\',\'doc_lainnya\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\',\'' . $list->doc_lainnya . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    </a>' : '<a target="_blank" href="' . base_url('upload/sekolah/doc-lainnya') . '/' . $list->doc_lainnya . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                    </a>') .
+                        '<a href="javascript:actionEditFile(\'Dokumen Lainnya\',\'doc_lainnya\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\',\'' . $list->doc_lainnya . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
                     </a>' :
                         '<a href="javascript:actionUpload(\'Dokumen Lainnya\',\'doc_lainnya\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\')" class="btn btn-primary waves-effect waves-light">
@@ -448,11 +462,57 @@ class Upkelengkapan extends BaseController
 
             $lampiran = $this->request->getFile('_file');
             $filesNamelampiran = $lampiran->getName();
-            $newNamelampiran = _create_name_file($filesNamelampiran);
+            $newNamelampiran = $field_db . '/' . _create_name_file($filesNamelampiran);
 
             if ($lampiran->isValid() && !$lampiran->hasMoved()) {
-                $lampiran->move($dir, $newNamelampiran);
-                $data[$field_db] = $newNamelampiran;
+                $minioClient = new MinioClient();
+
+                // $filesNamelampiran = $lampiran->getName();
+
+                // Contoh penamaan file unik di MinIO
+                // $newNamelampiran = time() . '_' . $filesNamelampiran;
+
+                // --- Konfigurasi MinIO ---
+                $bucketName = 'situgu';
+                // $field_db = 'file_path'; // Nama field di DB Anda
+
+                // 3. Ambil Path Sementara File
+                // MinIO SDK perlu path file sementara (temp file) untuk di-upload
+                $tempFilePath = $lampiran->getTempName();
+
+                // 4. Proses Upload ke MinIO
+                // Panggil metode upload dari Minio_client
+                $uploadResult = $minioClient->uploadFile(
+                    $bucketName,
+                    $newNamelampiran, // objectName
+                    $tempFilePath,    // sourceFilePath
+                    [
+                        'x-amz-meta-uploader' => 'situgu-app',
+                        'Content-Type' => $lampiran->getMimeType()
+                    ]
+                );
+
+                if ($uploadResult) {
+                    // Upload berhasil. $uploadResult berisi URL atau path object
+                    $data[$field_db] = $newNamelampiran; // Simpan nama object MinIO di database
+
+                    // Lanjutkan ke proses penyimpanan data di database
+
+                    // $response = new \stdClass;
+                    // $response->status = 200;
+                    // $response->message = "File berhasil diupload ke MinIO.";
+                    // $response->filePath = getDokumentPreviewStorage("situgu", $field_db . '/' . $newNamelampiran);
+                    // return json_encode($response);
+                } else {
+                    // Gagal upload ke MinIO
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload file ke Storage.";
+                    return json_encode($response);
+                }
+
+                // $lampiran->move($dir, $newNamelampiran);
+                // $data[$field_db] = $newNamelampiran;
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -464,7 +524,21 @@ class Upkelengkapan extends BaseController
             try {
                 $this->_db->table('_absen_kehadiran')->where(['id_tahun_tw' => $tw, 'npsn' => $npsn, 'is_locked' => 0])->update($data);
             } catch (\Exception $e) {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    //code...
+                    if (strpos($newNamelampiran, '/') !== false) {
+
+
+                        $minioClient = new MinioClient();
+
+                        // 3. Hapus Objek dari MinIO
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
 
                 $this->_db->transRollback();
 
@@ -482,7 +556,21 @@ class Upkelengkapan extends BaseController
                 $response->message = "Data berhasil disimpan.";
                 return json_encode($response);
             } else {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    //code...
+                    if (strpos($newNamelampiran, '/') !== false) {
+
+
+                        $minioClient = new MinioClient();
+
+                        // 3. Hapus Objek dari MinIO
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
 
                 $this->_db->transRollback();
                 $response = new \stdClass;
@@ -599,11 +687,57 @@ class Upkelengkapan extends BaseController
 
             $lampiran = $this->request->getFile('_file');
             $filesNamelampiran = $lampiran->getName();
-            $newNamelampiran = _create_name_file($filesNamelampiran);
+            $newNamelampiran = $field_db . '/' . _create_name_file($filesNamelampiran);
 
             if ($lampiran->isValid() && !$lampiran->hasMoved()) {
-                $lampiran->move($dir, $newNamelampiran);
-                $data[$field_db] = $newNamelampiran;
+                $minioClient = new MinioClient();
+
+                // $filesNamelampiran = $lampiran->getName();
+
+                // Contoh penamaan file unik di MinIO
+                // $newNamelampiran = time() . '_' . $filesNamelampiran;
+
+                // --- Konfigurasi MinIO ---
+                $bucketName = 'situgu';
+                // $field_db = 'file_path'; // Nama field di DB Anda
+
+                // 3. Ambil Path Sementara File
+                // MinIO SDK perlu path file sementara (temp file) untuk di-upload
+                $tempFilePath = $lampiran->getTempName();
+
+                // 4. Proses Upload ke MinIO
+                // Panggil metode upload dari Minio_client
+                $uploadResult = $minioClient->uploadFile(
+                    $bucketName,
+                    $newNamelampiran, // objectName
+                    $tempFilePath,    // sourceFilePath
+                    [
+                        'x-amz-meta-uploader' => 'situgu-app',
+                        'Content-Type' => $lampiran->getMimeType()
+                    ]
+                );
+
+                if ($uploadResult) {
+                    // Upload berhasil. $uploadResult berisi URL atau path object
+                    $data[$field_db] = $newNamelampiran; // Simpan nama object MinIO di database
+
+                    // Lanjutkan ke proses penyimpanan data di database
+
+                    // $response = new \stdClass;
+                    // $response->status = 200;
+                    // $response->message = "File berhasil diupload ke MinIO.";
+                    // $response->filePath = getDokumentPreviewStorage("situgu", $field_db . '/' . $newNamelampiran);
+                    // return json_encode($response);
+                } else {
+                    // Gagal upload ke MinIO
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload file ke Storage.";
+                    return json_encode($response);
+                }
+
+                // $lampiran->move($dir, $newNamelampiran);
+                // $data[$field_db] = $newNamelampiran;
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -615,7 +749,21 @@ class Upkelengkapan extends BaseController
             try {
                 $this->_db->table('_absen_kehadiran')->where(['id_tahun_tw' => $tw, 'npsn' => $npsn, 'is_locked' => 0])->update($data);
             } catch (\Exception $e) {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    //code...
+                    if (strpos($newNamelampiran, '/') !== false) {
+
+
+                        $minioClient = new MinioClient();
+
+                        // 3. Hapus Objek dari MinIO
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
 
                 $this->_db->transRollback();
 
@@ -629,7 +777,17 @@ class Upkelengkapan extends BaseController
             if ($this->_db->affectedRows() > 0) {
                 $this->_db->transCommit();
                 try {
-                    unlink($dir . '/' . $old);
+                    //code...
+                    if (strpos($old, '/') !== false) {
+
+
+                        $minioClient = new MinioClient();
+
+                        // 3. Hapus Objek dari MinIO
+                        $isDeleted = $minioClient->deleteObject("situgu", $old);
+                    } else {
+                        unlink($dir . '/' . $old);
+                    }
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
@@ -638,7 +796,21 @@ class Upkelengkapan extends BaseController
                 $response->message = "Data berhasil diupdate.";
                 return json_encode($response);
             } else {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    //code...
+                    if (strpos($newNamelampiran, '/') !== false) {
+
+
+                        $minioClient = new MinioClient();
+
+                        // 3. Hapus Objek dari MinIO
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
 
                 $this->_db->transRollback();
                 $response = new \stdClass;

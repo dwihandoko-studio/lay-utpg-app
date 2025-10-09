@@ -29,6 +29,8 @@ use PhpOffice\PhpWord\TemplateProcessor;
 use iio\libmergepdf\Merger;
 use Dompdf\Dompdf;
 
+use App\Libraries\MinioClient;
+
 class Tamsil extends BaseController
 {
     var $folderImage = 'masterdata';
@@ -117,13 +119,13 @@ class Tamsil extends BaseController
             $row[] = $list->tw;
             $row[] = $list->jumlah_ptk;
             if ($list->is_locked == 1) {
-                $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_sptjm . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_sptjm . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
+                $row[] = '<a target="popup" onclick="window.open(\'' . (strpos($list->lampiran_sptjm, '/') !== false ? getDokumentPreviewStorage('situgu', $list->lampiran_sptjm) : base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_sptjm) . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . (strpos($list->lampiran_sptjm, '/') !== false ? getDokumentPreviewStorage('situgu', $list->lampiran_sptjm) : base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_sptjm) . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
             } else {
                 if ($list->lampiran_sptjm == null || $list->lampiran_sptjm == "") {
                     $row[] = '<a class="btn btn-sm btn-primary waves-effect waves-light" target="_blank" href="' . base_url('situgu/ks/sptjm/tamsil/download') . '?id=' . $list->id . '"><i class="bx bxs-cloud-download font-size-16 align-middle me-2"></i> Download</a>&nbsp;&nbsp;'
                         . '<a class="btn btn-sm btn-primary waves-effect waves-light" href="javascript:actionUpload(\'' . $list->id . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\');"><i class="bx bxs-cloud-upload font-size-16 align-middle me-2"></i> Upload</a>';
                 } else {
-                    $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_sptjm . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_sptjm . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
+                    $row[] = '<a target="popup" onclick="window.open(\'' . (strpos($list->lampiran_sptjm, '/') !== false ? getDokumentPreviewStorage('situgu', $list->lampiran_sptjm) : base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_sptjm) . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . (strpos($list->lampiran_sptjm, '/') !== false ? getDokumentPreviewStorage('situgu', $list->lampiran_sptjm) : base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_sptjm) . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
                 }
             }
 
@@ -1155,11 +1157,30 @@ class Tamsil extends BaseController
 
             $lampiran = $this->request->getFile('_file');
             $filesNamelampiran = $lampiran->getName();
-            $newNamelampiran = _create_name_file($filesNamelampiran);
+            $newNamelampiran = $field_db . '/' . _create_name_file($filesNamelampiran);
 
             if ($lampiran->isValid() && !$lampiran->hasMoved()) {
-                $lampiran->move($dir, $newNamelampiran);
-                $data[$field_db] = $newNamelampiran;
+                $minioClient = new MinioClient();
+                $bucketName = 'situgu';
+                $tempFilePath = $lampiran->getTempName();
+                $uploadResult = $minioClient->uploadFile(
+                    $bucketName,
+                    $newNamelampiran,
+                    $tempFilePath,
+                    [
+                        'x-amz-meta-uploader' => 'situgu-app',
+                        'Content-Type' => $lampiran->getMimeType()
+                    ]
+                );
+
+                if ($uploadResult) {
+                    $data[$field_db] = $newNamelampiran;
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload file ke Storage.";
+                    return json_encode($response);
+                }
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -1171,7 +1192,15 @@ class Tamsil extends BaseController
             try {
                 $this->_db->table($table_db)->where(['id' => $id, 'is_locked' => 0])->update($data);
             } catch (\Exception $e) {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    if (strpos($newNamelampiran, '/') !== false) {
+                        $minioClient = new MinioClient();
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                }
 
                 $this->_db->transRollback();
 
@@ -1194,7 +1223,15 @@ class Tamsil extends BaseController
                 $response->message = "Data berhasil diupdate.";
                 return json_encode($response);
             } else {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    if (strpos($current->lampiran_sptjm, '/') !== false) {
+                        $minioClient = new MinioClient();
+                        $isDeleted = $minioClient->deleteObject("situgu", $current->lampiran_sptjm);
+                    } else {
+                        unlink($dir . '/' . $current->lampiran_sptjm);
+                    }
+                } catch (\Throwable $th) {
+                }
 
                 $this->_db->transRollback();
                 $response = new \stdClass;
@@ -1339,11 +1376,30 @@ class Tamsil extends BaseController
 
             $lampiran = $this->request->getFile('_file');
             $filesNamelampiran = $lampiran->getName();
-            $newNamelampiran = _create_name_file($filesNamelampiran);
+            $newNamelampiran = $field_db . '/' . _create_name_file($filesNamelampiran);
 
             if ($lampiran->isValid() && !$lampiran->hasMoved()) {
-                $lampiran->move($dir, $newNamelampiran);
-                $data[$field_db] = $newNamelampiran;
+                $minioClient = new MinioClient();
+                $bucketName = 'situgu';
+                $tempFilePath = $lampiran->getTempName();
+                $uploadResult = $minioClient->uploadFile(
+                    $bucketName,
+                    $newNamelampiran,
+                    $tempFilePath,
+                    [
+                        'x-amz-meta-uploader' => 'situgu-app',
+                        'Content-Type' => $lampiran->getMimeType()
+                    ]
+                );
+
+                if ($uploadResult) {
+                    $data[$field_db] = $newNamelampiran;
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload file ke Storage.";
+                    return json_encode($response);
+                }
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -1355,7 +1411,15 @@ class Tamsil extends BaseController
             try {
                 $this->_db->table($table_db)->where(['id' => $id, 'is_locked' => 0])->update($data);
             } catch (\Exception $e) {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    if (strpos($newNamelampiran, '/') !== false) {
+                        $minioClient = new MinioClient();
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                }
 
                 $this->_db->transRollback();
 
@@ -1394,7 +1458,15 @@ class Tamsil extends BaseController
                             if ($this->_db->affectedRows() > 0) {
                                 continue;
                             } else {
-                                unlink($dir . '/' . $newNamelampiran);
+                                try {
+                                    if (strpos($newNamelampiran, '/') !== false) {
+                                        $minioClient = new MinioClient();
+                                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                                    } else {
+                                        unlink($dir . '/' . $newNamelampiran);
+                                    }
+                                } catch (\Throwable $th) {
+                                }
 
                                 $this->_db->transRollback();
                                 $response = new \stdClass;
@@ -1403,7 +1475,15 @@ class Tamsil extends BaseController
                                 return json_encode($response);
                             }
                         } else {
-                            unlink($dir . '/' . $newNamelampiran);
+                            try {
+                                if (strpos($newNamelampiran, '/') !== false) {
+                                    $minioClient = new MinioClient();
+                                    $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                                } else {
+                                    unlink($dir . '/' . $newNamelampiran);
+                                }
+                            } catch (\Throwable $th) {
+                            }
 
                             $this->_db->transRollback();
                             $response = new \stdClass;
@@ -1420,7 +1500,15 @@ class Tamsil extends BaseController
                 $response->message = "Data berhasil disimpan.";
                 return json_encode($response);
             } else {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    if (strpos($newNamelampiran, '/') !== false) {
+                        $minioClient = new MinioClient();
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                }
 
                 $this->_db->transRollback();
                 $response = new \stdClass;
@@ -1433,7 +1521,7 @@ class Tamsil extends BaseController
 
     public function testDir()
     {
-        var_dump(PHPWORD_BASE_DIR);
+        // var_dump(PHPWORD_BASE_DIR);
         die;
     }
 }

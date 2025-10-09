@@ -11,6 +11,8 @@ use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 use App\Libraries\Uuid;
 
+use App\Libraries\MinioClient;
+
 class Master extends BaseController
 {
     var $folderImage = 'masterdata';
@@ -414,11 +416,30 @@ class Master extends BaseController
 
             $lampiran = $this->request->getFile('_file');
             $filesNamelampiran = $lampiran->getName();
-            $newNamelampiran = _create_name_file($filesNamelampiran);
+            $newNamelampiran = $field_db . '/' . _create_name_file($filesNamelampiran);
 
             if ($lampiran->isValid() && !$lampiran->hasMoved()) {
-                $lampiran->move($dir, $newNamelampiran);
-                $data[$field_db] = $newNamelampiran;
+                $minioClient = new MinioClient();
+                $bucketName = 'situgu';
+                $tempFilePath = $lampiran->getTempName();
+                $uploadResult = $minioClient->uploadFile(
+                    $bucketName,
+                    $newNamelampiran,
+                    $tempFilePath,
+                    [
+                        'x-amz-meta-uploader' => 'situgu-app',
+                        'Content-Type' => $lampiran->getMimeType()
+                    ]
+                );
+
+                if ($uploadResult) {
+                    $data[$field_db] = $newNamelampiran;
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload file ke Storage.";
+                    return json_encode($response);
+                }
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -430,7 +451,15 @@ class Master extends BaseController
             try {
                 $this->_db->table($table_db)->where("id = '$id_ptk' AND (is_locked = 0 OR is_locked IS NULL)")->update($data);
             } catch (\Exception $e) {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    if (strpos($newNamelampiran, '/') !== false) {
+                        $minioClient = new MinioClient();
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                }
 
                 $this->_db->transRollback();
 
@@ -450,7 +479,15 @@ class Master extends BaseController
                 $response->message = "Data berhasil disimpan.";
                 return json_encode($response);
             } else {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    if (strpos($newNamelampiran, '/') !== false) {
+                        $minioClient = new MinioClient();
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                }
 
                 $this->_db->transRollback();
                 $response = new \stdClass;
@@ -646,11 +683,30 @@ class Master extends BaseController
 
             $lampiran = $this->request->getFile('_file');
             $filesNamelampiran = $lampiran->getName();
-            $newNamelampiran = _create_name_file($filesNamelampiran);
+            $newNamelampiran = $field_db . '/' . _create_name_file($filesNamelampiran);
 
             if ($lampiran->isValid() && !$lampiran->hasMoved()) {
-                $lampiran->move($dir, $newNamelampiran);
-                $data[$field_db] = $newNamelampiran;
+                $minioClient = new MinioClient();
+                $bucketName = 'situgu';
+                $tempFilePath = $lampiran->getTempName();
+                $uploadResult = $minioClient->uploadFile(
+                    $bucketName,
+                    $newNamelampiran,
+                    $tempFilePath,
+                    [
+                        'x-amz-meta-uploader' => 'situgu-app',
+                        'Content-Type' => $lampiran->getMimeType()
+                    ]
+                );
+
+                if ($uploadResult) {
+                    $data[$field_db] = $newNamelampiran;
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload file ke Storage.";
+                    return json_encode($response);
+                }
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -663,7 +719,15 @@ class Master extends BaseController
                 // $this->_db->table($table_db)->where(['id' => $id_ptk, 'is_locked' => 0])->update($data);
                 $this->_db->table($table_db)->where("id = '$id_ptk' AND (is_locked = 0 OR is_locked IS NULL)")->update($data);
             } catch (\Exception $e) {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    if (strpos($newNamelampiran, '/') !== false) {
+                        $minioClient = new MinioClient();
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                }
 
                 $this->_db->transRollback();
 
@@ -678,9 +742,13 @@ class Master extends BaseController
                 createAktifitas($user->data->id, "Mengedit upload lampiran data master pada lampiran $field_db", "Mengedit Upload Lampiran Master $field_db", "edit");
                 $this->_db->transCommit();
                 try {
-                    unlink($dir . '/' . $old);
+                    if (strpos($old, '/') !== false) {
+                        $minioClient = new MinioClient();
+                        $isDeleted = $minioClient->deleteObject("situgu", $old);
+                    } else {
+                        unlink($dir . '/' . $old);
+                    }
                 } catch (\Throwable $th) {
-                    //throw $th;
                 }
 
                 $response = new \stdClass;
@@ -688,7 +756,15 @@ class Master extends BaseController
                 $response->message = "Data berhasil diupdate.";
                 return json_encode($response);
             } else {
-                unlink($dir . '/' . $newNamelampiran);
+                try {
+                    if (strpos($newNamelampiran, '/') !== false) {
+                        $minioClient = new MinioClient();
+                        $isDeleted = $minioClient->deleteObject("situgu", $newNamelampiran);
+                    } else {
+                        unlink($dir . '/' . $newNamelampiran);
+                    }
+                } catch (\Throwable $th) {
+                }
 
                 $this->_db->transRollback();
                 $response = new \stdClass;
@@ -812,11 +888,11 @@ class Master extends BaseController
                 createAktifitas($user->data->id, "Menghapus lampiran data master pada lampiran $field_db", "Menghapus Lampiran Master $field_db", "delete");
                 $this->_db->transCommit();
                 try {
+                    $minioClient = new MinioClient();
+                    $isDeleted = $minioClient->deleteObject("situgu", $currentFile->file);
                     unlink($dir . '/' . $currentFile->file);
                 } catch (\Throwable $th) {
-                    //throw $th;
                 }
-
 
                 $response = new \stdClass;
                 $response->status = 200;
