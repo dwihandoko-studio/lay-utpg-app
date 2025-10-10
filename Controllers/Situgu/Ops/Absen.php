@@ -12,6 +12,8 @@ use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 use App\Libraries\Situgu\Kehadiranptklib;
 
+use App\Libraries\MinioClient;
+
 class Absen extends BaseController
 {
     var $folderImage = 'masterdata';
