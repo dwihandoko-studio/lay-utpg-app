@@ -58,10 +58,14 @@
                                 <th rowspan="3">#</th>
                                 <th rowspan="3">NAMA</th>
                                 <th rowspan="3">NUPTK</th>
-                                <th colspan="13">DATA PANGKAT KGB BARU UPLOAD</th>
+                                <th colspan="14">DATA PANGKAT KGB BARU UPLOAD</th>
                                 <th colspan="13">DATA PANGKAT KGB LAMA</th>
                             </tr>
                             <tr>
+                                <th colspan="6">PANGKAT
+                                <th>
+                                <th colspan="7">KGB
+                                <th>
                                 <th colspan="6">PANGKAT
                                 <th>
                                 <th colspan="7">KGB
