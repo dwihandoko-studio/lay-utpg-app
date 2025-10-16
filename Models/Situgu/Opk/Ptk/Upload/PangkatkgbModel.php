@@ -47,7 +47,7 @@ class PangkatkgbModel extends Model
             $this->dt->orderBy(key($order), $order[key($order)]);
         }
     }
-    function get_datatables()
+    function get_datatables($userId)
     {
         $this->dt->select("a.*");
         // $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id');
@@ -67,19 +67,21 @@ class PangkatkgbModel extends Model
         //     if ($this->request->getPost('tw_active')) {
         //         if ($this->request->getPost('tw_active') !== "") {
 
-        //             $this->dt->where('id_tahun_tw', $this->request->getPost('tw_active'));
+        $this->dt->where('user_id', $userId);
         //         }
         //     }
         // }
+
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
         $query = $this->dt->get();
         return $query->getResult();
     }
-    function count_filtered()
+    function count_filtered($userId)
     {
         $this->dt->select("a.*");
+        $this->dt->where('user_id', $userId);
         // $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id');
         // if ($this->request->getPost('tw')) {
         //     if ($this->request->getPost('tw') !== "") {
@@ -104,9 +106,10 @@ class PangkatkgbModel extends Model
 
         return $this->dt->countAllResults();
     }
-    public function count_all()
+    public function count_all($userId)
     {
         $this->dt->select("a.*");
+        $this->dt->where('user_id', $userId);
         // $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id');
         // if ($this->request->getPost('tw')) {
         //     if ($this->request->getPost('tw') !== "") {

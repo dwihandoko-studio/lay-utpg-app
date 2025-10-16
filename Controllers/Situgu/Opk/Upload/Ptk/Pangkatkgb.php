@@ -67,7 +67,7 @@ class Pangkatkgb extends BaseController
             }
         }
 
-        $lists = $datamodel->get_datatables();
+        $lists = $datamodel->get_datatables($userId);
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -104,8 +104,8 @@ class Pangkatkgb extends BaseController
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all(),
-            "recordsFiltered" => $datamodel->count_filtered(),
+            "recordsTotal" => $datamodel->count_all($userId),
+            "recordsFiltered" => $datamodel->count_filtered($userId),
             "data" => $data
         ];
         echo json_encode($output);
