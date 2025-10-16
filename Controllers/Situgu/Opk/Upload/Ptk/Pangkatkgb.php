@@ -705,53 +705,11 @@ class Pangkatkgb extends BaseController
                 $this->_db->transBegin();
 
                 if ($status == "table-success") {
-                    $this->_db->table('_ptk_tb')->where('id', $current->id_ptk)->update(
+                    $this->_db->table('_ptk_tb')->where('id_ptk', $current->id_ptk)->update(
                         $dataUpdate
                     );
                     if ($this->_db->affectedRows() > 0) {
                         $this->_db->transCommit();
-
-                        // $dataNotif = [
-                        //     "SKTP Telah Terbit", "Usulan " . $ptk->kode_usulan . " telah Terbit dengan No SK: " . $no_sktp . " No Urut: " . $no_urut, "success", $user->data->id, $ptk->id_ptk, base_url('situgu/ptk/us/tpg/skterbit')
-                        // ];
-
-                        // try {
-                        //     $notifLib = new NotificationLib();
-                        //     $notifLib->create("Pembaharuan No Rekening", "No Rekening Anda " . $current->no_rekening . " telah diperbaharui ke no rekening $no_rekening_up, silahkan mengecek data pembaharuan.", "success", $user->data->id, $current->id, base_url('situgu/ptk/masterdata/dapodik'));
-                        //     $getChatIdName = getChatIdTelegramPTKName($current->id);
-                        //     if ($getChatIdName) {
-                        //         // $admin = $user->data;
-                        //         $tokenTele = "6504819187:AAEtykjIx2Gjd229nUgDHRlwJ5xGNTMjO0A";
-                        //         $message = "Hallo <b>$getChatIdName->nama ($getChatIdName->nuptk)</b>....!!!\n______________________________________________________\n\n<b>UPDATA DATA PEMBAHARUAN</b> pada <b>SI-TUGU</b> dengan No Rekening : \n<b>$current->no_rekening</b>\ntelah diperbaharui ke no rekening $no_rekening_up, silahkan mengecek data pembaharuan.\n\n\nPesan otomatis dari <b>SI-TUGU Kab. Lampung Tengah</b>\n_________________________________________________";
-                        //         try {
-
-                        //             $dataReq = [
-                        //                 'chat_id' => $getChatIdName->chat_id_telegram,
-                        //                 "parse_mode" => "HTML",
-                        //                 'text' => $message,
-                        //             ];
-
-                        //             $ch = curl_init("https://api.telegram.org/bot$tokenTele/sendMessage");
-                        //             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-                        //             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($dataReq));
-                        //             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                        //             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                        //                 'Content-Type: application/json'
-                        //             ));
-                        //             curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-                        //             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 20);
-
-                        //             $server_output = curl_exec($ch);
-                        //             curl_close($ch);
-
-                        //             // var_dump($server_output);
-                        //         } catch (\Throwable $th) {
-                        //             // var_dump($th);
-                        //         }
-                        //     }
-                        // } catch (\Throwable $th) {
-                        //     //throw $th;
-                        // }
                         $response = new \stdClass;
                         $response->status = 200;
                         $response->message = "Data berhasil disimpan.";

@@ -263,16 +263,16 @@
             let sendToServer = function(lines, index) {
                 if (index > lines.length - 1) {
                     ambilId("progressBar").style.display = "none";
-                    ambilId("status").innerHTML = "Proses Matching Berhasil.";
+                    ambilId("status").innerHTML = "Proses Update Pangkat KGB PTK Berhasil.";
                     ambilId("status").style.color = "green";
                     ambilId("progressBar").value = 0;
 
                     Swal.fire(
                         'SELAMAT!',
-                        "Proses Matching Data Berhasil.",
+                        "Proses Update Pangkat KGB PTK Berhasil.",
                         'success'
                     ).then((valRes) => {
-                        document.location.href = "<?= base_url('situgu/su/masterdata/ptk'); ?>";
+                        document.location.href = "<?= base_url('situgu/opk/masterdata/ptk'); ?>";
                     })
                     return; // guard condition
                 }
@@ -300,10 +300,10 @@
 
                                 Swal.fire(
                                     'SELAMAT!',
-                                    "Proses Matching Data Berhasil.",
+                                    "Proses Update Pangkat KGB PTK Data Berhasil.",
                                     'success'
                                 ).then((valRes) => {
-                                    document.location.href = "<?= base_url('situgu/su/masterdata/ptk'); ?>";
+                                    document.location.href = "<?= base_url('situgu/opk/masterdata/ptk'); ?>";
                                 })
                             }
                         } else {
@@ -319,10 +319,10 @@
 
                                 Swal.fire(
                                     'SELAMAT!',
-                                    "Proses Matching Data Berhasil.",
+                                    "Proses Update Pangkat KGB PTK Berhasil.",
                                     'success'
                                 ).then((valRes) => {
-                                    document.location.href = "<?= base_url('situgu/su/masterdata/ptk'); ?>";
+                                    document.location.href = "<?= base_url('situgu/opk/masterdata/ptk'); ?>";
                                 })
                             }
                         }
