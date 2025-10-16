@@ -705,7 +705,7 @@ class Pangkatkgb extends BaseController
                 $this->_db->transBegin();
 
                 if ($status == "table-success") {
-                    $this->_db->table('_ptk_tb')->where('id', $current->id)->update(
+                    $this->_db->table('_ptk_tb')->where('id', $current->id_ptk)->update(
                         $dataUpdate
                     );
                     if ($this->_db->affectedRows() > 0) {
