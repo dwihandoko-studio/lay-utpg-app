@@ -315,6 +315,7 @@ class Pangkatkgb extends BaseController
             // $x['import'] = $dataImports;
 
             $data = [
+                'user_id' => $this->dt->where('user_id', $userId);,
                 'jumlah' => $total_line,
                 'created_at' => date('Y-m-d H:i:s')
             ];
