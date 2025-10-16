@@ -816,7 +816,7 @@ class Pangkatkgb extends BaseController
                 return json_encode($response);
             }
 
-            $current = $this->_db->table('tb_ptk_rekening')
+            $current = $this->_db->table('tb_ptk_upload_pangkat_kgb')
                 ->where('id', $id)
                 ->get()->getRowObject();
 
@@ -824,7 +824,7 @@ class Pangkatkgb extends BaseController
 
                 $this->_db->transBegin();
                 try {
-                    $this->_db->table('tb_ptk_rekening')->where('id', $current->id)->delete();
+                    $this->_db->table('tb_ptk_upload_pangkat_kgb')->where('id', $current->id)->delete();
                 } catch (\Throwable $th) {
                     $this->_db->transRollback();
                     $response = new \stdClass;
@@ -838,8 +838,8 @@ class Pangkatkgb extends BaseController
                     $this->_db->transCommit();
                     try {
                         $file = $current->filename;
-                        unlink(FCPATH . "upload/ptk-rekening/$file.json");
-                        unlink(FCPATH . "upload/ptk-rekening/$file");
+                        unlink(FCPATH . "upload/ptk-pangkat-kgb/$file.json");
+                        unlink(FCPATH . "upload/ptk-pangkat-kgb/$file");
                     } catch (\Throwable $th) {
                         //throw $th;
                     }
