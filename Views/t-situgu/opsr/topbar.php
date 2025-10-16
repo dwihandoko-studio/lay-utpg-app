@@ -80,6 +80,17 @@
 
                             </div>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "opsr" && $uri->getSegment(3) == "upload") ? ' active-menu-href' : '' ?>" href="javascript:;" id="topnav-upload" role="button">
+                                <i class="bx bx-cloud-upload me-2"></i>
+                                <span key="t-upload"> UPLOAD</span>
+                                <div class="arrow-down"></div>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="topnav-upload">
+                                <a href="<?= base_url('situgu/opsr/upload/ptk/pangkatkgb') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opsr" && $uri->getSegment(3) == "upload" && $uri->getSegment(4) == "ptk"  && $uri->getSegment(5) == "pangkatkgb") ? ' active-menu-href' : '' ?>" key="t-upload-ptk-pangkatkgb">Pangkat KGB</a>
+                            </div>
+                        </li>
                         <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "opsr" && $uri->getSegment(3) == "spj") ? ' active-menu-href' : '' ?>" href="javascript:;" id="topnav-spj" role="button">
                                 <i class="bx bx-task me-2"></i>
