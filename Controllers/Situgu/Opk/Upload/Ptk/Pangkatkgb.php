@@ -307,11 +307,11 @@ class Pangkatkgb extends BaseController
 
                 $dataInsert['data_ptk'] = $this->_db->table('_ptk_tb a')
                     ->select("a.id_ptk, a.nuptk, a.nip, a.nama, a.pangkat_golongan, a.nomor_sk_pangkat, a.tgl_sk_pangkat, a.tmt_pangkat, a.masa_kerja_tahun, a.masa_kerja_bulan, a.pangkat_golongan_kgb, a.sk_kgb, a.tgl_sk_kgb, a.tmt_sk_kgb, a.masa_kerja_tahun_kgb, a.masa_kerja_bulan_kgb, a.jam_mengajar_perminggu, a.mengajar_lain_satmikal")
-                    ->where('a.nuptk', str_replace("'", "", $data[1]))
+                    ->where('a.nuptk', str_replace("'", "", $data[2]))
                     ->get()->getRowObject();
 
                 $dataImport[] = $dataInsert;
-                $nuptkImport[] = str_replace("'", "", $data[1]);
+                $nuptkImport[] = str_replace("'", "", $data[2]);
             }
 
             $dataImports = [
