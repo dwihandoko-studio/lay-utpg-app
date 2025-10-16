@@ -3,7 +3,7 @@
 namespace App\Controllers\Situgu\Opk\Upload\Ptk;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Opk\Ptk\Upload\RekeningModel;
+use App\Models\Situgu\Opk\Ptk\Upload\PangkatkgbModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -32,84 +32,84 @@ class Pangkatkgb extends BaseController
         $this->_helpLib = new Helplib();
     }
 
-    // public function getAll()
-    // {
-    //     $request = Services::request();
-    //     $datamodel = new RekeningModel($request);
+    public function getAll()
+    {
+        $request = Services::request();
+        $datamodel = new PangkatkgbModel($request);
 
-    //     $jwt = get_cookie('jwt');
-    //     $token_jwt = getenv('token_jwt.default.key');
-    //     if ($jwt) {
-    //         try {
-    //             $decoded = JWT::decode($jwt, new Key($token_jwt, 'HS256'));
-    //             if ($decoded) {
-    //                 $userId = $decoded->id;
-    //                 $level = $decoded->level;
-    //             } else {
-    //                 $output = [
-    //                     "draw" => $request->getPost('draw'),
-    //                     "recordsTotal" => 0,
-    //                     "recordsFiltered" => 0,
-    //                     "data" => []
-    //                 ];
-    //                 echo json_encode($output);
-    //                 return;
-    //             }
-    //         } catch (\Exception $e) {
-    //             $output = [
-    //                 "draw" => $request->getPost('draw'),
-    //                 "recordsTotal" => 0,
-    //                 "recordsFiltered" => 0,
-    //                 "data" => []
-    //             ];
-    //             echo json_encode($output);
-    //             return;
-    //         }
-    //     }
+        $jwt = get_cookie('jwt');
+        $token_jwt = getenv('token_jwt.default.key');
+        if ($jwt) {
+            try {
+                $decoded = JWT::decode($jwt, new Key($token_jwt, 'HS256'));
+                if ($decoded) {
+                    $userId = $decoded->id;
+                    $level = $decoded->level;
+                } else {
+                    $output = [
+                        "draw" => $request->getPost('draw'),
+                        "recordsTotal" => 0,
+                        "recordsFiltered" => 0,
+                        "data" => []
+                    ];
+                    echo json_encode($output);
+                    return;
+                }
+            } catch (\Exception $e) {
+                $output = [
+                    "draw" => $request->getPost('draw'),
+                    "recordsTotal" => 0,
+                    "recordsFiltered" => 0,
+                    "data" => []
+                ];
+                echo json_encode($output);
+                return;
+            }
+        }
 
-    //     $lists = $datamodel->get_datatables();
-    //     $data = [];
-    //     $no = $request->getPost("start");
-    //     foreach ($lists as $list) {
-    //         $no++;
-    //         $row = [];
+        $lists = $datamodel->get_datatables();
+        $data = [];
+        $no = $request->getPost("start");
+        foreach ($lists as $list) {
+            $no++;
+            $row = [];
 
-    //         $row[] = $no;
-    //         $action = '<div class="btn-group">
-    //                     <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
-    //                     <div class="dropdown-menu" style="">
-    //                         <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . $list->filename . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
-    //                         <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . $list->filename . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Delete</a>
-    //                     </div>
-    //                 </div>';
-    //         // $action = '<a href="javascript:actionDetail(\'' . $list->id . '\', \'' . $list->filename . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-    //         //     <i class="bx bxs-show font-size-16 align-middle"></i> DETAIL</button>
-    //         //     </a>';
-    //         //     <a href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-    //         //     <i class="bx bx-transfer-alt font-size-16 align-middle"></i></button>
-    //         //     </a>
-    //         //     <a href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk . '\');" class="delete" id="delete"><button type="button" class="btn btn-danger btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-    //         //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
-    //         //     </a>';
-    //         $row[] = $action;
-    //         // $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
-    //         $row[] = $list->filename;
-    //         $row[] = $list->jumlah;
-    //         $row[] = $list->lolos;
-    //         $row[] = $list->gagal;
-    //         $row[] = $list->done;
-    //         $row[] = $list->created_at;
+            $row[] = $no;
+            $action = '<div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
+                        <div class="dropdown-menu" style="">
+                            <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . $list->filename . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
+                            <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . $list->filename . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Delete</a>
+                        </div>
+                    </div>';
+            // $action = '<a href="javascript:actionDetail(\'' . $list->id . '\', \'' . $list->filename . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            //     <i class="bx bxs-show font-size-16 align-middle"></i> DETAIL</button>
+            //     </a>';
+            //     <a href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            //     <i class="bx bx-transfer-alt font-size-16 align-middle"></i></button>
+            //     </a>
+            //     <a href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk . '\');" class="delete" id="delete"><button type="button" class="btn btn-danger btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
+            //     </a>';
+            $row[] = $action;
+            // $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
+            $row[] = $list->filename;
+            $row[] = $list->jumlah;
+            $row[] = $list->lolos;
+            $row[] = $list->gagal;
+            $row[] = $list->done;
+            $row[] = $list->created_at;
 
-    //         $data[] = $row;
-    //     }
-    //     $output = [
-    //         "draw" => $request->getPost('draw'),
-    //         "recordsTotal" => $datamodel->count_all(),
-    //         "recordsFiltered" => $datamodel->count_filtered(),
-    //         "data" => $data
-    //     ];
-    //     echo json_encode($output);
-    // }
+            $data[] = $row;
+        }
+        $output = [
+            "draw" => $request->getPost('draw'),
+            "recordsTotal" => $datamodel->count_all(),
+            "recordsFiltered" => $datamodel->count_filtered(),
+            "data" => $data
+        ];
+        echo json_encode($output);
+    }
 
     public function index()
     {
