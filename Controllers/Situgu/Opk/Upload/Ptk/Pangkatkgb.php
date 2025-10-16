@@ -282,8 +282,12 @@ class Pangkatkgb extends BaseController
                     continue;
                 }
 
+                $nuptk = str_replace("'", "", $data[2]);
+                $nuptk = trim($nuptk);
+                $nuptk = preg_replace('/[^0-9]/', '', $nuptk);
+
                 $dataInsert = [
-                    'nuptk' => str_replace("'", "", $data[2]),
+                    'nuptk' => $nuptk,
                     'nama' => $data[1],
                     'nik' => $data[3],
                     'npsn' => $data[4],
@@ -307,11 +311,11 @@ class Pangkatkgb extends BaseController
 
                 $dataInsert['data_ptk'] = $this->_db->table('_ptk_tb a')
                     ->select("a.id_ptk, a.nuptk, a.nip, a.nama, a.pangkat_golongan, a.nomor_sk_pangkat, a.tgl_sk_pangkat, a.tmt_pangkat, a.masa_kerja_tahun, a.masa_kerja_bulan, a.pangkat_golongan_kgb, a.sk_kgb, a.tgl_sk_kgb, a.tmt_sk_kgb, a.masa_kerja_tahun_kgb, a.masa_kerja_bulan_kgb, a.jam_mengajar_perminggu, a.mengajar_lain_satmikal")
-                    ->where('a.nuptk', str_replace("'", "", $data[2]))
+                    ->where('a.nuptk', $nuptk)
                     ->get()->getRowObject();
 
                 $dataImport[] = $dataInsert;
-                $nuptkImport[] = str_replace("'", "", $data[2]);
+                $nuptkImport[] = $nuptk;
             }
 
             $dataImports = [
