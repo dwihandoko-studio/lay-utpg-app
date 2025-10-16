@@ -28,7 +28,7 @@ class SettinguaccessploadpangkatkgbModel extends Model
         $select = "a.*, b.fullname, b.email, b.no_hp, b.npsn, b.role_user, c.role as role_name";
 
         $this->dt->select($select);
-        $this->dt->join('_profil_users_tb b', 'a.id = b.id', 'LEFT');
+        $this->dt->join('_profil_users_tb b', 'a.user_id = b.id', 'LEFT');
         $this->dt->join('_role_user c', 'b.role_user = c.id', 'LEFT');
 
         $i = 0;
