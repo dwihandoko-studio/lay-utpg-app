@@ -440,7 +440,7 @@ class Pangkatkgb extends BaseController
                     $item['masa_kerja_tahun_kgb_up'] = $v['masa_kerja_tahun_kgb'];
                     $item['masa_kerja_bulan_kgb_up'] = $v['masa_kerja_bulan_kgb'];
                     $item['jam_mengajar_perminggu_up'] = $v['jam_mengajar_perminggu'];
-                    $item['mengajar_lain_satmikal_up'] = $v['mengajar_lain_satmikal'];
+                    $item['mengajar_lain_satmikal_up'] = $v['npsn_noninduk'];
                     $item['nama'] = "";
                     $item['nuptk'] = "";
                     $item['pangkat_golongan'] = "";
