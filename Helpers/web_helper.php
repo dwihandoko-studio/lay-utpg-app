@@ -1328,6 +1328,19 @@ function canGrantedAjuanPengecualian($idPtk)
 	return $response;
 }
 
+function grantUploadPangkat($userId)
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	$grandted = $db->table('granted_upload_pangkatkgb')->where('user_id', $userId)->get()->getRowObject();
+	if (!$grandted) {
+		return false;
+	}
+
+	return true;
+}
+
 function canGrantedUploadSpj($idPtk)
 {
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
