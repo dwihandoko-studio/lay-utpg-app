@@ -272,23 +272,37 @@ class Pangkatkgb extends BaseController
             unset($sheet[0]);
             unset($sheet[1]);
             unset($sheet[2]);
-            unset($sheet[3]);
+            // unset($sheet[3]);
             // unset($sheet[4]);
 
             foreach ($sheet as $key => $data) {
 
-                if ($data[1] == "" || strlen($data[1]) < 5) {
+                if ($data[2] == "" || strlen($data[1]) < 16) {
                     // if($data[1] == "") {
                     continue;
                 }
 
                 $dataInsert = [
-                    'nuptk' => str_replace("'", "", $data[1]),
-                    'nama' => $data[2],
-                    'status' => $data[3],
-                    'nip' => $data[6],
-                    'no_rekening' => $data[8],
-                    'cabang_bank' => $data[9],
+                    'nuptk' => str_replace("'", "", $data[2]),
+                    'nama' => $data[1],
+                    'nik' => $data[3],
+                    'npsn' => $data[4],
+                    'jam_mengajar_perminggu' => $data[5],
+                    'npsn_noninduk' => $data[6],
+                    'jam_mengajar_perminggu_noninduk' => $data[7],
+                    'jam_mengajar_perminggu_noninduk' => $data[7],
+                    'nomor_sk_pangkat' => $data[8],
+                    'pangkat_golongan' => $data[9],
+                    'tgl_sk_pangkat' => $data[10],
+                    'tmt_pangkat' => $data[11],
+                    'masa_kerja_tahun' => $data[12],
+                    'masa_kerja_bulan' => $data[13],
+                    'sk_kgb' => $data[14],
+                    'pangkat_golongan_kgb' => $data[15],
+                    'tgl_sk_kgb' => $data[16],
+                    'tmt_sk_kgb' => $data[17],
+                    'masa_kerja_tahun_kgb' => $data[18],
+                    'masa_kerja_bulan_kgb' => $data[19],
                 ];
 
                 $dataInsert['data_ptk'] = $this->_db->table('_ptk_tb a')
