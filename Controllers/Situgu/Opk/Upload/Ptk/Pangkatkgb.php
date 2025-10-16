@@ -830,7 +830,7 @@ class Pangkatkgb extends BaseController
                     $response = new \stdClass;
                     $response->status = 400;
                     $response->error = var_dump($th);
-                    $response->message = "Data ptk rekening gagal dihapus.";
+                    $response->message = "Data Upload Pangkat KGB gagal dihapus.";
                     return json_encode($response);
                 }
 
@@ -845,13 +845,13 @@ class Pangkatkgb extends BaseController
                     }
                     $response = new \stdClass;
                     $response->status = 200;
-                    $response->message = "Data rekening ptk berhasil dihapus.";
+                    $response->message = "Data Upload Pangkat KGB berhasil dihapus.";
                     return json_encode($response);
                 } else {
                     $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
-                    $response->message = "Data rekening ptk gagal dihapus.";
+                    $response->message = "Data Upload Pangkat KGB gagal dihapus.";
                     return json_encode($response);
                 }
             } else {
