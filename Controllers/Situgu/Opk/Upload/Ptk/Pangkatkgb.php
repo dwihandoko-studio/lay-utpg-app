@@ -277,7 +277,7 @@ class Pangkatkgb extends BaseController
 
             foreach ($sheet as $key => $data) {
 
-                if ($data[2] == "" || strlen($data[1]) < 16) {
+                if ($data[2] == "" || strlen($data[2]) < 16) {
                     // if($data[1] == "") {
                     continue;
                 }
