@@ -40,7 +40,7 @@
                                     <th colspan="2" data-orderable="false">
                                         <div class="text-center">Tahun TW</div>
                                     </th>
-                                    <th colspan="5" data-orderable="false">
+                                    <th colspan="6" data-orderable="false">
                                         <div class="text-center">Riwayat Kepegawaian</div>
                                     </th>
                                     <th colspan="9" data-orderable="false">
