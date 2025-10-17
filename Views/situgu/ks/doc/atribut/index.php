@@ -40,10 +40,10 @@
                                     <th colspan="2" data-orderable="false">
                                         <div class="text-center">Tahun TW</div>
                                     </th>
-                                    <th colspan="6" data-orderable="false">
+                                    <th colspan="5" data-orderable="false">
                                         <div class="text-center">Riwayat Kepegawaian</div>
                                     </th>
-                                    <th colspan="8" data-orderable="false">
+                                    <th colspan="9" data-orderable="false">
                                         <div class="text-center">Dokumen Atribut</div>
                                     </th>
                                     <th rowspan="3">Status</th>

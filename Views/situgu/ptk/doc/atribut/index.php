@@ -40,10 +40,10 @@
                                     <th colspan="2" data-orderable="false">
                                         <div class="text-center">Tahun TW</div>
                                     </th>
-                                    <th colspan="6" data-orderable="false">
+                                    <th colspan="5" data-orderable="false">
                                         <div class="text-center">Riwayat Kepegawaian</div>
                                     </th>
-                                    <th colspan="7" data-orderable="false">
+                                    <th colspan="9" data-orderable="false">
                                         <div class="text-center">Dokumen Atribut</div>
                                     </th>
                                     <th rowspan="3">Status</th>
@@ -64,6 +64,7 @@
                                     <th rowspan="2">Pensiun</th>
                                     <th rowspan="2">Kematian</th>
                                     <th rowspan="2">Lainnya</th>
+                                    <th rowspan="2">Pembaharuan Doc</th>
                                 </tr>
                                 <tr>
                                     <th>Tahun</th>
