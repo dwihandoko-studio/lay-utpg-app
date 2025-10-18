@@ -10,7 +10,7 @@
                 <label class="col-form-label">NIK:</label>
                 <div class="input-group">
                     <input type="text" class="form-control" aria-describedby="nik" aria-label="NIK" value="<?= $data->nik ?>" readonly />
-                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/ktp') . '/' . $data->lampiran_ktp ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/ktp') . '/' . $data->lampiran_ktp ?>" id="nik">Lampiran KTP</a>
+                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= strpos($data->lampiran_ktp, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_ktp) : base_url('upload/ptk/ktp') . '/' . $data->lampiran_ktp ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_ktp, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_ktp) : base_url('upload/ptk/ktp') . '/' . $data->lampiran_ktp ?>" id="nik">Lampiran KTP</a>
                 </div>
                 <!-- <input type="text" class="form-control" value="<?= $data->nik ?>" readonly /> -->
             </div>
@@ -18,7 +18,7 @@
                 <label class="col-form-label">NUPTK:</label>
                 <div class="input-group">
                     <input type="text" class="form-control" aria-describedby="nuptk" aria-label="NUPTK" value="<?= $data->nuptk ?>" readonly />
-                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/nuptk') . '/' . $data->lampiran_nuptk ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/nuptk') . '/' . $data->lampiran_nuptk ?>" id="nik">Lampiran NUPTK</a>
+                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= strpos($data->lampiran_nuptk, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_nuptk) : base_url('upload/ptk/nuptk') . '/' . $data->lampiran_nuptk ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_nuptk, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_nuptk) : base_url('upload/ptk/nuptk') . '/' . $data->lampiran_nuptk ?>" id="nik">Lampiran NUPTK</a>
                 </div>
                 <!-- <input type="text" class="form-control" value="<?= $data->nuptk ?>" readonly /> -->
             </div>
@@ -26,7 +26,7 @@
                 <label class="col-form-label">NIP:</label>
                 <div class="input-group">
                     <input type="text" class="form-control" aria-describedby="nip" aria-label="NIP" value="<?= $data->nip ?>" readonly />
-                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/karpeg') . '/' . $data->lampiran_karpeg ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/karpeg') . '/' . $data->lampiran_karpeg ?>" id="nik">Lampiran Karpeg</a>
+                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= strpos($data->lampiran_karpeg, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_karpeg) : base_url('upload/ptk/karpeg') . '/' . $data->lampiran_karpeg ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_karpeg, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_karpeg) : base_url('upload/ptk/karpeg') . '/' . $data->lampiran_karpeg ?>" id="nik">Lampiran Karpeg</a>
                 </div>
                 <!-- <input type="text" class="form-control" value="<?= $data->nip ?>" readonly /> -->
             </div>
@@ -34,7 +34,7 @@
                 <label class="col-form-label">NRG:</label>
                 <div class="input-group">
                     <input type="text" class="form-control" aria-describedby="nrg" aria-label="NRG" value="<?= $data->nrg ?>" readonly />
-                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/nrg') . '/' . $data->lampiran_nrg ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/nrg') . '/' . $data->lampiran_nrg ?>" id="nik">Lampiran NRG</a>
+                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= strpos($data->lampiran_nrg, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_nrg) : base_url('upload/ptk/nrg') . '/' . $data->lampiran_nrg ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_nrg, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_nrg) : base_url('upload/ptk/nrg') . '/' . $data->lampiran_nrg ?>" id="nik">Lampiran NRG</a>
                 </div>
                 <!-- <input type="text" class="form-control" value="<?= $data->nrg ?>" readonly /> -->
             </div>
@@ -42,7 +42,7 @@
                 <label class="col-form-label">No Peserta:</label>
                 <div class="input-group">
                     <input type="text" class="form-control" aria-describedby="no_peserta" aria-label="No Peserta" value="<?= $data->no_peserta ?>" readonly />
-                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/serdik') . '/' . $data->lampiran_serdik ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/serdik') . '/' . $data->lampiran_serdik ?>" id="no_peserta">Lampiran Serdik</a>
+                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= strpos($data->lampiran_serdik, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_serdik) : base_url('upload/ptk/serdik') . '/' . $data->lampiran_serdik ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_serdik, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_serdik) : base_url('upload/ptk/serdik') . '/' . $data->lampiran_serdik ?>" id="no_peserta">Lampiran Serdik</a>
                 </div>
                 <!-- <input type="text" class="form-control" value="<?= $data->no_peserta ?>" readonly /> -->
             </div>
@@ -50,7 +50,7 @@
                 <label class="col-form-label">NPWP:</label>
                 <div class="input-group">
                     <input type="text" class="form-control" aria-describedby="npwp" aria-label="NPWP" value="<?= $data->npwp ?>" readonly />
-                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/npwp') . '/' . $data->lampiran_npwp ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/npwp') . '/' . $data->lampiran_npwp ?>" id="nik">Lampiran NPWP</a>
+                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= strpos($data->lampiran_npwp, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_npwp) : base_url('upload/ptk/npwp') . '/' . $data->lampiran_npwp ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_npwp, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_npwp) : base_url('upload/ptk/npwp') . '/' . $data->lampiran_npwp ?>" id="nik">Lampiran NPWP</a>
                 </div>
                 <!-- <input type="text" class="form-control" value="<?= $data->npwp ?>" readonly /> -->
             </div>
@@ -58,7 +58,7 @@
                 <label class="col-form-label">No Rekening:</label>
                 <div class="input-group">
                     <input type="text" class="form-control" aria-describedby="no_rekening" aria-label="NO REKENING" value="<?= $data->no_rekening ?>" readonly />
-                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/bukurekening') . '/' . $data->lampiran_buku_rekening ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/bukurekening') . '/' . $data->lampiran_buku_rekening ?>" id="nik">Lampiran Rekening</a>
+                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= strpos($data->lampiran_buku_rekening, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_buku_rekening) : base_url('upload/ptk/bukurekening') . '/' . $data->lampiran_buku_rekening ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_buku_rekening, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_buku_rekening) : base_url('upload/ptk/bukurekening') . '/' . $data->lampiran_buku_rekening ?>" id="nik">Lampiran Rekening</a>
                 </div>
                 <!-- <input type="text" class="form-control" value="<?= $data->no_rekening ?>" readonly /> -->
             </div>
@@ -70,7 +70,7 @@
                 <label class="col-form-label">Pendidikan Terakhir:</label>
                 <div class="input-group">
                     <input type="text" class="form-control" aria-describedby="pendidikan_terakhir" aria-label="PENDIDIKAN TERAKHIR" value="<?= $data->pendidikan ?>" readonly />
-                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/ijazah') . '/' . $data->lampiran_ijazah ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/ijazah') . '/' . $data->lampiran_ijazah ?>" id="nik">Lampiran Ijazah</a>
+                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= strpos($data->lampiran_ijazah, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_ijazah) : base_url('upload/ptk/ijazah') . '/' . $data->lampiran_ijazah ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_ijazah, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_ijazah) : base_url('upload/ptk/ijazah') . '/' . $data->lampiran_ijazah ?>" id="nik">Lampiran Ijazah</a>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -279,21 +279,21 @@
                         <label class="col-form-label">Absen 1:</label>
                         <div class="input-group">
                             <input type="text" class="form-control" aria-describedby="absen_1" aria-label="ABSEN 1" value="<?= $data->bulan_1 ?> Hari" readonly />
-                            <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/sekolah/kehadiran') . '/' . $data->lampiran_absen1 ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/kehadiran') . '/' . $data->lampiran_absen1 ?>" id="nik">Lampiran Absen 1</a>
+                            <a class="btn btn-primary" target="popup" onclick="window.open('<?= strpos($data->lampiran_absen1, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_absen1) : base_url('upload/sekolah/kehadiran') . '/' . $data->lampiran_absen1 ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_absen1, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_absen1) : base_url('upload/sekolah/kehadiran') . '/' . $data->lampiran_absen1 ?>" id="nik">Lampiran Absen 1</a>
                         </div>
                     </div>
                     <div class="col-sm-12">
                         <label class="col-form-label">Absen 2:</label>
                         <div class="input-group">
                             <input type="text" class="form-control" aria-describedby="absen_2" aria-label="ABSEN 2" value="<?= $data->bulan_2 ?> Hari" readonly />
-                            <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/sekolah/kehadiran') . '/' . $data->lampiran_absen2 ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/kehadiran') . '/' . $data->lampiran_absen2 ?>" id="nik">Lampiran Absen 2</a>
+                            <a class="btn btn-primary" target="popup" onclick="window.open('<?= strpos($data->lampiran_absen2, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_absen2) : base_url('upload/sekolah/kehadiran') . '/' . $data->lampiran_absen2 ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_absen2, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_absen2) : base_url('upload/sekolah/kehadiran') . '/' . $data->lampiran_absen2 ?>" id="nik">Lampiran Absen 2</a>
                         </div>
                     </div>
                     <div class="col-sm-12">
                         <label class="col-form-label">Absen 3:</label>
                         <div class="input-group">
                             <input type="text" class="form-control" aria-describedby="absen_3" aria-label="ABSEN 3" value="<?= $data->bulan_3 ?> Hari" readonly />
-                            <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/sekolah/kehadiran') . '/' . $data->lampiran_absen3 ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/kehadiran') . '/' . $data->lampiran_absen3 ?>" id="nik">Lampiran Absen 3</a>
+                            <a class="btn btn-primary" target="popup" onclick="window.open('<?= strpos($data->lampiran_absen3, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_absen3) : base_url('upload/sekolah/kehadiran') . '/' . $data->lampiran_absen3 ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_absen3, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_absen3) : base_url('upload/sekolah/kehadiran') . '/' . $data->lampiran_absen3 ?>" id="nik">Lampiran Absen 3</a>
                         </div>
                     </div>
                 </div>
@@ -306,10 +306,10 @@
                         <div class="input-group">
                             <input type="text" class="form-control" aria-describedby="pangkat_golongan" aria-label="PANGKAT GOLONGAN" value="<?= $data->us_pang_golongan ?>" readonly />
                             <?php if ($data->lampiran_pangkat !== NULL) { ?>
-                                <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/pangkat') . '/' . $data->lampiran_pangkat ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/pangkat') . '/' . $data->lampiran_pangkat ?>" id="nik">Lampiran Pangkat</a>
+                                <a class="btn btn-primary" target="popup" onclick="window.open('<?= strpos($data->lampiran_pangkat, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_pangkat) : base_url('upload/ptk/pangkat') . '/' . $data->lampiran_pangkat ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_pangkat, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_pangkat) : base_url('upload/ptk/pangkat') . '/' . $data->lampiran_pangkat ?>" id="nik">Lampiran Pangkat</a>
                             <?php } ?>
                             <?php if ($data->lampiran_kgb !== NULL) { ?>
-                                <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/kgb') . '/' . $data->lampiran_kgb ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/kgb') . '/' . $data->lampiran_kgb ?>" id="nik">Lampiran KGB</a>
+                                <a class="btn btn-primary" target="popup" onclick="window.open('<?= strpos($data->lampiran_kgb, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_kgb) : base_url('upload/ptk/kgb') . '/' . $data->lampiran_kgb ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_kgb, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_kgb) : base_url('upload/ptk/kgb') . '/' . $data->lampiran_kgb ?>" id="nik">Lampiran KGB</a>
                             <?php } ?>
                         </div>
                     </div>
@@ -342,51 +342,51 @@
             <div class="col-lg-12 mt-2">
                 <label class="col-form-label">Lampiran Dokumen:</label>
                 <br />
-                <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/sekolah/pembagian-tugas') . '/' . $data->lampiran_pembagian_tugas ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/pembagian-tugas') . '/' . $data->lampiran_pembagian_tugas ?>" id="nik">
+                <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= strpos($data->lampiran_pembagian_tugas, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_pembagian_tugas) : base_url('upload/sekolah/pembagian-tugas') . '/' . $data->lampiran_pembagian_tugas ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_pembagian_tugas, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_pembagian_tugas) : base_url('upload/sekolah/pembagian-tugas') . '/' . $data->lampiran_pembagian_tugas ?>" id="nik">
                     Pembagian Tugas
                 </a>
-                <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/sekolah/slip-gaji') . '/' . $data->lampiran_slip_gaji ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/slip-gaji') . '/' . $data->lampiran_slip_gaji ?>" id="nik">
+                <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= strpos($data->lampiran_slip_gaji, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_slip_gaji) : base_url('upload/sekolah/slip-gaji') . '/' . $data->lampiran_slip_gaji ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_slip_gaji, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_slip_gaji) : base_url('upload/sekolah/slip-gaji') . '/' . $data->lampiran_slip_gaji ?>" id="nik">
                     Slip Gaji
                 </a>
-                <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/ptk/pernyataanindividu') . '/' . $data->lampiran_pernyataan ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/pernyataanindividu') . '/' . $data->lampiran_pernyataan ?>" id="nik">
+                <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= strpos($data->lampiran_pernyataan, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_pernyataan) : base_url('upload/ptk/pernyataanindividu') . '/' . $data->lampiran_pernyataan ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_pernyataan, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_pernyataan) : base_url('upload/ptk/pernyataanindividu') . '/' . $data->lampiran_pernyataan ?>" id="nik">
                     Pernyataan 24 Jam
                 </a>
-                <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/sekolah/sptjm') . '/' . $data->lampiran_sptjm ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/sptjm') . '/' . $data->lampiran_sptjm ?>" id="nik">
+                <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= strpos($data->lampiran_sptjm, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_sptjm) : base_url('upload/sekolah/sptjm') . '/' . $data->lampiran_sptjm ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_sptjm, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_sptjm) : base_url('upload/sekolah/sptjm') . '/' . $data->lampiran_sptjm ?>" id="nik">
                     SPTJM USULAN
                 </a>
                 <?php if ($data->lampiran_impassing === null || $data->lampiran_impassing === "") {
                 } else { ?>
-                    <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/ptk/impassing') . '/' . $data->lampiran_impassing ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/impassing') . '/' . $data->lampiran_impassing ?>" id="nik">
+                    <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= strpos($data->lampiran_impassing, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_impassing) : base_url('upload/ptk/impassing') . '/' . $data->lampiran_impassing ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_impassing, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_impassing) : base_url('upload/ptk/impassing') . '/' . $data->lampiran_impassing ?>" id="nik">
                         Inpassing
                     </a>
                 <?php } ?>
                 <?php if ($data->lampiran_cuti === null || $data->lampiran_cuti === "") {
                 } else { ?>
-                    <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/ptk/keterangancuti') . '/' . $data->lampiran_cuti ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/keterangancuti') . '/' . $data->lampiran_cuti ?>" id="nik">
+                    <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= strpos($data->lampiran_cuti, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_cuti) : base_url('upload/ptk/keterangancuti') . '/' . $data->lampiran_cuti ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_cuti, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_cuti) : base_url('upload/ptk/keterangancuti') . '/' . $data->lampiran_cuti ?>" id="nik">
                         Cuti
                     </a>
                 <?php } ?>
                 <?php if ($data->lampiran_pensiun === null || $data->lampiran_pensiun === "") {
                 } else { ?>
-                    <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/ptk/pensiun') . '/' . $data->lampiran_pensiun ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/pensiun') . '/' . $data->lampiran_pensiun ?>" id="nik">
+                    <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= strpos($data->lampiran_pensiun, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_pensiun) : base_url('upload/ptk/pensiun') . '/' . $data->lampiran_pensiun ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_pensiun, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_pensiun) : base_url('upload/ptk/pensiun') . '/' . $data->lampiran_pensiun ?>" id="nik">
                         Pensiun
                     </a>
                 <?php } ?>
                 <?php if ($data->lampiran_kematian === null || $data->lampiran_kematian === "") {
                 } else { ?>
-                    <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/ptk/kematian') . '/' . $data->lampiran_kematian ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/kematian') . '/' . $data->lampiran_kematian ?>" id="nik">
+                    <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= strpos($data->lampiran_kematian, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_kematian) : base_url('upload/ptk/kematian') . '/' . $data->lampiran_kematian ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_kematian, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_kematian) : base_url('upload/ptk/kematian') . '/' . $data->lampiran_kematian ?>" id="nik">
                         Kematian
                     </a>
                 <?php } ?>
                 <?php if ($data->lampiran_attr_lainnya === null || $data->lampiran_attr_lainnya === "") {
                 } else { ?>
-                    <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/ptk/lainnya') . '/' . $data->lampiran_attr_lainnya ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/lainnya') . '/' . $data->lampiran_attr_lainnya ?>" id="nik">
+                    <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= strpos($data->lampiran_attr_lainnya, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_attr_lainnya) : base_url('upload/ptk/lainnya') . '/' . $data->lampiran_attr_lainnya ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_attr_lainnya, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_attr_lainnya) : base_url('upload/ptk/lainnya') . '/' . $data->lampiran_attr_lainnya ?>" id="nik">
                         Atribut Lainnya
                     </a>
                 <?php } ?>
                 <?php if ($data->lampiran_absen_lainnya === null || $data->lampiran_absen_lainnya === "") {
                 } else { ?>
-                    <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/sekolah/doc-lainnya') . '/' . $data->lampiran_absen_lainnya ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/doc-lainnya') . '/' . $data->lampiran_absen_lainnya ?>" id="nik">
+                    <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= strpos($data->lampiran_absen_lainnya, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_absen_lainnya) : base_url('upload/sekolah/doc-lainnya') . '/' . $data->lampiran_absen_lainnya ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_absen_lainnya, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_absen_lainnya) : base_url('upload/sekolah/doc-lainnya') . '/' . $data->lampiran_absen_lainnya ?>" id="nik">
                         Atribut Lainnya
                     </a>
                 <?php } ?>
