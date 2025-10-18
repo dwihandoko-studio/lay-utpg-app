@@ -428,4 +428,48 @@ class Ptkterhapus extends BaseController
             }
         }
     }
+
+    public function getSekolahMutasi()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'keyword' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Keyword tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('keyword');
+            return json_encode($response);
+        } else {
+            $keyword = htmlspecialchars($this->request->getVar('keyword'), true);
+
+            $current = $this->_db->table('ref_sekolah')->select("npsn, nama, bentuk_pendidikan, kecamatan")
+                ->where("npsn = '$keyword' OR nama LIKE '%$keyword%'")->get()->getResult();
+
+            if (count($current) > 0) {
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = $current;
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
 }
