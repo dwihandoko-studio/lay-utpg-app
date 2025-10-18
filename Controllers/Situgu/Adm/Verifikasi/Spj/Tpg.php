@@ -373,7 +373,11 @@ class Tpg extends BaseController
             $canUsulTamsil = canVerifikasiSpjTpg();
 
             if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
-                return json_encode($canUsulTamsil);
+                $canGrantedVerifikasi = canGrantedVerifikasiSpj($user->data->id);
+
+                if ($canGrantedVerifikasi && $canGrantedVerifikasi->code !== 200) {
+                    return json_encode($canUsulTamsil);
+                }
             }
 
             $id = htmlspecialchars($this->request->getVar('id'), true);

@@ -270,19 +270,19 @@
         })
     }
 
-    function actionHapus(id, ptkId, nama, nuptk, npsn) {
+    function actionMutasi(id, ptkId, nama, nuptk, npsn) {
         Swal.fire({
-            title: 'Apakah anda yakin ingin mengajukan hapus data ptk ini?',
-            text: "Hapus Data Untuk PTK : " + nama,
+            title: 'Apakah anda yakin ingin mengajukan mutasi data ptk ini?',
+            text: "Mutasi Data Untuk PTK : " + nama,
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Hapus Data!'
+            confirmButtonText: 'Ya, Mutasi Data!'
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "./formhapus",
+                    url: "./formmutasi",
                     type: 'POST',
                     data: {
                         id: id,
@@ -314,7 +314,7 @@
                                     'warning'
                                 );
                             } else {
-                                $('#content-tolakModalLabel').html('PENGHAPUSAN DATA PTK ' + nama);
+                                $('#content-tolakModalLabel').html('MUTASI DATA PTK ' + nama);
                                 $('.contentTolakBodyModal').html(resul.data);
                                 $('.content-tolakModal').modal({
                                     backdrop: 'static',
