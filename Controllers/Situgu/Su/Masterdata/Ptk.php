@@ -229,7 +229,7 @@ class Ptk extends BaseController
         }
     }
 
-    public function unlockAll()
+    public function unlockallptk()
     {
         if ($this->request->getMethod() != 'post') {
             $response = new \stdClass;
@@ -266,50 +266,63 @@ class Ptk extends BaseController
                 return json_encode($response);
             }
 
-            $current = $this->_db->table('_ptk_tb')
-                ->where(['id' => $id, 'id_ptk' => $ptk_id, 'npsn' => $npsn])->get()->getRowObject();
+            $currents = $this->_db->table('_ptk_tb')
+                ->select("id, nuptk, nama, is_locked")
+                ->where("is_locked = 1")->get()->getResult();
 
-            if ($current) {
-                if ((int)$current->is_locked == 0) {
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Status Unlock PTK sudah terbuka.";
-                    return json_encode($response);
+            $tw = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
+
+            if (!$tw) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Tidak ada tahun TW aktif.";
+                return json_encode($response);
+            }
+            if (count($currents) > 0) {
+                $total = count($currents);
+                $sukses = 0;
+                $gagal = 0;
+                foreach ($currents as $key => $ptk) {
+
+                    $canGrantedPengajuan = canGrantedPengajuan($ptk->id, $tw->id);
+
+                    if ($canGrantedPengajuan && $canGrantedPengajuan->code !== 200) {
+                        $gagal++;
+                        continue;
+                    }
+                    $this->_db->transBegin();
+                    try {
+                        $this->_db->table('_ptk_tb')->where(['id' => $ptk->id, 'is_locked' => 1])->update([
+                            'is_locked' => 0,
+                            'updated_at' => date('Y-m-d H:i:s')
+                        ]);
+                    } catch (\Exception $e) {
+                        $this->_db->transRollback();
+                        $gagal++;
+                        continue;
+                    }
+
+                    if ($this->_db->affectedRows() > 0) {
+                        $this->_db->transCommit();
+
+                        createAktifitas($user->data->id, "Mengunlock dapa PTK $ptk->nama dengan NUPTK: $ptk->nuptk", "Mengunlock data PTK", "edit");
+
+                        $sukses++;
+                        continue;
+                    } else {
+                        $gagal++;
+                        continue;
+                    }
                 }
-                $this->_db->transBegin();
-                try {
-                    $this->_db->table('_ptk_tb')->where(['id' => $current->id, 'is_locked' => 1])->update([
-                        'is_locked' => 0,
-                        'updated_at' => date('Y-m-d H:i:s')
-                    ]);
-                } catch (\Exception $e) {
-                    $this->_db->transRollback();
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Gagal mengunlock data ptk.";
-                    return json_encode($response);
-                }
-
-                if ($this->_db->affectedRows() > 0) {
-                    $this->_db->transCommit();
-
-                    createAktifitas($user->data->id, "Mengunlock dapa PTK $nama dengan NUPTK: $current->nuptk", "Mengunlock data PTK", "edit");
-
-                    $response = new \stdClass;
-                    $response->status = 200;
-                    $response->message = "Data PTK berhasil diunlock.";
-                    return json_encode($response);
-                } else {
-                    $this->_db->transRollback();
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Gagal mengunlock data PTK.";
-                    return json_encode($response);
-                }
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Data PTK berhasil di unlock dengan jumlah TOTAL: $total, SUKSES: $sukses, GAGAL: $gagal.";
+                return json_encode($response);
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
-                $response->message = "Data tidak ditemukan";
+                $response->message = "Tidak ada data PTK yang perlu di unlock.";
                 return json_encode($response);
             }
         }

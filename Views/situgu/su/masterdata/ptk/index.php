@@ -158,6 +158,61 @@
         })
     }
 
+    function actionUnlockAll(event) {
+        Swal.fire({
+            title: 'Apakah anda yakin ingin membuka kunci untuk data ptk TW BARU?',
+            text: "Buka Kunci Semua Data PTK TW BARU",
+            showCancelButton: true,
+            icon: 'question',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Unlock Semua PTK!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "./unlockallptk",
+                    type: 'POST',
+                    data: {
+                        id: "unclock-all",
+                    },
+                    dataType: 'JSON',
+                    beforeSend: function() {
+                        $('div.main-content').block({
+                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                        });
+                    },
+                    success: function(resul) {
+                        $('div.main-content').unblock();
+
+                        if (resul.status !== 200) {
+                            Swal.fire(
+                                'Failed!',
+                                resul.message,
+                                'warning'
+                            );
+                        } else {
+                            Swal.fire(
+                                'SELAMAT!',
+                                resul.message,
+                                'success'
+                            ).then((valRes) => {
+                                reloadPage();
+                            })
+                        }
+                    },
+                    error: function() {
+                        $('div.main-content').unblock();
+                        Swal.fire(
+                            'Failed!',
+                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                            'warning'
+                        );
+                    }
+                });
+            }
+        })
+    }
+
     function actionUnlockSpj(id, ptkId, nama, nuptk, npsn) {
         Swal.fire({
             title: 'Apakah anda yakin ingin membuka kunci upload spj ptk ini?',
