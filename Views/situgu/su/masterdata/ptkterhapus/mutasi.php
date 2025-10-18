@@ -19,7 +19,7 @@
     </div>
     <script>
         $('#_sekolah_pilihan_mutasi').select2({
-            dropdownParent: ".content-tolakModal",
+            dropdownParent: ".content-detailModal",
             ajax: {
                 url: "./getSekolahMutasi",
                 type: 'POST',

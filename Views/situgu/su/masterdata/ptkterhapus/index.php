@@ -152,13 +152,14 @@
                                     'warning'
                                 );
                             } else {
-                                $('#content-tolakModalLabel').html('MUTASI DATA PTK ' + nama);
-                                $('.contentTolakBodyModal').html(resul.data);
-                                $('.content-tolakModal').modal({
+                                $('#content-detailModalLabel').html('MUTASI DATA PTK ' + nama);
+                                $('.contentBodyModal').html(resul.data);
+                                $('.content-detailModal').modal({
                                     backdrop: 'static',
                                     keyboard: false,
                                 });
-                                $('.content-tolakModal').modal('show');
+                                $('.content-detailModal').modal('show');
+
                             }
                         }
                     },
