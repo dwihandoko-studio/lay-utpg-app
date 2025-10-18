@@ -76,6 +76,7 @@ class Ptk extends BaseController
                         <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
                         <a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-edit-alt font-size-16 align-middle"></i> &nbsp;Edit</a>
                         <a class="dropdown-item" href="javascript:actionEditInpassing(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-edit-alt font-size-16 align-middle"></i> &nbsp;Edit Inpassing</a>
+                        <a class="dropdown-item" href="javascript:actionEditDefaultInpassing(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="mdi mdi-school-outline font-size-16 align-middle"></i> &nbsp;Edit Default Inpassing</a>
                         <a class="dropdown-item" href="javascript:actionEditPendidikan(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="mdi mdi-school-outline font-size-16 align-middle"></i> &nbsp;Edit Default Pendidikan</a>
                         <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Tarik Data</a>
                         <a class="dropdown-item" href="javascript:actionSyncDataPembenahan(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Syncrone Data Pembenahan</a>
@@ -355,6 +356,125 @@ class Ptk extends BaseController
                 $response->message = "Permintaan diizinkan";
                 $response->data = view('situgu/adm/masterdata/ptk/get_detail_backbone', $data);
                 return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function editdefaulinpassing()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'ptk_id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'PTK Id tidak boleh kosong. ',
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+            'npsn' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NPSN tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('nama')
+                . $this->validator->getError('npsn')
+                . $this->validator->getError('ptk_id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $ptk_id = htmlspecialchars($this->request->getVar('ptk_id'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+            $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
+
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session telah habis.";
+                return json_encode($response);
+            }
+
+            $current = $this->_db->table('_ptk_tb')
+                ->where(['id' => $id, 'id_ptk' => $ptk_id, 'npsn' => $npsn])->get()->getRowObject();
+
+            if ($current) {
+                if ((int)$current->is_locked == 1) {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mendefault data inpassing. Status PTK terkunci, silahkan unlock terlebih dahulu.";
+                    return json_encode($response);
+                }
+                $this->_db->transBegin();
+                try {
+                    $this->_db->table('_ptk_tb')->where(['id' => $current->id, 'is_locked' => 0])->update([
+                        'nomor_sk_impassing' => NULL,
+                        'tgl_sk_impassing' => NULL,
+                        'tmt_sk_impassing' => NULL,
+                        'jabatan_angka_kredit' => NULL,
+                        'pangkat_golongan_ruang' => NULL,
+                        'masa_kerja_tahun_impassing' => NULL,
+                        'masa_kerja_bulan_impassing' => NULL,
+                        'jumlah_tunjangan_pokok_impassing' => NULL,
+                        'lampiran_impassing' => NULL,
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ]);
+                } catch (\Exception $e) {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->error = var_dump($e);
+                    $response->message = "Gagal mendefault data inpassing.";
+                    return json_encode($response);
+                }
+
+                if ($this->_db->affectedRows() > 0) {
+                    $this->_db->transCommit();
+                    createAktifitas($user->data->id, "Mendafaultkan data Inpassing PTK $nama dengan NUPTK: $current->nuptk", "Mendefaultkan Inpassing data PTK", "edit");
+
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->message = "Data inpassing berhasil didefaulkan.";
+                    return json_encode($response);
+                } else {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->error = "tidak ada perubahan data";
+                    $response->status = 400;
+                    $response->message = "Gagal mendefault data inpassing.";
+                    return json_encode($response);
+                }
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
