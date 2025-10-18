@@ -915,7 +915,7 @@ function canGrantedPengajuan($id_ptk, $tw)
 			}
 			if ($grandted->jenis_tunjangan == 'tamsil') {
 				$grandtedAntrian = $db->table('_tb_usulan_tamsil_transfer')->where("id_ptk = '$id_ptk' AND id_tahun_tw = '$tw' AND (status_usulan IN (0,2,5,6,7))")->get()->getRowObject();
-				if ($grandtedAntrianTransfer) {
+				if ($grandtedAntrian) {
 					$grandtedTransferTamsilUnblock = $db->table('tb_pengecualian_usulan')->where("nuptk = (SELECT nuptk FROM _ptk_tb WHERE id = '$id_ptk')")->get()->getRowObject();
 
 					if (!$grandtedTransferTamsilUnblock) {
