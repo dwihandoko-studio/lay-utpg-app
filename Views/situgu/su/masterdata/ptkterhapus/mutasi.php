@@ -108,7 +108,7 @@
 
             Swal.fire({
                 title: 'Apakah anda yakin ingin mengajukan mutasi data ptk ini?',
-                text: "Mutasi Data Untuk PTK : " + nama,
+                text: "Mutasi Data Untuk PTK : <?= $nama ?>",
                 showCancelButton: true,
                 icon: 'question',
                 confirmButtonColor: '#3085d6',
