@@ -40,7 +40,7 @@
                                     <th colspan="2" data-orderable="false">
                                         <div class="text-center">Tahun TW</div>
                                     </th>
-                                    <th colspan="6" data-orderable="false">
+                                    <th colspan="7" data-orderable="false">
                                         <div class="text-center">Riwayat Kepegawaian</div>
                                     </th>
                                     <th colspan="9" data-orderable="false">
@@ -56,6 +56,7 @@
                                     <th rowspan="2">TMT</th>
                                     <th rowspan="2">Tanggal</th>
                                     <th colspan="2">Masa Kerja</th>
+                                    <th rowspan="2">Gaji Pokok</th>
                                     <th rowspan="2">Pangkat</th>
                                     <th rowspan="2">KGB</th>
                                     <th rowspan="2">Pernyataan</th>

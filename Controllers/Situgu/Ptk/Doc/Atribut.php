@@ -99,6 +99,7 @@ class Atribut extends BaseController
             $row[] = $list->pang_tgl;
             $row[] = $list->pang_tahun;
             $row[] = $list->pang_bulan;
+            $row[] = getGajiPokokByPangkatMkt($list->pang_golongan, $list->pang_tahun); //Gaji pokok
 
             switch ($list->is_locked) {
                 case 1:

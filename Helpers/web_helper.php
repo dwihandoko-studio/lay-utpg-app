@@ -2537,3 +2537,18 @@ function checkIsLockedCetakSPJ($id)
 		return 0;
 	}
 }
+
+function getGajiPokokByPangkatMkt($pangkatGolongan, $masa_kerja_tahun)
+{
+	$db      = \Config\Database::connect('sigaji');
+
+	$limit = $db->table('ref_gaji')
+		->select("gaji_pokok")
+		->where("pangkat = '$pangkatGolongan' AND masa_kerja = (IF($masa_kerja_tahun > 32, 32, $masa_kerja_tahun))")
+		->get()->getRowObject();
+	if ($limit) {
+		return rpAwalan($limit->gaji_pokok);
+	} else {
+		return rpAwalan(0);
+	}
+}
