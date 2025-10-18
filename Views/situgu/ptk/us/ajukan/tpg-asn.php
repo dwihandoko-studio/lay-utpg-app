@@ -161,7 +161,7 @@
                     <th scope="row">6</th>
                     <td><label class="form-check-label" for="_gaji_pokok">Gaji Pokok</label></td>
                     <td>
-                        <span class="badge rounded-pill badge-soft-dark"><?= $ptk->gajiPokok == NULL || $ptk->gajiPokok == "" ? rpAwalan(1500000) : rpAwalan((int)$ptk->gajiPokok) ?></span>
+                        <span class="badge rounded-pill badge-soft-dark"><?= $ptk->gajiPokok == NULL || $ptk->gajiPokok == "" ? rpAwalan(2000000) : rpAwalan((int)$ptk->gajiPokok) ?></span>
                     </td>
                     <td>
                         <div class="form-check">
