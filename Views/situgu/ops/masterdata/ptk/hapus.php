@@ -20,7 +20,7 @@
         <button type="button" onclick="simpanTolak(this)" class="btn btn-primary waves-effect waves-light">Mutasi Data PTK</button>
     </div>
     <script>
-        $('#_ptk').select2({
+        $('#_sekolah_pilihan_mutasi').select2({
             dropdownParent: ".content-tolakModal",
             ajax: {
                 url: "./getSekolahMutasi",
