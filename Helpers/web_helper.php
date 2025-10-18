@@ -2540,7 +2540,7 @@ function checkIsLockedCetakSPJ($id)
 
 function getGajiPokokByPangkatMkt($pangkatGolongan, $masa_kerja_tahun)
 {
-	$db      = \Config\Database::connect('sigaji');
+	$db      = \Config\Database::connect();
 
 	$limit = $db->table('ref_gaji')
 		->select("gaji_pokok")
