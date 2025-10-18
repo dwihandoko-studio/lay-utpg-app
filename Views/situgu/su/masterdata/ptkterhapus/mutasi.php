@@ -1,13 +1,11 @@
 <?php if (isset($id)) { ?>
     <div class="modal-body">
-        <div class="col-lg-12">
-            <div class="mb-3 _sekolah-block">
-                <label for="_sekolah_pilihan_mutasi" class="col-form-label">Sekolah:</label>
-                <select class="form-control ptk" id="_sekolah_pilihan_mutasi" name="_sekolah_pilihan_mutasi" style="width: 100%">
-                    <option value="">&nbsp;</option>
-                </select>
-                <div class="help-block _sekolah_pilihan_mutasi"></div>
-            </div>
+        <div class="mb-3 _sekolah-block">
+            <label for="_sekolah_pilihan_mutasi" class="col-form-label">Sekolah:</label>
+            <select class="form-control ptk" id="_sekolah_pilihan_mutasi" name="_sekolah_pilihan_mutasi" style="width: 100%">
+                <option value="">&nbsp;</option>
+            </select>
+            <div class="help-block _sekolah_pilihan_mutasi"></div>
         </div>
         <div class="col-lg-12">
             <label class="col-form-label">Keterangan Mutasi:</label>
