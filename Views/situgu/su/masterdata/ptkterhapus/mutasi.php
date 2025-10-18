@@ -84,7 +84,7 @@
         }
 
         function formatRepoSelection(repo) {
-            return repo.npsn || repo.text;
+            return repo.nama || repo.text;
         }
 
 
