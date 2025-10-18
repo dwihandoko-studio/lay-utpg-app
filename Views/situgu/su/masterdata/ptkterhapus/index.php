@@ -73,6 +73,19 @@
         </div>
     </div>
 </div>
+<div id="content-tolakModal" class="modal fade content-tolakModal" tabindex="-1" role="dialog" aria-labelledby="content-tolakModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-loading-tolak">
+            <div class="modal-header">
+                <h5 class="modal-title" id="content-tolakModalLabel">Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="contentTolakBodyModal">
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- end modal -->
 <?= $this->endSection(); ?>
 
@@ -95,6 +108,73 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
+    function actionMutasikan(id, id_ptk, nama, nuptk, npsn) {
+        Swal.fire({
+            title: 'Apakah anda yakin ingin mengajukan mutasi data ptk ini?',
+            text: "Mutasi Data Untuk PTK : " + nama,
+            showCancelButton: true,
+            icon: 'question',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Mutasi Data!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "./formmutasi",
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        ptk_id: id_ptk,
+                        nama: nama,
+                        nuptk: nuptk,
+                        npsn: npsn,
+                    },
+                    dataType: 'JSON',
+                    beforeSend: function() {
+                        $('div.main-content').block({
+                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                        });
+                    },
+                    success: function(resul) {
+                        $('div.main-content').unblock();
+
+                        if (resul.status !== 200) {
+                            Swal.fire(
+                                'Failed!',
+                                resul.message,
+                                'warning'
+                            );
+                        } else {
+                            if (resul.status !== 200) {
+                                Swal.fire(
+                                    'Failed!',
+                                    resul.message,
+                                    'warning'
+                                );
+                            } else {
+                                $('#content-tolakModalLabel').html('MUTASI DATA PTK ' + nama);
+                                $('.contentTolakBodyModal').html(resul.data);
+                                $('.content-tolakModal').modal({
+                                    backdrop: 'static',
+                                    keyboard: false,
+                                });
+                                $('.content-tolakModal').modal('show');
+                            }
+                        }
+                    },
+                    error: function() {
+                        $('div.main-content').unblock();
+                        Swal.fire(
+                            'Failed!',
+                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                            'warning'
+                        );
+                    }
+                });
+            }
+        })
+    }
+
     function actionKembalikan(id, id_ptk, nama, nuptk, npsn) {
         Swal.fire({
             title: 'Apakah anda yakin ingin mengembalikan data ini?',
