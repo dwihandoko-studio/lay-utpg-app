@@ -287,6 +287,10 @@
                 <label class="col-form-label">Masa Kerja Bulan:</label>
                 <div><?= ($data->tmt_sk_kgb > $data->tmt_pangkat) ? ($data->masa_kerja_bulan_kgb !== null ? $data->masa_kerja_bulan_kgb : 0) : ($data->masa_kerja_bulan !== null ? $data->masa_kerja_bulan : 0) ?></div>
             </div>
+            <div class="col-lg-3">
+                <label class="col-form-label">Gaji Pokok:</label>
+                <div><?= getGajiPokokByPangkatMkt($data->pangkat_golongan, ($data->tmt_sk_kgb > $data->tmt_pangkat) ? ($data->masa_kerja_bulan_kgb !== null ? $data->masa_kerja_bulan_kgb : 0) : ($data->masa_kerja_bulan !== null ? $data->masa_kerja_bulan : 0)) ?></div>
+            </div>
             <div class="col-lg-12">
                 <label class="col-form-label">Lampiran Dokumen:</label>
                 <br />
