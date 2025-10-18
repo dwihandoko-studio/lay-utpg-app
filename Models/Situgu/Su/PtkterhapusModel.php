@@ -49,6 +49,7 @@ class PtkterhapusModel extends Model
     }
     function get_datatables()
     {
+        $this->dt->where('status_ajuan', 2);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
@@ -57,12 +58,14 @@ class PtkterhapusModel extends Model
     }
     function count_filtered()
     {
+        $this->dt->where('status_ajuan', 2);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
     public function count_all()
     {
+        $this->dt->where('status_ajuan', 2);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
