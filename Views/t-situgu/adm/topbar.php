@@ -18,6 +18,7 @@
                             <div class="dropdown-menu" aria-labelledby="topnav-masterdata">
                                 <a href="<?= base_url('situgu/adm/masterdata/ptk') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "ptk") ? ' active-menu-href' : '' ?>" key="t-masterdata-ptk">PTK</a>
                                 <a href="<?= base_url('situgu/adm/masterdata/pengguna') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "pengguna") ? ' active-menu-href' : '' ?>" key="t-masterdata-pengguna">Pengguna</a>
+                                <a href="<?= base_url('situgu/adm/masterdata/ptkterhapus') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "ptkterhapus") ? ' active-menu-href' : '' ?>" key="t-masterdata-ptkterhapus">PTK Terhapus</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">

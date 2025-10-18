@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\Situgu\Su\Masterdata;
+namespace App\Controllers\Situgu\Adm\Masterdata;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Su\PtkterhapusModel;
+use App\Models\Situgu\Adm\PtkterhapusModel;
 use Config\Services;
 use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
@@ -76,7 +76,7 @@ class Ptkterhapus extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/su/masterdata/ptkterhapus/data'));
+        return redirect()->to(base_url('situgu/adm/masterdata/ptkterhapus/data'));
     }
 
     public function data()
@@ -92,7 +92,7 @@ class Ptkterhapus extends BaseController
 
         $data['user'] = $user->data;
 
-        return view('situgu/su/masterdata/ptkterhapus/index', $data);
+        return view('situgu/adm/masterdata/ptkterhapus/index', $data);
     }
 
     public function detail()
@@ -139,7 +139,7 @@ class Ptkterhapus extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/su/masterdata/ptk/detail', $data);
+                $response->data = view('situgu/adm/masterdata/ptk/detail', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -206,7 +206,7 @@ class Ptkterhapus extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('situgu/su/masterdata/ptkterhapus/mutasi', $data);
+            $response->data = view('situgu/adm/masterdata/ptkterhapus/mutasi', $data);
             return json_encode($response);
         }
     }
