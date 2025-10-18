@@ -467,6 +467,7 @@ class Ptkterhapus extends BaseController
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
+                $response->keyword = $keyword;
                 $response->message = "Data tidak ditemukan";
                 return json_encode($response);
             }
