@@ -682,27 +682,27 @@ class Pangkatkgb extends BaseController
                     'updated_at' => date('Y-m-d H:i:s')
                 ];
 
-                if (!($pangkat_golongan_kgb_up == "" || $pangkat_golongan_kgb_up == NULL)) {
+                if (!($pangkat_golongan_kgb_up == "" || $pangkat_golongan_kgb_up == NULL || $pangkat_golongan_kgb_up == "-" || $pangkat_golongan_kgb_up == "0")) {
                     $dataUpdate['pangkat_golongan_kgb'] = $pangkat_golongan_kgb_up;
                 }
 
-                if (!($sk_kgb_up == "" || $sk_kgb_up == NULL)) {
+                if (!($sk_kgb_up == "" || $sk_kgb_up == NULL || $pangkat_golongan_kgb_up == "-" || $pangkat_golongan_kgb_up == "0")) {
                     $dataUpdate['sk_kgb'] = $sk_kgb_up;
                 }
 
-                if (!($tgl_sk_kgb_up == "" || $tgl_sk_kgb_up == NULL)) {
+                if (!($tgl_sk_kgb_up == "" || $tgl_sk_kgb_up == NULL || $pangkat_golongan_kgb_up == "-" || $pangkat_golongan_kgb_up == "0")) {
                     $dataUpdate['tgl_sk_kgb'] = $tgl_sk_kgb_up;
                 }
 
-                if (!($tmt_sk_kgb_up == "" || $tmt_sk_kgb_up == NULL)) {
+                if (!($tmt_sk_kgb_up == "" || $tmt_sk_kgb_up == NULL || $pangkat_golongan_kgb_up == "-" || $pangkat_golongan_kgb_up == "0")) {
                     $dataUpdate['tmt_sk_kgb'] = $tmt_sk_kgb_up;
                 }
 
-                if (!($masa_kerja_tahun_kgb_up == "" || $masa_kerja_tahun_kgb_up == NULL)) {
+                if (!($masa_kerja_tahun_kgb_up == "" || $masa_kerja_tahun_kgb_up == NULL || $pangkat_golongan_kgb_up == "-")) {
                     $dataUpdate['masa_kerja_tahun_kgb'] = $masa_kerja_tahun_kgb_up;
                 }
 
-                if (!($masa_kerja_bulan_kgb_up == "" || $masa_kerja_bulan_kgb_up == NULL)) {
+                if (!($masa_kerja_bulan_kgb_up == "" || $masa_kerja_bulan_kgb_up == NULL || $pangkat_golongan_kgb_up == "-")) {
                     $dataUpdate['masa_kerja_bulan_kgb'] = $masa_kerja_bulan_kgb_up;
                 }
 
