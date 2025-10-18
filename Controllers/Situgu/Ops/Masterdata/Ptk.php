@@ -1256,7 +1256,7 @@ class Ptk extends BaseController
         } else {
             $keyword = htmlspecialchars($this->request->getVar('keyword'), true);
 
-            $current = $this->_db->table('ref_sekolah')->select("npsn, nama, bentuk_pendidikan, kecamatan")
+            $current = $this->_db->table('ref_sekolah')->select("id, npsn, nama, bentuk_pendidikan, kecamatan")
                 ->where("npsn = '$keyword' OR nama LIKE '%$keyword%'")->get()->getResult();
 
             if (count($current) > 0) {
