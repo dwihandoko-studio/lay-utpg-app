@@ -269,7 +269,7 @@ class Ptkterhapus extends BaseController
 
             if ($current) {
                 $tujuan = $this->_db->table('ref_sekolah')
-                    ->where('npsn', $sekolah_tujuan)->get()->getRowObject();
+                    ->where('id', $sekolah_tujuan)->get()->getRowObject();
 
                 if (!$tujuan) {
                     $response = new \stdClass;
@@ -455,7 +455,7 @@ class Ptkterhapus extends BaseController
         } else {
             $keyword = htmlspecialchars($this->request->getVar('keyword'), true);
 
-            $current = $this->_db->table('ref_sekolah')->select("npsn, nama, bentuk_pendidikan, kecamatan")
+            $current = $this->_db->table('ref_sekolah')->select("id, nama, npsn, bentuk_pendidikan, kecamatan")
                 ->where("npsn = '$keyword' OR nama LIKE '%$keyword%'")->get()->getResult();
 
             if (count($current) > 0) {
@@ -467,6 +467,7 @@ class Ptkterhapus extends BaseController
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
+                $response->keyword = $keyword;
                 $response->message = "Data tidak ditemukan";
                 return json_encode($response);
             }

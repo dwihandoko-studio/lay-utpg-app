@@ -1,13 +1,11 @@
 <?php if (isset($id)) { ?>
     <div class="modal-body">
-        <div class="col-lg-12">
-            <div class="mb-3 _sekolah-block">
-                <label for="_sekolah_pilihan_mutasi" class="col-form-label">Sekolah:</label>
-                <select class="form-control ptk" id="_sekolah_pilihan_mutasi" name="_sekolah_pilihan_mutasi" style="width: 100%">
-                    <option value="">&nbsp;</option>
-                </select>
-                <div class="help-block _sekolah_pilihan_mutasi"></div>
-            </div>
+        <div class="mb-3 _sekolah-block">
+            <label for="_sekolah_pilihan_mutasi" class="col-form-label">Sekolah:</label>
+            <select class="form-control ptk" id="_sekolah_pilihan_mutasi" name="_sekolah_pilihan_mutasi" style="width: 100%">
+                <option value="">&nbsp;</option>
+            </select>
+            <div class="help-block _sekolah_pilihan_mutasi"></div>
         </div>
         <div class="col-lg-12">
             <label class="col-form-label">Keterangan Mutasi:</label>
@@ -21,7 +19,7 @@
     </div>
     <script>
         $('#_sekolah_pilihan_mutasi').select2({
-            dropdownParent: ".content-tolakModal",
+            dropdownParent: ".content-detailModal",
             ajax: {
                 url: "./getSekolahMutasi",
                 type: 'POST',
@@ -84,7 +82,7 @@
         }
 
         function formatRepoSelection(repo) {
-            return repo.npsn || repo.text;
+            return repo.nama || repo.text;
         }
 
 
@@ -107,72 +105,85 @@
                 );
                 return;
             }
-            $.ajax({
-                url: "./mutasi",
-                type: 'POST',
-                data: {
-                    id: '<?= $id ?>',
-                    nama: '<?= $nama ?>',
-                    sekolah_tujuan: sekolah_tujuan,
-                    keterangan: keterangan,
-                },
-                dataType: 'JSON',
-                beforeSend: function() {
-                    e.disabled = true;
-                    $('div.modal-content-loading-tolak').block({
-                        message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                    });
-                },
-                success: function(resul) {
-                    $('div.modal-content-loading-tolak').unblock();
 
-                    if (resul.status !== 200) {
-                        if (resul.status !== 201) {
-                            if (resul.status === 401) {
+            Swal.fire({
+                title: 'Apakah anda yakin ingin mengajukan mutasi data ptk ini?',
+                text: "Mutasi Data Untuk PTK : <?= $nama ?>",
+                showCancelButton: true,
+                icon: 'question',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Mutasi Data!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "./mutasi",
+                        type: 'POST',
+                        data: {
+                            id: '<?= $id ?>',
+                            nama: '<?= $nama ?>',
+                            sekolah_tujuan: sekolah_tujuan,
+                            keterangan: keterangan,
+                        },
+                        dataType: 'JSON',
+                        beforeSend: function() {
+                            e.disabled = true;
+                            $('div.modal-content-loading-tolak').block({
+                                message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                            });
+                        },
+                        success: function(resul) {
+                            $('div.modal-content-loading-tolak').unblock();
+
+                            if (resul.status !== 200) {
+                                if (resul.status !== 201) {
+                                    if (resul.status === 401) {
+                                        Swal.fire(
+                                            'Failed!',
+                                            resul.message,
+                                            'warning'
+                                        ).then((valRes) => {
+                                            reloadPage();
+                                        });
+                                    } else {
+                                        e.disabled = false;
+                                        Swal.fire(
+                                            'GAGAL!',
+                                            resul.message,
+                                            'warning'
+                                        );
+                                    }
+                                } else {
+                                    Swal.fire(
+                                        'Peringatan!',
+                                        resul.message,
+                                        'success'
+                                    ).then((valRes) => {
+                                        reloadPage();
+                                    })
+                                }
+                            } else {
                                 Swal.fire(
-                                    'Failed!',
+                                    'SELAMAT!',
                                     resul.message,
-                                    'warning'
+                                    'success'
                                 ).then((valRes) => {
                                     reloadPage();
-                                });
-                            } else {
-                                e.disabled = false;
-                                Swal.fire(
-                                    'GAGAL!',
-                                    resul.message,
-                                    'warning'
-                                );
+                                })
                             }
-                        } else {
+                        },
+                        error: function(erro) {
+                            console.log(erro);
+                            // e.attr('disabled', false);
+                            e.disabled = false
+                            $('div.modal-content-loading-tolak').unblock();
                             Swal.fire(
-                                'Peringatan!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
+                                'PERINGATAN!',
+                                "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                                'warning'
+                            );
                         }
-                    } else {
-                        Swal.fire(
-                            'SELAMAT!',
-                            resul.message,
-                            'success'
-                        ).then((valRes) => {
-                            reloadPage();
-                        })
-                    }
-                },
-                error: function(erro) {
-                    console.log(erro);
-                    // e.attr('disabled', false);
-                    e.disabled = false
-                    $('div.modal-content-loading-tolak').unblock();
-                    Swal.fire(
-                        'PERINGATAN!',
-                        "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                        'warning'
-                    );
+                    });
                 }
             });
         };
