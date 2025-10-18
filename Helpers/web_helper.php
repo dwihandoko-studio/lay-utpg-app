@@ -2549,6 +2549,6 @@ function getGajiPokokByPangkatMkt($pangkatGolongan, $masa_kerja_tahun)
 	if ($limit) {
 		return rpAwalan($limit->gaji_pokok);
 	} else {
-		return rpAwalan(0);
+		return rpAwalan(2000000);
 	}
 }
