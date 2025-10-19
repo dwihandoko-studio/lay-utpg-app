@@ -131,11 +131,26 @@ class Ptk extends BaseController
 
     public function syndapolocal()
     {
-        if (!(grantTarikDataBackbone())) {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            delete_cookie('jwt');
+            session()->destroy();
             $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Tarik data dari backbone masih dalam normalisasi system.";
+            $response->status = 401;
+            $response->message = "Session telah expired.";
             return json_encode($response);
+        }
+
+        if (!(grantTarikDataDapodikLokal())) {
+            $canGrantedSyncrone = canGrantedTarikDataDapodikLokal($user->data->id);
+
+            if ($canGrantedSyncrone && $canGrantedSyncrone->code !== 200) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Tarik data dari dapodik lokal masih dalam normalisasi system.";
+                return json_encode($response);
+            }
         }
 
         if ($this->request->getMethod() != 'post') {

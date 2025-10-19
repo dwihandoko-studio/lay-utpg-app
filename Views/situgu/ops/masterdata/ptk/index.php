@@ -12,6 +12,7 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript:actionSyndapolocal(this,'lokal');" class="btn btn-warning btn-rounded waves-effect waves-light">Tarik Semua Data PTK Dari Dapodik Lokal</a></li>
                             <li class="breadcrumb-item"><a href="javascript:actionSyncAll(this);" class="btn btn-primary btn-rounded waves-effect waves-light">Tarik Semua Data PTK Dari Dapodik</a></li>
                         </ol>
                     </div>
@@ -135,7 +136,7 @@
                         'warning'
                     );
                 } else {
-                    $('#content-aktivasiModalLabel').html('TARIK DATA DARI ' + event + ' UNTUK NPSN ' + ak);
+                    $('#content-aktivasiModalLabel').html('TARIK DATA DARI DAPODIK LOKAL');
                     $('.contentAktivasiBodyModal').html(resul.data);
                     $('.content-aktivasiModal').modal({
                         backdrop: 'static',

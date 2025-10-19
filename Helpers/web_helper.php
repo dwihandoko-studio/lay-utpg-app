@@ -1507,6 +1507,39 @@ function canVerifikasiTamsil()
 	}
 }
 
+function grantTarikDataDapodikLokal()
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	$grandted = $db->table('granted_syncrone_backbone')->where(['id' => 2, 'status' => 1])->get()->getRowObject();
+	if (!$grandted) {
+		return false;
+	}
+
+	return true;
+}
+
+function canGrantedTarikDataDapodikLokal($user_id)
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	$grandted = $db->table('access_granted_syncrone_backbone')->where('user_id', $user_id)->get()->getRowObject();
+	if (!$grandted) {
+		$response = new \stdClass;
+		$response->code = 400;
+		$response->message = "Akses untuk proses tarik dapodik lokal tidak diizinkan. Silahkan hubungi Admin Tunjangan.";
+		$response->redirect = "";
+		return $response;
+	}
+
+	$response = new \stdClass;
+	$response->code = 200;
+	$response->message = "";
+	return $response;
+}
+
 function grantTarikDataBackbone()
 {
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'

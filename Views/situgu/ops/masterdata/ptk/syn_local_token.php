@@ -6,6 +6,7 @@
             <!-- <p style="padding: 5px 0px;">Silah isi Nomor Whatsapp dengan format: 08xxxxxxxxxx (Contoh: 081208120812)</p> -->
             <div class="help-block _token"></div>
         </div>
+        <div id="result"></div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
@@ -26,112 +27,55 @@
             );
         }
 
-        // axios.get('http://localhost:5774/WebService/getGtk?npsn=' + npsn, {
-        //         // method: 'GET',
-        //         // mode: 'no-cors',
-        //         headers: {
-        //             'Authorization': 'Bearer ' + token
-        //         }
-        //     })
-        //     .then(function(response) {
-        //         console.log(response);
-        //     })
-        //     .catch(function(error) {
-        //         console.log(error);
-        //     });
+        $.ajax({
+            url: "http://localhost:5774/WebService/getGtk?npsn=" + npsn,
+            type: 'GET',
+            headers: {
+                // Header Authorization (sudah ada di contoh sebelumnya)
+                'Authorization': "Bearer " + token,
 
-        var xhrLocal = new XMLHttpRequest();
-        xhrLocal.onreadystatechange = function() {
-            if (xhrLocal.readyState === 4 && xhrLocal.status === 200) {
-                console.log(xhrLocal.responseText);
-            } else {
-                console.log(xhrLocal.responseType);
+                // Header dari Postman screenshot
+                'Cache-Control': 'no-cache',
+                'Postman-Token': generatePostmanToken(),
+                'User-Agent': 'PostmanRuntime/7.49.0',
+                'Accept': '*/*',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Connection': 'keep-alive',
+
+                // Header tambahan yang biasanya ada di Postman
+                'Content-Type': 'application/json',
+                'Cookie': 'killme=dont'
+            },
+            dataType: 'jsonp',
+            success: function(response) {
+                $('#result').html(`
+                        <h3>Success Response:</h3>
+                        <pre>${JSON.stringify(response, null, 2)}</pre>
+                    `);
+                console.log('Success:', response);
+            },
+            error: function(xhr, status, error) {
+                $('#result').html(`
+                        <h3>Error:</h3>
+                        <p>${error}</p>
+                        <p>Status: ${status}</p>
+                    `);
+                console.error('Error:', error);
+            },
+            beforeSend: function(xhr) {
+                console.log('All Headers being sent:');
+                console.log(xhr.headers);
             }
-        };
+        });
+    }
 
-        xhrLocal.open('GET', 'http://10.20.30.228:5774/WebService/getGtk?npsn=' + npsn);
-        // xhrLocal.setRequestHeader("Origin", "localhost");
-        xhrLocal.setRequestHeader("Authorization", "Bearer " + token);
-        // xhrLocal.onload = function(data) {
-
-        // }
-        xhrLocal.send();
-
-        // fetch('http://localhost:5774/WebService/getGtk?npsn=' + npsn, {
-        //         method: 'GET',
-        //         mode: 'no-cors',
-        //         headers: new Headers({
-        //             'Authorization': 'Bearer ' + token
-        //         })
-        //     })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         console.log(data);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
-
-        // $.ajax({
-        //     url: "http://localhost:5774/WebService/getGtk?npsn=" + npsn + "&callback=myFunctionCallBack",
-        //     type: 'GET',
-        //     // method: 'GET',
-        //     headers: {
-        //         'Authorization': "Bearer " + token,
-        //         // 'Origin': "http://localhost:5774",
-        //     },
-        //     // beforeSend: function(xhr) {
-        //     //     xhr.setRequestHeader("Authorization", "Bearer " + token);
-        //     //     xhr.setRequestHeader("Origin", "http://localhost");
-        //     // },
-        //     dataType: 'jsonp',
-        //     jsonpCallback: 'myFunctionCallBack',
-        //     // crossDomain: true,
-        //     beforeSend: function(xhr) {
-        //         // xhr.setRequestHeader("Authorization", "Bearer " + token);
-        //         $('div.modal-content-loading-aktivasi').block({
-        //             message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-        //         });
-        //     },
-        //     success: function(resul) {
-        //         $('div.modal-content-loading-aktivasi').unblock();
-
-        //         console.log(resul);
-
-        //         // if (resul.status !== 200) {
-        //         //     if (resul.status === 401) {
-        //         //         Swal.fire(
-        //         //             'Failed!',
-        //         //             resul.message,
-        //         //             'warning'
-        //         //         ).then((valRes) => {
-        //         //             reloadPage();
-        //         //         });
-        //         //     } else {
-        //         //         Swal.fire(
-        //         //             'PERINGATAN!',
-        //         //             resul.message,
-        //         //             'warning'
-        //         //         );
-        //         //     }
-        //         // } else {
-        //         //     $('.contentAktivasiBodyModal').html(resul.data);
-        //         // }
-        //     },
-        //     error: function(err) {
-        //         console.log(err);
-        //         $('div.modal-content-loading-aktivasi').unblock();
-        //         Swal.fire(
-        //             'PERINGATAN!',
-        //             "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-        //             'warning'
-        //         );
-        //     }
-        // });
-
-    };
-
-    function myFunctionCallBack(data) {
-        console.log(data);
+    // Generate random Postman-Token (mirip dengan yang di Postman)
+    function generatePostmanToken() {
+        const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        let token = '';
+        for (let i = 0; i < 36; i++) {
+            token += chars[Math.floor(Math.random() * chars.length)];
+        }
+        return token;
     }
 </script>
