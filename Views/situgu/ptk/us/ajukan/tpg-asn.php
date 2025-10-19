@@ -378,7 +378,7 @@
                 <tr>
                     <th scope="row">15</th>
                     <td><label class="form-check-label" for="_lampiran_pernyataan24">Pernyataan 24Jam</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= strpos($ptk->lampiran_pernyataan, '/') !== false ? getDokumentPreviewStorage('situgu', $ptk->lampiran_pernyataan) : base_url('upload/ptk/pernyataanindividu') . '/' . $ptk->lampiran_pernyataan ?>','popup','width=600,height=600'); return false;" href="<?= strpos($ptk->lampiran_pernyataan, '/') !== false ? getDokumentPreviewStorage('situgu', $ptk->lampiran_pernyataan) : base_url('upload/ptk/pernyataanindividu') . '/' . $ptk->lampiran_pernyataan ?>">Lihat Lampiran</a></td>
+                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= strpos($ptk->lampiran_pernyataan24, '/') !== false ? getDokumentPreviewStorage('situgu', $ptk->lampiran_pernyataan24) : base_url('upload/ptk/pernyataanindividu') . '/' . $ptk->lampiran_pernyataan24 ?>','popup','width=600,height=600'); return false;" href="<?= strpos($ptk->lampiran_pernyataan24, '/') !== false ? getDokumentPreviewStorage('situgu', $ptk->lampiran_pernyataan24) : base_url('upload/ptk/pernyataanindividu') . '/' . $ptk->lampiran_pernyataan24 ?>">Lihat Lampiran</a></td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_lampiran_pernyataan24" onchange="changeChecked()" name="hasil[]">
