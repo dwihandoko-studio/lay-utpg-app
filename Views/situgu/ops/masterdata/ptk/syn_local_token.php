@@ -40,24 +40,29 @@
             'Content-Type': 'application/json',
             'Cookie': 'killme=dont',
             'Origin': 'localhost',
-            // Tambahkan header custom untuk IP client
-            'X-Client-IP': 'localhost',
-            'X-Client-Location': 'localhost',
-            'X-Request-Source': 'Web-Browser'
-        };
 
-        // console.log('🔄 Mengirim request dari:', {
-        //     ip: clientIP,
-        //     location: clientLocation,
-        //     npsn: npsn,
-        //     timestamp: new Date().toISOString()
-        // });
+            // Header untuk manipulasi
+            'X-Client-IP': '127.0.0.1',
+            'X-Client-Location': 'localhost',
+            'X-Request-Source': 'Web-Browser',
+            'X-Forwarded-For': '127.0.0.1',
+            'X-Real-IP': '127.0.0.1',
+            'X-Originating-IP': '127.0.0.1',
+            'X-Remote-IP': '127.0.0.1',
+            'X-Remote-Addr': '127.0.0.1',
+            'Forwarded': 'for=127.0.0.1;host=localhost;proto=http',
+
+            // Header khusus untuk aplikasi tertentu
+            'Referer': 'http://localhost/',
+            'Host': 'localhost:5774'
+        };
 
         try {
             const response = await fetch(url, {
                 method: 'GET',
                 headers: headers,
-                mode: 'no-cors'
+                mode: 'no-cors',
+                credentials: 'include'
             });
 
             if (response.ok || response.type === 'opaque') {
