@@ -3,6 +3,7 @@
         <div class="mb-3">
             <label for="_token" class="form-label">Token Api Local Dapodik</label>
             <input type="text" class="form-control token" <?= isset($data) ? ($data->token === NULL || $data->token === "" ? '' : 'value="' . $data->token . '"') : '' ?> id="_token" name="_token" placeholder="Token Api Dapodik Local..." onfocusin="inputFocus(this);" />
+            <input type="text" class="form-control token" <?= isset($data) ? ($data->token === NULL || $data->token === "" ? '' : 'value="' . $data->token . '"') : '' ?> id="_token" name="_token" placeholder="Token Api Dapodik Local..." onfocusin="inputFocus(this);" />
             <!-- <p style="padding: 5px 0px;">Silah isi Nomor Whatsapp dengan format: 08xxxxxxxxxx (Contoh: 081208120812)</p> -->
             <div class="help-block _token"></div>
         </div>
@@ -17,7 +18,7 @@
 <script>
     function getSyncDapoLocal(event) {
         const token = document.getElementsByName('_token')[0].value;
-        const npsn = '<?= isset($data) ? $data->npsn : '' ?>';
+        const npsn = '<?= isset($sekolah) ? $sekolah->npsn : '' ?>';
 
         if (token === "") {
             Swal.fire(
