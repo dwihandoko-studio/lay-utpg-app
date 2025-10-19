@@ -451,7 +451,7 @@
                         <?php if ($ptk->lampiran_att_lain == null || $ptk->lampiran_att_lain == "") {
                             echo 'Tidak ada';
                         } else { ?>
-                            <a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= strpos($ptk->lampiran_attr_lain, '/') !== false ? getDokumentPreviewStorage('situgu', $ptk->lampiran_attr_lain) : base_url('upload/ptk/lainnya') . '/' . $ptk->lampiran_attr_lain ?>','popup','width=600,height=600'); return false;" href="<?= strpos($ptk->lampiran_attr_lain, '/') !== false ? getDokumentPreviewStorage('situgu', $ptk->lampiran_attr_lain) : base_url('upload/ptk/lainnya') . '/' . $ptk->lampiran_attr_lain ?>">Lihat Lampiran</a>
+                            <a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= strpos($ptk->lampiran_att_lain, '/') !== false ? getDokumentPreviewStorage('situgu', $ptk->lampiran_att_lain) : base_url('upload/ptk/lainnya') . '/' . $ptk->lampiran_att_lain ?>','popup','width=600,height=600'); return false;" href="<?= strpos($ptk->lampiran_att_lain, '/') !== false ? getDokumentPreviewStorage('situgu', $ptk->lampiran_att_lain) : base_url('upload/ptk/lainnya') . '/' . $ptk->lampiran_att_lain ?>">Lihat Lampiran</a>
                         <?php } ?>
                     </td>
                     <td>
