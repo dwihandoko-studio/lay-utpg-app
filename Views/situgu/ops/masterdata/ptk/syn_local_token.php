@@ -38,7 +38,8 @@
             'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive',
             'Content-Type': 'application/json',
-            'Cookie': 'killme=dont'
+            'Cookie': 'killme=dont',
+            'Origin': 'http://localhost'
         };
 
         try {
