@@ -39,30 +39,51 @@
             'Connection': 'keep-alive',
             'Content-Type': 'application/json',
             'Cookie': 'killme=dont',
-            'Origin': 'http://localhost'
+            'Origin': 'localhost',
+            // Tambahkan header custom untuk IP client
+            'X-Client-IP': 'localhost',
+            'X-Client-Location': 'localhost',
+            'X-Request-Source': 'Web-Browser'
         };
+
+        console.log('🔄 Mengirim request dari:', {
+            ip: clientIP,
+            location: clientLocation,
+            npsn: npsn,
+            timestamp: new Date().toISOString()
+        });
 
         try {
             const response = await fetch(url, {
                 method: 'GET',
                 headers: headers,
-                mode: 'no-cors' // Mode no-cors untuk menghindari CORS
+                mode: 'no-cors'
             });
 
-            // Dengan mode 'no-cors', kita hanya bisa membaca status ok/success
             if (response.ok || response.type === 'opaque') {
                 $('#result').html(`
                 <div style="background: #d4edda; padding: 15px; border-radius: 5px;">
-                    <h3 style="color: #155724;">✅ Request Sent Successfully</h3>
-                    <p><strong>Note:</strong> Using no-cors mode - response body may not be accessible</p>
+                    <h3 style="color: #155724;">✅ Request Berhasil Dikirim</h3>
+                    <p><strong>Informasi Request:</strong></p>
+                    <ul>
+                        <li><strong>IP Client:</strong> ${clientIP}</li>
+                        <li><strong>Lokasi:</strong> ${clientLocation}</li>
+                        <li><strong>NPSN:</strong> ${npsn}</li>
+                        <li><strong>Waktu:</strong> ${new Date().toLocaleString()}</li>
+                    </ul>
+                    <p><em>Note: Menggunakan mode no-cors - response body mungkin tidak dapat diakses</em></p>
                 </div>
             `);
             }
 
         } catch (error) {
             $('#result').html(`
-            <h3>Error:</h3>
-            <p>${error.message}</p>
+            <div style="background: #f8d7da; padding: 15px; border-radius: 5px;">
+                <h3 style="color: #721c24;">❌ Error</h3>
+                <p><strong>Pesan Error:</strong> ${error.message}</p>
+                <p><strong>IP Client:</strong> ${clientIP}</p>
+                <p><strong>Lokasi:</strong> ${clientLocation}</p>
+            </div>
         `);
         }
     }
