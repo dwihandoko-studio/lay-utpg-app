@@ -42,18 +42,18 @@
             'Origin': 'localhost',
 
             // Header untuk manipulasi
-            'X-Client-IP': '127.0.0.1',
+            'X-Client-IP': 'localhost',
             'X-Client-Location': 'localhost',
             'X-Request-Source': 'Web-Browser',
-            'X-Forwarded-For': '127.0.0.1',
-            'X-Real-IP': '127.0.0.1',
-            'X-Originating-IP': '127.0.0.1',
-            'X-Remote-IP': '127.0.0.1',
-            'X-Remote-Addr': '127.0.0.1',
-            'Forwarded': 'for=127.0.0.1;host=localhost;proto=http',
+            'X-Forwarded-For': 'localhost',
+            'X-Real-IP': 'localhost',
+            'X-Originating-IP': 'localhost',
+            'X-Remote-IP': 'localhost',
+            'X-Remote-Addr': 'localhost',
+            'Forwarded': 'for=localhost;host=localhost;proto=http',
 
             // Header khusus untuk aplikasi tertentu
-            'Referer': 'http://localhost/',
+            'Referer': 'http://localhost:5774/',
             'Host': 'localhost:5774'
         };
 
