@@ -15,7 +15,7 @@
 </form>
 
 <script>
-    function getSyncDapoLocal(event) {
+    async function getSyncDapoLocal(event) {
         const token = document.getElementsByName('_token')[0].value;
         const npsn = '<?= isset($sekolah) ? $sekolah->npsn : '' ?>';
 
@@ -27,50 +27,98 @@
             );
         }
 
-        $.ajax({
-            url: "http://localhost:5774/WebService/getGtk?npsn=" + npsn,
-            type: 'GET',
-            headers: {
-                'Authorization': "Bearer " + token,
-                'Cache-Control': 'no-cache',
-                'Postman-Token': generatePostmanToken(),
-                'User-Agent': 'PostmanRuntime/7.49.0',
-                'Accept': '*/*',
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Connection': 'keep-alive',
-                'Content-Type': 'application/json',
-                'Cookie': 'killme=dont'
-            },
-            // HAPUS dataType: 'jsonp' untuk request normal
-            dataType: 'json', // Ganti dengan json untuk response JSON normal
-            crossDomain: true, // Izinkan cross-domain
-            xhrFields: {
-                withCredentials: true // Include credentials/cookies
-            },
-            success: function(response) {
-                $('#result').html(`
-                <h3>Success Response:</h3>
-                <pre>${JSON.stringify(response, null, 2)}</pre>
-            `);
-                console.log('Success:', response);
-            },
-            error: function(xhr, status, error) {
-                $('#result').html(`
-                <h3>Error:</h3>
-                <p>${error}</p>
-                <p>Status: ${status}</p>
-                <p>HTTP Status: ${xhr.status}</p>
-                <pre>${xhr.responseText}</pre>
-            `);
-                console.error('Error:', error, 'Status:', status, 'HTTP Status:', xhr.status);
-            },
-            beforeSend: function(xhr) {
-                console.log('All Headers being sent:');
-                // Tambahkan header tambahan untuk meniru browser
-                xhr.setRequestHeader('Sec-Fetch-Mode', 'cors');
-                xhr.setRequestHeader('Sec-Fetch-Site', 'same-site');
+        const url = "http://localhost:5774/WebService/getGtk?npsn=" + npsn;
+
+        const headers = {
+            'Authorization': 'Bearer ' + token,
+            'Cache-Control': 'no-cache',
+            'Postman-Token': generatePostmanToken(),
+            'User-Agent': 'PostmanRuntime/7.49.0',
+            'Accept': '*/*',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Connection': 'keep-alive',
+            'Content-Type': 'application/json',
+            'Cookie': 'killme=dont',
+            'Origin': 'http://localhost', // Tambahkan origin local
+            'Referer': 'http://localhost/' // Referer local
+        };
+
+        try {
+            console.log('Sending request with headers:', headers);
+
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: headers,
+                mode: 'cors', // Important for cross-origin
+                credentials: 'include' // Include cookies
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        });
+
+            const data = await response.json();
+
+            $('#result').html(`
+            <h3>Success Response:</h3>
+            <pre>${JSON.stringify(data, null, 2)}</pre>
+            <h4>Response Headers:</h4>
+            <pre>${JSON.stringify(Object.fromEntries(response.headers), null, 2)}</pre>
+        `);
+            console.log('Success:', data);
+
+        } catch (error) {
+            $('#result').html(`
+            <h3>Error:</h3>
+            <p>${error.message}</p>
+        `);
+            console.error('Error:', error);
+        }
+
+        // $.ajax({
+        //     url: "http://localhost:5774/WebService/getGtk?npsn=" + npsn,
+        //     type: 'GET',
+        //     headers: {
+        //         'Authorization': "Bearer " + token,
+        //         'Cache-Control': 'no-cache',
+        //         'Postman-Token': generatePostmanToken(),
+        //         'User-Agent': 'PostmanRuntime/7.49.0',
+        //         'Accept': '*/*',
+        //         'Accept-Encoding': 'gzip, deflate, br',
+        //         'Connection': 'keep-alive',
+        //         'Content-Type': 'application/json',
+        //         'Cookie': 'killme=dont'
+        //     },
+        //     // HAPUS dataType: 'jsonp' untuk request normal
+        //     dataType: 'json', // Ganti dengan json untuk response JSON normal
+        //     crossDomain: true, // Izinkan cross-domain
+        //     xhrFields: {
+        //         withCredentials: true // Include credentials/cookies
+        //     },
+        //     success: function(response) {
+        //         $('#result').html(`
+        //         <h3>Success Response:</h3>
+        //         <pre>${JSON.stringify(response, null, 2)}</pre>
+        //     `);
+        //         console.log('Success:', response);
+        //     },
+        //     error: function(xhr, status, error) {
+        //         $('#result').html(`
+        //         <h3>Error:</h3>
+        //         <p>${error}</p>
+        //         <p>Status: ${status}</p>
+        //         <p>HTTP Status: ${xhr.status}</p>
+        //         <pre>${xhr.responseText}</pre>
+        //     `);
+        //         console.error('Error:', error, 'Status:', status, 'HTTP Status:', xhr.status);
+        //     },
+        //     beforeSend: function(xhr) {
+        //         console.log('All Headers being sent:');
+        //         // Tambahkan header tambahan untuk meniru browser
+        //         xhr.setRequestHeader('Sec-Fetch-Mode', 'cors');
+        //         xhr.setRequestHeader('Sec-Fetch-Site', 'same-site');
+        //     }
+        // });
     }
 
     // Generate random Postman-Token (mirip dengan yang di Postman)
