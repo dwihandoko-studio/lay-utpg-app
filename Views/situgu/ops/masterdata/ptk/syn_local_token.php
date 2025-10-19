@@ -29,6 +29,37 @@
 
         const url = "http://localhost:5774/WebService/getGtk?npsn=" + npsn;
 
+        // Buat XMLHttpRequest object
+        const xhr = new XMLHttpRequest();
+
+        // Setup event handlers
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                handleResponse(xhr);
+            }
+        };
+
+        xhr.onerror = function() {
+            $('#result').html(`
+            <h3>Network Error</h3>
+            <p>Failed to connect to server</p>
+        `);
+        };
+
+        xhr.ontimeout = function() {
+            $('#result').html(`
+            <h3>Timeout Error</h3>
+            <p>Request took too long to complete</p>
+        `);
+        };
+
+        // Open connection
+        xhr.open('GET', url, true);
+
+        // Set timeout (30 detik)
+        xhr.timeout = 30000;
+
+        // Set headers persis seperti Postman
         const headers = {
             'Authorization': 'Bearer ' + token,
             'Cache-Control': 'no-cache',
@@ -39,86 +70,65 @@
             'Connection': 'keep-alive',
             'Content-Type': 'application/json',
             'Cookie': 'killme=dont',
-            'Origin': 'http://localhost', // Tambahkan origin local
-            'Referer': 'http://localhost/' // Referer local
+            'Origin': window.location.origin, // Origin current page
+            'Referer': window.location.href // Referer current page
         };
 
-        try {
-            console.log('Sending request with headers:', headers);
+        // Apply semua headers
+        Object.keys(headers).forEach(key => {
+            xhr.setRequestHeader(key, headers[key]);
+        });
 
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: headers,
-                mode: 'cors', // Important for cross-origin
-                credentials: 'include' // Include cookies
-            });
+        console.log('Sending request to:', url);
+        console.log('With headers:', headers);
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+        // Kirim request
+        xhr.send();
+    }
+
+    function handleResponse(xhr) {
+        const resultDiv = $('#result');
+
+        if (xhr.status >= 200 && xhr.status < 300) {
+            // Success
+            try {
+                const response = JSON.parse(xhr.responseText);
+                resultDiv.html(`
+                <div style="background: #d4edda; padding: 15px; border-radius: 5px;">
+                    <h3 style="color: #155724;">✅ Request Successful</h3>
+                    <p><strong>Status:</strong> ${xhr.status} ${xhr.statusText}</p>
+                    <h4>Response Data:</h4>
+                    <pre style="background: white; padding: 10px;">${JSON.stringify(response, null, 2)}</pre>
+                </div>
+            `);
+                console.log('Success Response:', response);
+            } catch (e) {
+                // Jika response bukan JSON
+                resultDiv.html(`
+                <div style="background: #d4edda; padding: 15px; border-radius: 5px;">
+                    <h3 style="color: #155724;">✅ Request Successful (Raw Response)</h3>
+                    <p><strong>Status:</strong> ${xhr.status} ${xhr.statusText}</p>
+                    <h4>Raw Response:</h4>
+                    <pre style="background: white; padding: 10px;">${xhr.responseText}</pre>
+                </div>
+            `);
             }
-
-            const data = await response.json();
-
-            $('#result').html(`
-            <h3>Success Response:</h3>
-            <pre>${JSON.stringify(data, null, 2)}</pre>
-            <h4>Response Headers:</h4>
-            <pre>${JSON.stringify(Object.fromEntries(response.headers), null, 2)}</pre>
+        } else {
+            // Error
+            resultDiv.html(`
+            <div style="background: #f8d7da; padding: 15px; border-radius: 5px;">
+                <h3 style="color: #721c24;">❌ Request Failed</h3>
+                <p><strong>Status:</strong> ${xhr.status} ${xhr.statusText}</p>
+                <h4>Error Response:</h4>
+                <pre style="background: white; padding: 10px;">${xhr.responseText || 'No response body'}</pre>
+            </div>
         `);
-            console.log('Success:', data);
-
-        } catch (error) {
-            $('#result').html(`
-            <h3>Error:</h3>
-            <p>${error.message}</p>
-        `);
-            console.error('Error:', error);
+            console.error('Error Response:', xhr.status, xhr.statusText, xhr.responseText);
         }
 
-        // $.ajax({
-        //     url: "http://localhost:5774/WebService/getGtk?npsn=" + npsn,
-        //     type: 'GET',
-        //     headers: {
-        //         'Authorization': "Bearer " + token,
-        //         'Cache-Control': 'no-cache',
-        //         'Postman-Token': generatePostmanToken(),
-        //         'User-Agent': 'PostmanRuntime/7.49.0',
-        //         'Accept': '*/*',
-        //         'Accept-Encoding': 'gzip, deflate, br',
-        //         'Connection': 'keep-alive',
-        //         'Content-Type': 'application/json',
-        //         'Cookie': 'killme=dont'
-        //     },
-        //     // HAPUS dataType: 'jsonp' untuk request normal
-        //     dataType: 'json', // Ganti dengan json untuk response JSON normal
-        //     crossDomain: true, // Izinkan cross-domain
-        //     xhrFields: {
-        //         withCredentials: true // Include credentials/cookies
-        //     },
-        //     success: function(response) {
-        //         $('#result').html(`
-        //         <h3>Success Response:</h3>
-        //         <pre>${JSON.stringify(response, null, 2)}</pre>
-        //     `);
-        //         console.log('Success:', response);
-        //     },
-        //     error: function(xhr, status, error) {
-        //         $('#result').html(`
-        //         <h3>Error:</h3>
-        //         <p>${error}</p>
-        //         <p>Status: ${status}</p>
-        //         <p>HTTP Status: ${xhr.status}</p>
-        //         <pre>${xhr.responseText}</pre>
-        //     `);
-        //         console.error('Error:', error, 'Status:', status, 'HTTP Status:', xhr.status);
-        //     },
-        //     beforeSend: function(xhr) {
-        //         console.log('All Headers being sent:');
-        //         // Tambahkan header tambahan untuk meniru browser
-        //         xhr.setRequestHeader('Sec-Fetch-Mode', 'cors');
-        //         xhr.setRequestHeader('Sec-Fetch-Site', 'same-site');
-        //     }
-        // });
+        // Log response headers
+        console.log('Response Headers:');
+        console.log(xhr.getAllResponseHeaders());
     }
 
     // Generate random Postman-Token (mirip dengan yang di Postman)
