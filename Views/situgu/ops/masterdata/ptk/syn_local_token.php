@@ -27,7 +27,7 @@
             );
         }
 
-        const url = "http://localhost:5774/WebService/getGtk?npsn=" + npsn;
+        const url = "http://127.0.0.1:5774/WebService/getGtk?npsn=" + npsn;
 
         const headers = {
             'Authorization': 'Bearer ' + token,
@@ -39,22 +39,22 @@
             'Connection': 'keep-alive',
             'Content-Type': 'application/json',
             'Cookie': 'killme=dont',
-            'Origin': 'localhost',
+            'Origin': '127.0.0.1',
 
             // Header untuk manipulasi
             'X-Client-IP': 'localhost',
             'X-Client-Location': 'localhost',
             'X-Request-Source': 'Web-Browser',
-            'X-Forwarded-For': 'localhost',
-            'X-Real-IP': 'localhost',
-            'X-Originating-IP': 'localhost',
-            'X-Remote-IP': 'localhost',
-            'X-Remote-Addr': 'localhost',
-            'Forwarded': 'for=localhost;host=localhost;proto=http',
+            'X-Forwarded-For': '127.0.0.1',
+            'X-Real-IP': '127.0.0.1',
+            'X-Originating-IP': '127.0.0.1',
+            'X-Remote-IP': '127.0.0.1',
+            'X-Remote-Addr': '127.0.0.1',
+            'Forwarded': 'for=127.0.0.1;host=localhost;proto=http',
 
             // Header khusus untuk aplikasi tertentu
-            'Referer': 'http://localhost:5774/',
-            'Host': 'localhost:5774'
+            'Referer': 'http://127.0.0.1/',
+            'Host': '127.0.0.1:5774'
         };
 
         try {
