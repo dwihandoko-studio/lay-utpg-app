@@ -31,40 +31,44 @@
             url: "http://localhost:5774/WebService/getGtk?npsn=" + npsn,
             type: 'GET',
             headers: {
-                // Header Authorization (sudah ada di contoh sebelumnya)
                 'Authorization': "Bearer " + token,
-
-                // Header dari Postman screenshot
                 'Cache-Control': 'no-cache',
                 'Postman-Token': generatePostmanToken(),
                 'User-Agent': 'PostmanRuntime/7.49.0',
                 'Accept': '*/*',
                 'Accept-Encoding': 'gzip, deflate, br',
                 'Connection': 'keep-alive',
-
-                // Header tambahan yang biasanya ada di Postman
                 'Content-Type': 'application/json',
                 'Cookie': 'killme=dont'
             },
-            dataType: 'jsonp',
+            // HAPUS dataType: 'jsonp' untuk request normal
+            dataType: 'json', // Ganti dengan json untuk response JSON normal
+            crossDomain: true, // Izinkan cross-domain
+            xhrFields: {
+                withCredentials: true // Include credentials/cookies
+            },
             success: function(response) {
                 $('#result').html(`
-                        <h3>Success Response:</h3>
-                        <pre>${JSON.stringify(response, null, 2)}</pre>
-                    `);
+                <h3>Success Response:</h3>
+                <pre>${JSON.stringify(response, null, 2)}</pre>
+            `);
                 console.log('Success:', response);
             },
             error: function(xhr, status, error) {
                 $('#result').html(`
-                        <h3>Error:</h3>
-                        <p>${error}</p>
-                        <p>Status: ${status}</p>
-                    `);
-                console.error('Error:', error);
+                <h3>Error:</h3>
+                <p>${error}</p>
+                <p>Status: ${status}</p>
+                <p>HTTP Status: ${xhr.status}</p>
+                <pre>${xhr.responseText}</pre>
+            `);
+                console.error('Error:', error, 'Status:', status, 'HTTP Status:', xhr.status);
             },
             beforeSend: function(xhr) {
                 console.log('All Headers being sent:');
-                console.log(xhr.headers);
+                // Tambahkan header tambahan untuk meniru browser
+                xhr.setRequestHeader('Sec-Fetch-Mode', 'cors');
+                xhr.setRequestHeader('Sec-Fetch-Site', 'same-site');
             }
         });
     }
