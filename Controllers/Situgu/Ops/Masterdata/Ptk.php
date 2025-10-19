@@ -208,6 +208,79 @@ class Ptk extends BaseController
         }
     }
 
+    public function mulaisyndapolocal()
+    {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            delete_cookie('jwt');
+            session()->destroy();
+            $response = new \stdClass;
+            $response->status = 401;
+            $response->message = "Session telah expired.";
+            return json_encode($response);
+        }
+
+        if (!(grantTarikDataDapodikLokal())) {
+            $canGrantedSyncrone = canGrantedTarikDataDapodikLokal($user->data->id);
+
+            if ($canGrantedSyncrone && $canGrantedSyncrone->code !== 200) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Tarik data dari dapodik lokal masih dalam normalisasi system.";
+                return json_encode($response);
+            }
+        }
+
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'token' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Token tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('token');
+            return json_encode($response);
+        } else {
+            $token = htmlspecialchars($this->request->getVar('token'), true);
+
+
+
+            $urlendpoint = 'http://localhost:5774/WebService/getGtk?npsn=' . $user->data->npsn;
+
+            $curlHandle = curl_init($urlendpoint);
+            curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, "GET");
+            // curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curlHandle, CURLOPT_HTTPHEADER, array(
+                'Authorization: Bearer ' . $token,
+                'Content-Type: application/json'
+            ));
+            curl_setopt($curlHandle, CURLOPT_TIMEOUT, 30);
+            curl_setopt($curlHandle, CURLOPT_CONNECTTIMEOUT, 30);
+
+            return $curlHandle;
+            // } else {
+            //     $response = new \stdClass;
+            //     $response->status = 400;
+            //     $response->message = "Data tidak ditemukan";
+            //     return json_encode($response);
+            // }
+        }
+    }
+
     public function detail()
     {
         if ($this->request->getMethod() != 'post') {

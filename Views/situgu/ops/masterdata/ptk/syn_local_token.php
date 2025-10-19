@@ -17,7 +17,6 @@
 <script>
     async function getSyncDapoLocal(event) {
         const token = document.getElementsByName('_token')[0].value;
-        const npsn = '<?= isset($sekolah) ? $sekolah->npsn : '' ?>';
 
         if (token === "") {
             Swal.fire(
@@ -27,65 +26,73 @@
             );
         }
 
-        const url = "http://127.0.0.1:5774/WebService/getGtk?npsn=" + npsn;
+        $.ajax({
+            url: "./mulaisyndapolocal",
+            type: 'POST',
+            data: {
+                token: token,
+            },
+            dataType: 'JSON',
+            beforeSend: function() {
+                e.disabled = true;
+                $('div.modal-content-loading-tolak').block({
+                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                });
+            },
+            success: function(resul) {
+                $('div.modal-content-loading-tolak').unblock();
 
-        const headers = {
-            'Authorization': 'Bearer ' + token,
-            'Cache-Control': 'no-cache',
-            'Postman-Token': generatePostmanToken(),
-            'User-Agent': 'PostmanRuntime/7.49.0',
-            'Accept': '*/*',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Connection': 'keep-alive',
-            'Content-Type': 'application/json',
-            'Cookie': 'killme=dont',
-            'Origin': '127.0.0.1',
-
-            // Header untuk manipulasi
-            'X-Client-IP': 'localhost',
-            'X-Client-Location': 'localhost',
-            'X-Request-Source': 'Web-Browser',
-            'X-Forwarded-For': '127.0.0.1',
-            'X-Real-IP': '127.0.0.1',
-            'X-Originating-IP': '127.0.0.1',
-            'X-Remote-IP': '127.0.0.1',
-            'X-Remote-Addr': '127.0.0.1',
-            'Forwarded': 'for=127.0.0.1;host=localhost;proto=http',
-
-            // Header khusus untuk aplikasi tertentu
-            'Referer': 'http://127.0.0.1/',
-            'Host': '127.0.0.1:5774'
-        };
-
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: headers,
-                mode: 'no-cors',
-                credentials: 'include'
-            });
-
-            if (response.ok || response.type === 'opaque') {
-                $('#result').html(`
-                <div style="background: #d4edda; padding: 15px; border-radius: 5px;">
-                    <h3 style="color: #155724;">✅ Request Berhasil Dikirim</h3>
-                    <p><strong>Informasi Request:</strong></p>
-                    <ul>
-                        <li><strong>NPSN:</strong> ${npsn}</li>
-                        <li><strong>Waktu:</strong> ${new Date().toLocaleString()}</li>
-                    </ul>
-                    <p><em>Note: Menggunakan mode no-cors - response body mungkin tidak dapat diakses</em></p>
-                </div>
-            `);
+                if (resul.status !== 200) {
+                    if (resul.status !== 201) {
+                        if (resul.status === 401) {
+                            Swal.fire(
+                                'Failed!',
+                                resul.message,
+                                'warning'
+                            ).then((valRes) => {
+                                reloadPage();
+                            });
+                        } else {
+                            e.disabled = false;
+                            Swal.fire(
+                                'GAGAL!',
+                                resul.message,
+                                'warning'
+                            );
+                        }
+                    } else {
+                        Swal.fire(
+                            'Peringatan!',
+                            resul.message,
+                            'success'
+                        ).then((valRes) => {
+                            reloadPage();
+                        })
+                    }
+                } else {
+                    Swal.fire(
+                        'SELAMAT!',
+                        resul.message,
+                        'success'
+                    ).then((valRes) => {
+                        reloadPage();
+                    })
+                }
+            },
+            error: function(erro) {
+                console.log(erro);
+                // e.attr('disabled', false);
+                e.disabled = false
+                $('div.modal-content-loading-tolak').unblock();
+                Swal.fire(
+                    'PERINGATAN!',
+                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                    'warning'
+                );
             }
+        });
 
-        } catch (error) {
-            $('#result').html(`
-            <div style="background: #f8d7da; padding: 15px; border-radius: 5px;">
-                <h3 style="color: #721c24;">❌ Error</h3>
-            </div>
-        `);
-        }
+
     }
 
     // Generate random Postman-Token (mirip dengan yang di Postman)
