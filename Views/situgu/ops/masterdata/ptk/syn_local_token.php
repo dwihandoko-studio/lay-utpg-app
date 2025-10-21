@@ -1,7 +1,7 @@
 <form id="formTarikDataLocalModalData" method="post">
     <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
         <div class="mb-3">
-            <label for="_token" class="form-label">Token Api Local Dapodik</label>
+            <label for="_token" class="form-label">Token Api Local Dapodik Untuk Situgu Client</label>
             <input type="text" class="form-control token" <?= isset($data) ? ($data->token === NULL || $data->token === "" ? '' : 'value="' . $data->token . '"') : '' ?> id="_token" name="_token" placeholder="Token Api Dapodik Local..." onfocusin="inputFocus(this);" />
             <!-- <p style="padding: 5px 0px;">Silah isi Nomor Whatsapp dengan format: 08xxxxxxxxxx (Contoh: 081208120812)</p> -->
             <div class="help-block _token"></div>
@@ -53,7 +53,6 @@
                                 reloadPage();
                             });
                         } else {
-                            e.disabled = false;
                             Swal.fire(
                                 'GAGAL!',
                                 resul.message,
@@ -81,8 +80,6 @@
             },
             error: function(erro) {
                 console.log(erro);
-                // e.attr('disabled', false);
-                e.disabled = false
                 $('div.modal-content-loading-tolak').unblock();
                 Swal.fire(
                     'PERINGATAN!',

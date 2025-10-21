@@ -255,29 +255,63 @@ class Ptk extends BaseController
             return json_encode($response);
         } else {
             $token = htmlspecialchars($this->request->getVar('token'), true);
+            $npsn = $user->data->npsn;
 
+            $tmtTarikan = getTmtTarikanSync();
+            if ($tmtTarikan->code !== 200) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Batas TMT tidak ditemukan, silahkan hubungi Admin.";
+                return json_encode($response);
+            }
 
+            $tw = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
 
-            $urlendpoint = 'http://localhost:5774/WebService/getGtk?npsn=' . $user->data->npsn;
+            $data = [
+                'npsn' => $npsn,
+                'semester' => $tw->tahun,
+                'batasTmtTarikan' => $tmtTarikan->data,
+                'token' => $token,
+            ];
+
+            $urlendpoint = 'https://backbone.disdikbud.lampungtengahkab.go.id/api/tarik-data';
 
             $curlHandle = curl_init($urlendpoint);
-            curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, "GET");
-            // curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($curlHandle, CURLOPT_POSTFIELDS, json_encode($data));
             curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curlHandle, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token,
+                'x-api-token: 0b4e06f30dc26c36f322580591e0a09c',
                 'Content-Type: application/json'
             ));
             curl_setopt($curlHandle, CURLOPT_TIMEOUT, 30);
             curl_setopt($curlHandle, CURLOPT_CONNECTTIMEOUT, 30);
 
-            return $curlHandle;
-            // } else {
-            //     $response = new \stdClass;
-            //     $response->status = 400;
-            //     $response->message = "Data tidak ditemukan";
-            //     return json_encode($response);
-            // }
+            $send_data         = curl_exec($curlHandle);
+
+            $result = json_decode($send_data);
+
+
+            if (isset($result->error)) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->error = $result->error;
+                $response->message = "gagal.";
+                return json_encode($response);
+            }
+
+            if ($result) {
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->data = $result;
+                $response->message = "success";
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal melakukan tarik data.";
+                return json_encode($response);
+            }
         }
     }
 

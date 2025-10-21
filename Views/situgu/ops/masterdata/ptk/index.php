@@ -136,13 +136,13 @@
                         'warning'
                     );
                 } else {
-                    $('#content-aktivasiModalLabel').html('TARIK DATA DARI DAPODIK LOKAL');
-                    $('.contentAktivasiBodyModal').html(resul.data);
-                    $('.content-aktivasiModal').modal({
+                    $('#content-tolakModalLabel').html('TARIK DATA DARI DAPODIK LOKAL');
+                    $('.contentTolakBodyModal').html(resul.data);
+                    $('.content-tolakModal').modal({
                         backdrop: 'static',
                         keyboard: false,
                     });
-                    $('.content-aktivasiModal').modal('show');
+                    $('.content-tolakModal').modal('show');
                 }
             },
             error: function() {
