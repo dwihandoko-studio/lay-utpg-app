@@ -77,6 +77,7 @@ class Ptk extends BaseController
                             <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
                             <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Tarik Data</a>
                             <a class="dropdown-item" href="javascript:actionSyncDataPembenahan(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Syncrone Data Pembenahan</a>
+                            <a class="dropdown-item" href="javascript:actionEditRiwayatBerkala(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-edit font-size-16 align-middle"></i> &nbsp;Edit Riwayat Berkala</a>
                             <a class="dropdown-item" href="javascript:actionMutasi(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Ajukan Mutasi PTK</a>
                         </div>
                     </div>';
@@ -375,51 +376,6 @@ class Ptk extends BaseController
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
                 $response->data = view('situgu/ops/masterdata/ptk/detail', $data);
-                return json_encode($response);
-            } else {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Data tidak ditemukan";
-                return json_encode($response);
-            }
-        }
-    }
-
-    public function edit()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
-
-        $rules = [
-            'id' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Id tidak boleh kosong. ',
-                ]
-            ],
-        ];
-
-        if (!$this->validate($rules)) {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = $this->validator->getError('id');
-            return json_encode($response);
-        } else {
-            $id = htmlspecialchars($this->request->getVar('id'), true);
-
-            $current = $this->_db->table('_users_tb')
-                ->where('uid', $id)->get()->getRowObject();
-
-            if ($current) {
-                $data['data'] = $current;
-                $response = new \stdClass;
-                $response->status = 200;
-                $response->message = "Permintaan diizinkan";
-                $response->data = view('a/setting/pengguna/edit', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -908,6 +864,356 @@ class Ptk extends BaseController
             $response->message = "Permintaan diizinkan";
             $response->data = view('situgu/ops/masterdata/ptk/hapus', $data);
             return json_encode($response);
+        }
+    }
+
+    public function formkgb()
+    {
+        if (!(grantEditKGB())) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Untuk Saat ini Edit KGB Sudah Ditutup.";
+            return json_encode($response);
+        }
+
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'ptk_id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'PTK Id tidak boleh kosong. ',
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+            'npsn' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NPSN tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('nama')
+                . $this->validator->getError('npsn')
+                . $this->validator->getError('ptk_id');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session telah habis";
+                $response->redirect = base_url('auth');
+                return json_encode($response);
+            }
+
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $ptk_id = htmlspecialchars($this->request->getVar('ptk_id'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+            $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
+
+            $current = $this->_db->table('_ptk_tb')
+                ->where(['id' => $id, 'id_ptk' => $ptk_id, 'npsn' => $npsn])->get()->getRowObject();
+
+            if ($current) {
+                $current->pangkats = $this->_db->table('ref_gaji')
+                    ->whereNotIn('pangkat', ['pghm', 'tamsil'])->orderBy('pangkat', 'ASC')->get()->getResult();
+                $data['data'] = $current;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('situgu/ops/masterdata/ptk/edit_kgb', $data);
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function editKgbSave()
+    {
+        if (!(grantEditKGB())) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Untuk Saat ini Edit KGB Sudah Ditutup.";
+            return json_encode($response);
+        }
+
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id PTK tidak boleh kosong. ',
+                ]
+            ],
+            'kgb' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Pangkat KGB tidak boleh kosong. ',
+                ]
+            ],
+            'no_sk_kgb' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'No SK KGB tidak boleh kosong. ',
+                ]
+            ],
+            'tgl_kgb' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tanggal SK KGB tidak boleh kosong. ',
+                ]
+            ],
+            'tmt_kgb' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'TMT SK KGB tidak boleh kosong. ',
+                ]
+            ],
+            'mkt_kgb' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Masa Kerja Tahun KGB tidak boleh kosong. ',
+                ]
+            ],
+            'mkb_kgb' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Masa Kerja Bulan KGB tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('kgb')
+                . $this->validator->getError('no_sk_kgb')
+                . $this->validator->getError('tgl_kgb')
+                . $this->validator->getError('tmt_kgb')
+                . $this->validator->getError('mkt_kgb')
+                . $this->validator->getError('mkb_kgb');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $kgb = htmlspecialchars($this->request->getVar('kgb'), true);
+            $no_sk_kgb = htmlspecialchars($this->request->getVar('no_sk_kgb'), true);
+            $tgl_kgb = htmlspecialchars($this->request->getVar('tgl_kgb'), true);
+            $tmt_kgb = htmlspecialchars($this->request->getVar('tmt_kgb'), true);
+            $mkt_kgb = htmlspecialchars($this->request->getVar('mkt_kgb'), true);
+            $mkb_kgb = htmlspecialchars($this->request->getVar('mkb_kgb'), true);
+
+            $oldData =  $this->_db->table('_ptk_tb')->where('id', $id)->get()->getRowObject();
+
+            if (!$oldData) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $data = [
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
+            if ($kgb !== "") {
+                $data['pangkat_golongan_kgb'] = $kgb;
+            }
+            if ($no_sk_kgb !== "") {
+                $data['sk_kgb'] = $no_sk_kgb;
+            }
+            if ($tgl_kgb !== "") {
+                $data['tgl_sk_kgb'] = $tgl_kgb;
+            }
+            if ($tmt_kgb !== "") {
+                $data['tmt_sk_kgb'] = $tmt_kgb;
+            }
+            if ($mkt_kgb !== "") {
+                $data['masa_kerja_tahun_kgb'] = $mkt_kgb;
+            }
+            if ($mkb_kgb !== "") {
+                $data['masa_kerja_bulan_kgb'] = $mkb_kgb;
+            }
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table('_ptk_tb')->where('id', $oldData->id)->update($data);
+            } catch (\Exception $e) {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menyimpan gambar baru.";
+                return json_encode($response);
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+                $this->_db->transCommit();
+
+                $this->syncPembenahanKgb($oldData->id_ptk, $oldData->nama);
+
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Data berhasil diupdate.";
+                return json_encode($response);
+            } else {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengupate data";
+                return json_encode($response);
+            }
+        }
+    }
+
+    private function syncPembenahanKgb($idPtk, $nama)
+    {
+        $tw = $this->_helpLib->getCurrentTw();
+        if (!$tw) {
+            return false;
+        }
+
+        $ptk = $this->_db->table('_ptk_tb')->where('id_ptk', $idPtk)->get()->getRowObject();
+
+        if (!$ptk) {
+            return false;
+        }
+
+        $ptkAttr = $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $ptk->id, 'id_tahun_tw' => $tw])->get()->getRowObject();
+        if (!$ptkAttr) {
+            return false;
+        }
+        if ($ptkAttr->is_locked == 1) {
+            return false;
+        }
+
+        $tgl = "";
+        $golongan = "";
+        $tmt = "";
+        $tgl = "";
+        $no = "";
+        $jenis = "";
+        $tahun = "";
+        $bulan = "";
+
+        if ($ptk->status_kepegawaian == "GTY/PTY") {
+            $tgl = $ptk->tgl_sk_impassing;
+            $golongan = $ptk->pangkat_golongan_ruang;
+            $tmt = $ptk->tmt_sk_impassing;
+            $no = $ptk->nomor_sk_impassing;
+            $jenis = "pangkat";
+            $tahun = $ptk->masa_kerja_tahun_impassing;
+            $bulan = $ptk->masa_kerja_bulan_impassing;
+        } else {
+            if ($ptk->tmt_sk_kgb == NULL || $ptk->tmt_sk_kgb == "" || $ptk->tmt_pangkat == NULL || $ptk->tmt_pangkat == "") {
+                if ($ptk->tmt_pangkat == NULL || $ptk->tmt_pangkat == "") {
+                    return false;
+                } else {
+                    if ($ptk->tmt_sk_kgb > $ptk->tmt_pangkat) {
+                        $tgl = $ptk->tgl_sk_kgb;
+                        $golongan = $ptk->pangkat_golongan_kgb;
+                        $tmt = $ptk->tmt_sk_kgb;
+                        $no = $ptk->sk_kgb;
+                        $jenis = "kgb";
+                        $tahun = $ptk->masa_kerja_tahun_kgb;
+                        $bulan = $ptk->masa_kerja_bulan_kgb;
+                    } else {
+                        $tgl = $ptk->tgl_sk_pangkat;
+                        $golongan = $ptk->pangkat_golongan;
+                        $tmt = $ptk->tmt_pangkat;
+                        $no = $ptk->nomor_sk_pangkat;
+                        $jenis = "pangkat";
+                        $tahun = $ptk->masa_kerja_tahun;
+                        $bulan = $ptk->masa_kerja_bulan;
+                    }
+                }
+            } else {
+                if ($ptk->tmt_sk_kgb > $ptk->tmt_pangkat) {
+                    $tgl = $ptk->tgl_sk_kgb;
+                    $golongan = $ptk->pangkat_golongan_kgb;
+                    $tmt = $ptk->tmt_sk_kgb;
+                    $no = $ptk->sk_kgb;
+                    $jenis = "kgb";
+                    $tahun = $ptk->masa_kerja_tahun_kgb;
+                    $bulan = $ptk->masa_kerja_bulan_kgb;
+                } else {
+                    $tgl = $ptk->tgl_sk_pangkat;
+                    $golongan = $ptk->pangkat_golongan;
+                    $tmt = $ptk->tmt_pangkat;
+                    $no = $ptk->nomor_sk_pangkat;
+                    $jenis = "pangkat";
+                    $tahun = $ptk->masa_kerja_tahun;
+                    $bulan = $ptk->masa_kerja_bulan;
+                }
+            }
+        }
+
+        $this->_db->transBegin();
+        try {
+            $this->_db->table('_upload_data_attribut')->where('id', $ptkAttr->id)->update([
+                'pang_golongan' => $golongan,
+                'pang_jenis' => $jenis,
+                'pang_no' => $no,
+                'pang_tmt' => $tmt,
+                'pang_tgl' => $tgl,
+                'pang_tahun' => $tahun,
+                'pang_bulan' => $bulan,
+            ]);
+        } catch (\Throwable $th) {
+            $this->_db->transRollback();
+            return false;
+        }
+
+        if ($this->_db->affectedRows() > 0) {
+            $this->_db->transCommit();
+            return true;
+        } else {
+            $this->_db->transRollback();
+            return false;
         }
     }
 

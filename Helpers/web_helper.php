@@ -1553,6 +1553,19 @@ function grantTarikDataBackbone()
 	return true;
 }
 
+function grantEditKGB()
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	$grandted = $db->table('granted_syncrone_backbone')->where(['id' => 3, 'status' => 1])->get()->getRowObject();
+	if (!$grandted) {
+		return false;
+	}
+
+	return true;
+}
+
 function getHasActivationTeleFromPengguna($ptk_id)
 {
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
