@@ -941,7 +941,9 @@ class Ptk extends BaseController
 
             if ($current) {
                 $current->pangkats = $this->_db->table('ref_gaji')
-                    ->whereNotIn('pangkat', ['pghm', 'tamsil'])->orderBy('pangkat', 'ASC')->get()->getResult();
+                    ->whereNotIn('pangkat', ['pghm', 'tamsil'])
+                    ->groupBy('pangkat')
+                    ->orderBy('pangkat', 'ASC')->get()->getResult();
                 $data['data'] = $current;
                 $response = new \stdClass;
                 $response->status = 200;
