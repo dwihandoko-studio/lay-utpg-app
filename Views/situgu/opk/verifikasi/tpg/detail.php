@@ -351,6 +351,9 @@
                 <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= strpos($data->lampiran_pernyataan, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_pernyataan) : base_url('upload/ptk/pernyataanindividu') . '/' . $data->lampiran_pernyataan ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_pernyataan, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_pernyataan) : base_url('upload/ptk/pernyataanindividu') . '/' . $data->lampiran_pernyataan ?>" id="nik">
                     Pernyataan 24 Jam
                 </a>
+                <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= strpos($data->lampiran_skp_pkg, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_skp_pkg) : base_url('upload/ptk/skp_pkg') . '/' . $data->lampiran_skp_pkg ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_skp_pkg, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_skp_pkg) : base_url('upload/ptk/skp_pkg') . '/' . $data->lampiran_skp_pkg ?>" id="nik">
+                    SKP / PKG
+                </a>
                 <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= strpos($data->lampiran_sptjm, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_sptjm) : base_url('upload/sekolah/sptjm') . '/' . $data->lampiran_sptjm ?>','popup','width=600,height=600'); return false;" href="<?= strpos($data->lampiran_sptjm, '/') !== false ? getDokumentPreviewStorage('situgu', $data->lampiran_sptjm) : base_url('upload/sekolah/sptjm') . '/' . $data->lampiran_sptjm ?>" id="nik">
                     SPTJM USULAN
                 </a>

@@ -32,6 +32,9 @@
 		},
 		{
 			"path": "../../../../../../../../../sso-portal-idp"
+		},
+		{
+			"path": "../../../../../../../../../../DOCKER/SITUGU-V2025/situtu_client"
 		}
 	],
 	"settings": {
