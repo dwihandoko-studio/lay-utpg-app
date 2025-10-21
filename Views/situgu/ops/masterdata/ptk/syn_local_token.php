@@ -1,5 +1,13 @@
 <form id="formTarikDataLocalModalData" method="post">
     <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
+        <p>
+            Jika terdeteksi "Belum melakukan syncron data local", Silahkan hub. Operator Dapodik Sekolah untuk melakukan Syncronisasi Data Local dengan menggunakan aplikasi SiTuguSyncronClient.
+        <ol>
+            <li>▶️ <a href="https://drive.google.com/drive/folders/1YK1Y_V54aMGAQY0q3-A6LiqIE_BV-Ip4?usp=sharing" target="_blank">Download Aplikasi SiTuguSyncronClient.</a></li>
+            <li>▶️ <a href="https://drive.google.com/drive/folders/1YK1Y_V54aMGAQY0q3-A6LiqIE_BV-Ip4?usp=sharing" target="_blank">Download Panduan.</a></li>
+
+        </ol>
+        </p>
         <div class="mb-3">
             <label for="_token" class="form-label">Token Api Local Dapodik Untuk Situgu Client</label>
             <input type="text" class="form-control token" <?= isset($data) ? ($data->token === NULL || $data->token === "" ? '' : 'value="' . $data->token . '"') : '' ?> id="_token" name="_token" placeholder="Token Api Dapodik Local..." onfocusin="inputFocus(this);" />
