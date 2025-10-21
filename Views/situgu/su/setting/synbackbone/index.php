@@ -31,7 +31,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-6">
-                                <h4 class="card-title">STATUS GRANTED SYNCRONE BACKBONE</h4>
+                                <h4 class="card-title">STATUS GRANTEDE</h4>
                             </div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                         <table id="data-datatables" class="table table-bordered dt-responsive  nowrap w-100">
                             <thead>
                                 <tr>
-                                    <th data-orderable="false">PUSDATIN</th>
+                                    <th data-orderable="false">SYNCRONE PUSDATIN</th>
                                     <th data-orderable="false">STATUS</th>
                                     <th>
                                         <div class="text-center">
@@ -52,14 +52,14 @@
                                     </th>
                                     <th>
                                         <?php if ($status_syn > 0) { ?>
-                                            <a href="javascript:actionDisabled('Pusdatin', 1);" class="btn btn-danger btn-rounded waves-effect waves-light">Non Aktifkan Grant Sync Bacbone Pusdatin</a>
+                                            <a href="javascript:actionDisabled('Syncrone Backbone Pusdatin', 1);" class="btn btn-danger btn-rounded waves-effect waves-light">Non Aktifkan Grant Sync Bacbone Pusdatin</a>
                                         <?php } else { ?>
-                                            <a href="javascript:actionActived('Pusdatin', 1);" class="btn btn-success btn-rounded waves-effect waves-light">Aktifkan Grant Sync Bacbone Pusdatin</a>
+                                            <a href="javascript:actionActived('Syncrone Backbone Pusdatin', 1);" class="btn btn-success btn-rounded waves-effect waves-light">Aktifkan Grant Sync Bacbone Pusdatin</a>
                                         <?php } ?>
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th data-orderable="false">LOKAL</th>
+                                    <th data-orderable="false">SYNCRONE DAPODIK LOKAL</th>
                                     <th data-orderable="false">STATUS</th>
                                     <th>
                                         <div class="text-center">
@@ -72,9 +72,29 @@
                                     </th>
                                     <th>
                                         <?php if ($status_syn_local > 0) { ?>
-                                            <a href="javascript:actionDisabled('Lokal', 2);" class="btn btn-danger btn-rounded waves-effect waves-light">Non Aktifkan Grant Sync Bacbone Lokal</a>
+                                            <a href="javascript:actionDisabled('Syncrone Backbone Lokal', 2);" class="btn btn-danger btn-rounded waves-effect waves-light">Non Aktifkan Grant Sync Bacbone Lokal</a>
                                         <?php } else { ?>
-                                            <a href="javascript:actionActived('Lokal', 2);" class="btn btn-success btn-rounded waves-effect waves-light">Aktifkan Grant Sync Bacbone Lokal</a>
+                                            <a href="javascript:actionActived('Syncrone Backbone Lokal', 2);" class="btn btn-success btn-rounded waves-effect waves-light">Aktifkan Grant Sync Bacbone Lokal</a>
+                                        <?php } ?>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th data-orderable="false">EDIT KGB</th>
+                                    <th data-orderable="false">STATUS</th>
+                                    <th>
+                                        <div class="text-center">
+                                            <?php if ($status_edit_kgb > 0) { ?>
+                                                <span class="badge rounded-pill bg-success">Aktif</span>
+                                            <?php } else { ?>
+                                                <span class="badge rounded-pill bg-danger">Tidak Aktif </span>
+                                            <?php } ?>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <?php if ($status_edit_kgb > 0) { ?>
+                                            <a href="javascript:actionDisabled('Edit KGB', 3);" class="btn btn-danger btn-rounded waves-effect waves-light">Non Aktifkan Edit Riwayat KGB</a>
+                                        <?php } else { ?>
+                                            <a href="javascript:actionActived('Edit KGB', 3);" class="btn btn-success btn-rounded waves-effect waves-light">Aktifkan Edit Riwayat KGB</a>
                                         <?php } ?>
                                     </th>
                                 </tr>
@@ -111,8 +131,8 @@
 <script>
     function actionDisabled(event, id) {
         Swal.fire({
-            title: `Apakah anda yakin ingin menonaktifkan granted syncrone backbone ${event}?`,
-            text: `Nonaktifkan Grant Syncrone Backbone ${event}: SITUGU`,
+            title: `Apakah anda yakin ingin menonaktifkan granted ${event}?`,
+            text: `Nonaktifkan Grant ${event}: SITUGU`,
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
@@ -167,8 +187,8 @@
 
     function actionActived(event, id) {
         Swal.fire({
-            title: `Apakah anda yakin ingin mengaktifkan Grant Syncrone Backbone ${event}?`,
-            text: `Aktifkan Grant Syncrone Backbone ${event}: SITUGU`,
+            title: `Apakah anda yakin ingin mengaktifkan Grant ${event}?`,
+            text: `Aktifkan Grant ${event}: SITUGU`,
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',

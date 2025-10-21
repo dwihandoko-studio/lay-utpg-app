@@ -32,6 +32,7 @@ class Grantedsynbakbone extends BaseController
 
         $data['status_syn'] = $this->_db->table('granted_syncrone_backbone')->where(['id' => 1, 'status' => 1])->countAllResults();
         $data['status_syn_local'] = $this->_db->table('granted_syncrone_backbone')->where(['id' => 2, 'status' => 1])->countAllResults();
+        $data['status_edit_kgb'] = $this->_db->table('granted_syncrone_backbone')->where(['id' => 3, 'status' => 1])->countAllResults();
 
         $data['user'] = $user->data;
 
@@ -80,20 +81,20 @@ class Grantedsynbakbone extends BaseController
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
-                    $response->message = "Granted Syncrone Backbone $id Berhasil Dinonaktifkan.";
+                    $response->message = "Granted $id Berhasil Dinonaktifkan.";
                     return json_encode($response);
                 } else {
                     $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
-                    $response->message = "Gagal menonaktifkan Granted Syncrone Backbone $id.";
+                    $response->message = "Gagal menonaktifkan Granted $id.";
                     return json_encode($response);
                 }
             } catch (\Throwable $th) {
                 $this->_db->transRollback();
                 $response = new \stdClass;
                 $response->status = 400;
-                $response->message = "Gagal menonaktifkan Granted Syncrone Backbone $id.";
+                $response->message = "Gagal menonaktifkan Granted $id.";
                 return json_encode($response);
             }
         }
@@ -141,20 +142,20 @@ class Grantedsynbakbone extends BaseController
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
-                    $response->message = "Granted Syncrone Backbone $id Berhasil Diaktifkan.";
+                    $response->message = "Granted $id Berhasil Diaktifkan.";
                     return json_encode($response);
                 } else {
                     $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
-                    $response->message = "Gagal mengaktifkan Granted Syncrone Backbone $id.";
+                    $response->message = "Gagal mengaktifkan Granted $id.";
                     return json_encode($response);
                 }
             } catch (\Throwable $th) {
                 $this->_db->transRollback();
                 $response = new \stdClass;
                 $response->status = 400;
-                $response->message = "Gagal mengaktifkan Granted Syncrone Backbone $id.";
+                $response->message = "Gagal mengaktifkan Granted $id.";
                 return json_encode($response);
             }
         }
