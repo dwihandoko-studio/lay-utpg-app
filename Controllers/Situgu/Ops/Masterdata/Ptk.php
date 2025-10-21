@@ -1156,7 +1156,7 @@ class Ptk extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_ptk_tb')->where('id', $oldData->id)->update($data);
+                $this->_db->table('_ptk_tb')->where(['id' => $oldData->id, 'is_locked' => 0])->update($data);
             } catch (\Exception $e) {
                 $this->_db->transRollback();
                 $response = new \stdClass;
