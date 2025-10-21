@@ -8,7 +8,7 @@
                     <option value="" selected>--Pilih Pendidikan--</option>
                     <?php if (isset($data->pangkats)) { ?>
                         <?php if (count($data->pangkats) > 0) { ?>
-                            <?php foreach ($$data->pangkats as $key => $value) { ?>
+                            <?php foreach ($data->pangkats as $key => $value) { ?>
                                 <option value="<?= $value->pangkat ?>" <?= $data->pangkat_golongan_kgb == $value->pangkat ? 'selected' : '' ?>><?= $value->pangkat ?></option>
                             <?php } ?>
                         <?php } ?>
