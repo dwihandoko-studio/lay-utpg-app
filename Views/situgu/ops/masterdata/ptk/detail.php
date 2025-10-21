@@ -287,6 +287,17 @@
                 <label class="col-form-label">Masa Kerja Bulan:</label>
                 <div><?= ($data->tmt_sk_kgb > $data->tmt_pangkat) ? ($data->masa_kerja_bulan_kgb !== null ? $data->masa_kerja_bulan_kgb : 0) : ($data->masa_kerja_bulan !== null ? $data->masa_kerja_bulan : 0) ?></div>
             </div>
+            <div class="col-lg-3">
+                <label class="col-form-label">Gaji Pokok:</label>
+                <div>
+                    <?php
+                    if ($data->tmt_sk_kgb > $data->tmt_pangkat) {
+                        echo getGajiPokokByPangkatMkt($data->pangkat_golongan, $data->masa_kerja_tahun_kgb ?? 0);
+                    } else {
+                        echo getGajiPokokByPangkatMkt($data->pangkat_golongan, $data->masa_kerja_tahun ?? 0);
+                    } ?>
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
