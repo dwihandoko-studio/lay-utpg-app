@@ -77,7 +77,7 @@ class Ptk extends BaseController
                             <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
                             <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Tarik Data</a>
                             <a class="dropdown-item" href="javascript:actionSyncDataPembenahan(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Syncrone Data Pembenahan</a>
-                            <a class="dropdown-item" href="javascript:actionEditRiwayatBerkala(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-edit font-size-16 align-middle"></i> &nbsp;Edit Riwayat Berkala</a>
+                            <a class="dropdown-item" href="javascript:actionEditRiwayatBerkala(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-edit font-size-16 align-middle"></i> &nbsp;Edit Riwayat Pangkat & Berkala</a>
                             <a class="dropdown-item" href="javascript:actionMutasi(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Ajukan Mutasi PTK</a>
                         </div>
                     </div>';
@@ -872,7 +872,7 @@ class Ptk extends BaseController
         if (!(grantEditKGB())) {
             $response = new \stdClass;
             $response->status = 400;
-            $response->message = "Untuk Saat ini Edit KGB Sudah Ditutup.";
+            $response->message = "Untuk Saat ini Edit Pangkat & KGB Sudah Ditutup.";
             return json_encode($response);
         }
 
@@ -964,7 +964,7 @@ class Ptk extends BaseController
         if (!(grantEditKGB())) {
             $response = new \stdClass;
             $response->status = 400;
-            $response->message = "Untuk Saat ini Edit KGB Sudah Ditutup.";
+            $response->message = "Untuk Saat ini Edit Pangkat & KGB Sudah Ditutup.";
             return json_encode($response);
         }
 
@@ -980,6 +980,42 @@ class Ptk extends BaseController
                 'rules' => 'required|trim',
                 'errors' => [
                     'required' => 'Id PTK tidak boleh kosong. ',
+                ]
+            ],
+            'pangkat' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Pangkat pangkat tidak boleh kosong. ',
+                ]
+            ],
+            'no_sk_pangkat' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'No SK pangkat tidak boleh kosong. ',
+                ]
+            ],
+            'tgl_pangkat' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tanggal SK pangkat tidak boleh kosong. ',
+                ]
+            ],
+            'tmt_pangkat' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'TMT SK pangkat tidak boleh kosong. ',
+                ]
+            ],
+            'mkt_pangkat' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Masa Kerja Tahun pangkat tidak boleh kosong. ',
+                ]
+            ],
+            'mkb_pangkat' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Masa Kerja Bulan pangkat tidak boleh kosong. ',
                 ]
             ],
             'kgb' => [
@@ -1024,6 +1060,12 @@ class Ptk extends BaseController
             $response = new \stdClass;
             $response->status = 400;
             $response->message = $this->validator->getError('id')
+                . $this->validator->getError('pangkat')
+                . $this->validator->getError('no_sk_pangkat')
+                . $this->validator->getError('tgl_pangkat')
+                . $this->validator->getError('tmt_pangkat')
+                . $this->validator->getError('mkt_pangkat')
+                . $this->validator->getError('mkb_pangkat')
                 . $this->validator->getError('kgb')
                 . $this->validator->getError('no_sk_kgb')
                 . $this->validator->getError('tgl_kgb')
@@ -1050,6 +1092,12 @@ class Ptk extends BaseController
             $tmt_kgb = htmlspecialchars($this->request->getVar('tmt_kgb'), true);
             $mkt_kgb = htmlspecialchars($this->request->getVar('mkt_kgb'), true);
             $mkb_kgb = htmlspecialchars($this->request->getVar('mkb_kgb'), true);
+            $pangkat = htmlspecialchars($this->request->getVar('pangkat'), true);
+            $no_sk_pangkat = htmlspecialchars($this->request->getVar('no_sk_pangkat'), true);
+            $tgl_pangkat = htmlspecialchars($this->request->getVar('tgl_pangkat'), true);
+            $tmt_pangkat = htmlspecialchars($this->request->getVar('tmt_pangkat'), true);
+            $mkt_pangkat = htmlspecialchars($this->request->getVar('mkt_pangkat'), true);
+            $mkb_pangkat = htmlspecialchars($this->request->getVar('mkb_pangkat'), true);
 
             $oldData =  $this->_db->table('_ptk_tb')->where('id', $id)->get()->getRowObject();
 
@@ -1063,6 +1111,24 @@ class Ptk extends BaseController
             $data = [
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
+            if ($pangkat !== "") {
+                $data['pangkat_golongan'] = $pangkat;
+            }
+            if ($no_sk_pangkat !== "") {
+                $data['nomor_sk_pangkat'] = $no_sk_pangkat;
+            }
+            if ($tgl_pangkat !== "") {
+                $data['tgl_sk_pangkat'] = $tgl_pangkat;
+            }
+            if ($tmt_pangkat !== "") {
+                $data['tmt_pangkat'] = $tmt_pangkat;
+            }
+            if ($mkt_pangkat !== "") {
+                $data['masa_kerja_tahun'] = $mkt_pangkat;
+            }
+            if ($mkb_pangkat !== "") {
+                $data['masa_kerja_bulan'] = $mkb_pangkat;
+            }
             if ($kgb !== "") {
                 $data['pangkat_golongan_kgb'] = $kgb;
             }
@@ -1112,7 +1178,7 @@ class Ptk extends BaseController
         }
     }
 
-    private function syncPembenahanKgb($idPtk, $nama)
+    private function syncPembenahanKgb($idPtk)
     {
         $tw = $this->_helpLib->getCurrentTw();
         if (!$tw) {

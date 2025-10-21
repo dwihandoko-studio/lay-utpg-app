@@ -273,8 +273,8 @@
 
     function actionEditRiwayatBerkala(id, ptkId, nama, nuptk, npsn) {
         Swal.fire({
-            title: 'Apakah anda yakin ingin mengajukan perubahan data riwayat kenaikan gaji berkala ptk ini?',
-            text: "Edit KGB Untuk PTK : " + nama,
+            title: 'Apakah anda yakin ingin mengajukan perubahan data riwayat pangkat & kenaikan gaji berkala ptk ini?',
+            text: "Edit Pangkat & KGB Untuk PTK : " + nama,
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
@@ -315,7 +315,7 @@
                                     'warning'
                                 );
                             } else {
-                                $('#content-tolakModalLabel').html('EDIT RIWAYAT KGB PTK ' + nama);
+                                $('#content-tolakModalLabel').html('EDIT RIWAYAT PANGKAT & KGB PTK ' + nama);
                                 $('.contentTolakBodyModal').html(resul.data);
                                 $('.content-tolakModal').modal({
                                     backdrop: 'static',
