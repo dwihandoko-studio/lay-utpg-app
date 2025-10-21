@@ -287,7 +287,7 @@ class Ptk extends BaseController
             curl_setopt($curlHandle, CURLOPT_TIMEOUT, 30);
             curl_setopt($curlHandle, CURLOPT_CONNECTTIMEOUT, 30);
 
-            $send_data         = curl_exec($curlHandle);
+            $send_data = curl_exec($curlHandle);
 
             $result = json_decode($send_data);
 
@@ -309,6 +309,7 @@ class Ptk extends BaseController
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
+                $response->error = $send_data;
                 $response->message = "Gagal melakukan tarik data.";
                 return json_encode($response);
             }
