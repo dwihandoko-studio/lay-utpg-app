@@ -10,7 +10,7 @@
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0 font-size-18">SETTING GRANTED SYNCRONE BACKBONE</h4>
 
-                    <div class="page-title-right">
+                    <!-- <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <?php if ($status_syn > 0) { ?>
                                 <li class="breadcrumb-item"><a href="javascript:actionDisabled(this);" class="btn btn-danger btn-rounded waves-effect waves-light">Non Aktifkan Grant Sync Bacbone</a></li>
@@ -18,7 +18,7 @@
                                 <li class="breadcrumb-item"><a href="javascript:actionActived(this);" class="btn btn-success btn-rounded waves-effect waves-light">Aktifkan Grant Sync Bacbone</a></li>
                             <?php } ?>
                         </ol>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
@@ -39,6 +39,7 @@
                         <table id="data-datatables" class="table table-bordered dt-responsive  nowrap w-100">
                             <thead>
                                 <tr>
+                                    <th data-orderable="false">PUSDATIN</th>
                                     <th data-orderable="false">STATUS</th>
                                     <th>
                                         <div class="text-center">
@@ -48,6 +49,33 @@
                                                 <span class="badge rounded-pill bg-danger">Tidak Aktif </span>
                                             <?php } ?>
                                         </div>
+                                    </th>
+                                    <th>
+                                        <?php if ($status_syn > 0) { ?>
+                                            <a href="javascript:actionDisabled('Pusdatin', 1);" class="btn btn-danger btn-rounded waves-effect waves-light">Non Aktifkan Grant Sync Bacbone Pusdatin</a>
+                                        <?php } else { ?>
+                                            <a href="javascript:actionActived('Pusdatin', 1);" class="btn btn-success btn-rounded waves-effect waves-light">Aktifkan Grant Sync Bacbone Pusdatin</a>
+                                        <?php } ?>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th data-orderable="false">LOKAL</th>
+                                    <th data-orderable="false">STATUS</th>
+                                    <th>
+                                        <div class="text-center">
+                                            <?php if ($status_syn_local > 0) { ?>
+                                                <span class="badge rounded-pill bg-success">Aktif</span>
+                                            <?php } else { ?>
+                                                <span class="badge rounded-pill bg-danger">Tidak Aktif </span>
+                                            <?php } ?>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <?php if ($status_syn_local > 0) { ?>
+                                            <a href="javascript:actionDisabled('Lokal', 2);" class="btn btn-danger btn-rounded waves-effect waves-light">Non Aktifkan Grant Sync Bacbone Lokal</a>
+                                        <?php } else { ?>
+                                            <a href="javascript:actionActived('Lokal', 2);" class="btn btn-success btn-rounded waves-effect waves-light">Aktifkan Grant Sync Bacbone Lokal</a>
+                                        <?php } ?>
                                     </th>
                                 </tr>
                             </thead>
@@ -81,10 +109,10 @@
 <script src="<?= base_url() ?>/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
 <script src="<?= base_url() ?>/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 <script>
-    function actionDisabled(event) {
+    function actionDisabled(event, id) {
         Swal.fire({
-            title: 'Apakah anda yakin ingin menonaktifkan granted syncrone backbone?',
-            text: "Nonaktifkan Grant Syncrone Backbone : SITUGU",
+            title: `Apakah anda yakin ingin menonaktifkan granted syncrone backbone ${event}?`,
+            text: `Nonaktifkan Grant Syncrone Backbone ${event}: SITUGU`,
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
@@ -96,7 +124,8 @@
                     url: "<?= base_url('situgu/su/setting/grantedsynbakbone/disabled') ?>",
                     type: 'POST',
                     data: {
-                        id: 'disable',
+                        id: event,
+                        jenis: id,
                     },
                     dataType: 'JSON',
                     beforeSend: function() {
@@ -136,10 +165,10 @@
         })
     }
 
-    function actionActived(event) {
+    function actionActived(event, id) {
         Swal.fire({
-            title: 'Apakah anda yakin ingin mengaktifkan Grant Syncrone Backbone?',
-            text: "Aktifkan Grant Syncrone Backbone : SITUGU",
+            title: `Apakah anda yakin ingin mengaktifkan Grant Syncrone Backbone ${event}?`,
+            text: `Aktifkan Grant Syncrone Backbone ${event}: SITUGU`,
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
@@ -151,7 +180,8 @@
                     url: "<?= base_url('situgu/su/setting/grantedsynbakbone/active') ?>",
                     type: 'POST',
                     data: {
-                        id: 'active',
+                        id: event,
+                        jenis: id,
                     },
                     dataType: 'JSON',
                     beforeSend: function() {
