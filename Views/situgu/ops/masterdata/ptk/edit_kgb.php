@@ -3,9 +3,9 @@
         <input type="hidden" id="_id" name="_id" value="<?= $data->id ?>" />
         <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
             <div class="mb-3">
-                <label for="_kgb" class="col-form-label">Pilih Pendidikan:</label>
+                <label for="_kgb" class="col-form-label">Pilih Pangkat KGB Terakhir:</label>
                 <select class="select2 form-control select2" id="_kgb" name="_kgb" style="width: 100%" data-placeholder="Pilih Pangkat KGB ...">
-                    <option value="" selected>--Pilih Pendidikan--</option>
+                    <option value="" selected>--Pilih Pangkat KGB--</option>
                     <?php if (isset($data->pangkats)) { ?>
                         <?php if (count($data->pangkats) > 0) { ?>
                             <?php foreach ($data->pangkats as $key => $value) { ?>
@@ -14,11 +14,6 @@
                         <?php } ?>
                     <?php } ?>
                 </select>
-                <div class="help-block _kgb"></div>
-            </div>
-            <div class="mb-3">
-                <label for="_kgb" class="form-label">Pangkat KGB Terakhir</label>
-                <input type="text" class="form-control kgb" value="<?= $data->pangkat_golongan_kgb ?>" id="_kgb" name="_kgb" placeholder="Pangkat KGB terakhir (example: IV/A)..." onfocusin="inputFocus(this);">
                 <div class="help-block _kgb"></div>
             </div>
             <div class="mb-3">
