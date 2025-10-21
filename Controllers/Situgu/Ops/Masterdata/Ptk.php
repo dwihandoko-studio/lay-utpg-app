@@ -301,15 +301,29 @@ class Ptk extends BaseController
             }
 
             if ($result) {
-                $response = new \stdClass;
-                $response->status = 200;
-                $response->data = $result;
-                $response->message = "success";
-                return json_encode($response);
+                if (isset($result->status)) {
+                    if ((int)$result->status == 200) {
+                        $response = new \stdClass;
+                        $response->status = 200;
+                        $response->data = $result;
+                        $response->message = $result->message;
+                        return json_encode($response);
+                    } else {
+                        $response = new \stdClass;
+                        $response->status = 400;
+                        $response->message = $result->message;
+                        return json_encode($response);
+                    }
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal melakukan tarik data.";
+                    return json_encode($response);
+                }
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
-                $response->error = $send_data;
+                // $response->error = $send_data;
                 $response->message = "Gagal melakukan tarik data.";
                 return json_encode($response);
             }
