@@ -274,7 +274,7 @@ class Ptk extends BaseController
                 'token' => $token,
             ];
 
-            $urlendpoint = 'https://backbone.disdikbud.lampungtengahkab.go.id/api/tarik-data';
+            $urlendpoint = 'http://192.168.33.21:3050/api/tarik-data';
 
             $curlHandle = curl_init($urlendpoint);
             curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, "POST");
