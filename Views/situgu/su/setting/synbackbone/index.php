@@ -31,7 +31,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-6">
-                                <h4 class="card-title">STATUS GRANTEDE</h4>
+                                <h4 class="card-title">STATUS GRANTED</h4>
                             </div>
                         </div>
                     </div>
