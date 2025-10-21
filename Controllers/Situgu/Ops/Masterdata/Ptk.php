@@ -305,7 +305,7 @@ class Ptk extends BaseController
                     if ((int)$result->status == 200) {
                         $response = new \stdClass;
                         $response->status = 200;
-                        $response->data = $result;
+                        // $response->data = $result;
                         $response->message = $result->message;
                         return json_encode($response);
                     } else {
