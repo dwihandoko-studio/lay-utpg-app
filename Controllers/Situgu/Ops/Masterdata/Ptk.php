@@ -940,6 +940,12 @@ class Ptk extends BaseController
                 ->where(['id' => $id, 'id_ptk' => $ptk_id, 'npsn' => $npsn])->get()->getRowObject();
 
             if ($current) {
+                if ((int)$current->is_locked == 1) {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Data PTK Telah Terkunci. Atau Usulan Anda Masih Dalam Proses Antrian.";
+                    return json_encode($response);
+                }
                 $current->pangkats = $this->_db->table('ref_gaji')
                     ->whereNotIn('pangkat', ['pghm', 'tamsil'])
                     ->groupBy('pangkat')
