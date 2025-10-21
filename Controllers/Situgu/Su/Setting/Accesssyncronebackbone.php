@@ -57,7 +57,7 @@ class Accesssyncronebackbone extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/su/setting/accesssyncronebackbone /data'));
+        return redirect()->to(base_url('situgu/su/setting/accesssyncronebackbone/data'));
     }
 
     public function data()
@@ -73,7 +73,7 @@ class Accesssyncronebackbone extends BaseController
 
         $data['user'] = $user->data;
 
-        return view('situgu/su/setting/accesssyncronebackbone /index', $data);
+        return view('situgu/su/setting/accesssyncronebackbone/index', $data);
     }
 
     public function add()
@@ -94,7 +94,7 @@ class Accesssyncronebackbone extends BaseController
         $response = new \stdClass;
         $response->status = 200;
         $response->message = "Permintaan diizinkan";
-        $response->data = view('situgu/su/setting/accesssyncronebackbone /add', $d);
+        $response->data = view('situgu/su/setting/accesssyncronebackbone/add', $d);
         return json_encode($response);
     }
 
