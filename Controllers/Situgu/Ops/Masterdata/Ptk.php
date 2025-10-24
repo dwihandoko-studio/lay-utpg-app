@@ -988,42 +988,42 @@ class Ptk extends BaseController
                     'required' => 'Id PTK tidak boleh kosong. ',
                 ]
             ],
-            'pangkat' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Pangkat pangkat tidak boleh kosong. ',
-                ]
-            ],
-            'no_sk_pangkat' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'No SK pangkat tidak boleh kosong. ',
-                ]
-            ],
-            'tgl_pangkat' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Tanggal SK pangkat tidak boleh kosong. ',
-                ]
-            ],
-            'tmt_pangkat' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'TMT SK pangkat tidak boleh kosong. ',
-                ]
-            ],
-            'mkt_pangkat' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Masa Kerja Tahun pangkat tidak boleh kosong. ',
-                ]
-            ],
-            'mkb_pangkat' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Masa Kerja Bulan pangkat tidak boleh kosong. ',
-                ]
-            ],
+            // 'pangkat' => [
+            //     'rules' => 'required|trim',
+            //     'errors' => [
+            //         'required' => 'Pangkat pangkat tidak boleh kosong. ',
+            //     ]
+            // ],
+            // 'no_sk_pangkat' => [
+            //     'rules' => 'required|trim',
+            //     'errors' => [
+            //         'required' => 'No SK pangkat tidak boleh kosong. ',
+            //     ]
+            // ],
+            // 'tgl_pangkat' => [
+            //     'rules' => 'required|trim',
+            //     'errors' => [
+            //         'required' => 'Tanggal SK pangkat tidak boleh kosong. ',
+            //     ]
+            // ],
+            // 'tmt_pangkat' => [
+            //     'rules' => 'required|trim',
+            //     'errors' => [
+            //         'required' => 'TMT SK pangkat tidak boleh kosong. ',
+            //     ]
+            // ],
+            // 'mkt_pangkat' => [
+            //     'rules' => 'required|trim',
+            //     'errors' => [
+            //         'required' => 'Masa Kerja Tahun pangkat tidak boleh kosong. ',
+            //     ]
+            // ],
+            // 'mkb_pangkat' => [
+            //     'rules' => 'required|trim',
+            //     'errors' => [
+            //         'required' => 'Masa Kerja Bulan pangkat tidak boleh kosong. ',
+            //     ]
+            // ],
             'kgb' => [
                 'rules' => 'required|trim',
                 'errors' => [
@@ -1098,12 +1098,12 @@ class Ptk extends BaseController
             $tmt_kgb = htmlspecialchars($this->request->getVar('tmt_kgb'), true);
             $mkt_kgb = htmlspecialchars($this->request->getVar('mkt_kgb'), true);
             $mkb_kgb = htmlspecialchars($this->request->getVar('mkb_kgb'), true);
-            $pangkat = htmlspecialchars($this->request->getVar('pangkat'), true);
-            $no_sk_pangkat = htmlspecialchars($this->request->getVar('no_sk_pangkat'), true);
-            $tgl_pangkat = htmlspecialchars($this->request->getVar('tgl_pangkat'), true);
-            $tmt_pangkat = htmlspecialchars($this->request->getVar('tmt_pangkat'), true);
-            $mkt_pangkat = htmlspecialchars($this->request->getVar('mkt_pangkat'), true);
-            $mkb_pangkat = htmlspecialchars($this->request->getVar('mkb_pangkat'), true);
+            // $pangkat = htmlspecialchars($this->request->getVar('pangkat'), true);
+            // $no_sk_pangkat = htmlspecialchars($this->request->getVar('no_sk_pangkat'), true);
+            // $tgl_pangkat = htmlspecialchars($this->request->getVar('tgl_pangkat'), true);
+            // $tmt_pangkat = htmlspecialchars($this->request->getVar('tmt_pangkat'), true);
+            // $mkt_pangkat = htmlspecialchars($this->request->getVar('mkt_pangkat'), true);
+            // $mkb_pangkat = htmlspecialchars($this->request->getVar('mkb_pangkat'), true);
 
             $oldData =  $this->_db->table('_ptk_tb')->where('id', $id)->get()->getRowObject();
 
@@ -1117,24 +1117,24 @@ class Ptk extends BaseController
             $data = [
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
-            if ($pangkat !== "") {
-                $data['pangkat_golongan'] = $pangkat;
-            }
-            if ($no_sk_pangkat !== "") {
-                $data['nomor_sk_pangkat'] = $no_sk_pangkat;
-            }
-            if ($tgl_pangkat !== "") {
-                $data['tgl_sk_pangkat'] = $tgl_pangkat;
-            }
-            if ($tmt_pangkat !== "") {
-                $data['tmt_pangkat'] = $tmt_pangkat;
-            }
-            if ($mkt_pangkat !== "") {
-                $data['masa_kerja_tahun'] = $mkt_pangkat;
-            }
-            if ($mkb_pangkat !== "") {
-                $data['masa_kerja_bulan'] = $mkb_pangkat;
-            }
+            // if ($pangkat !== "") {
+            //     $data['pangkat_golongan'] = $pangkat;
+            // }
+            // if ($no_sk_pangkat !== "") {
+            //     $data['nomor_sk_pangkat'] = $no_sk_pangkat;
+            // }
+            // if ($tgl_pangkat !== "") {
+            //     $data['tgl_sk_pangkat'] = $tgl_pangkat;
+            // }
+            // if ($tmt_pangkat !== "") {
+            //     $data['tmt_pangkat'] = $tmt_pangkat;
+            // }
+            // if ($mkt_pangkat !== "") {
+            //     $data['masa_kerja_tahun'] = $mkt_pangkat;
+            // }
+            // if ($mkb_pangkat !== "") {
+            //     $data['masa_kerja_bulan'] = $mkb_pangkat;
+            // }
             if ($kgb !== "") {
                 $data['pangkat_golongan_kgb'] = $kgb;
             }

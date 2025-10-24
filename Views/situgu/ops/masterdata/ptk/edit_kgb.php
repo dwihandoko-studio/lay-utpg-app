@@ -2,7 +2,7 @@
     <form id="formEditKgbModalData" action="./editKgbSave" method="post">
         <input type="hidden" id="_id" name="_id" value="<?= $data->id ?>" />
         <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <label for="_pangkat" class="col-form-label">Pilih Pangkat Terakhir:</label>
                 <select class="select2 form-control select2" id="_pangkat" name="_pangkat" style="width: 100%" data-placeholder="Pilih Pangkat ...">
                     <option value="" selected>--Pilih Pangkat--</option>
@@ -40,7 +40,7 @@
                 <label for="_mkb_pangkat" class="form-label">Masa Kerja Bulan Pangkat Terakhir</label>
                 <input type="number" class="form-control mkt-pangkat" value="<?= $data->masa_kerja_bulan ?>" id="_mkb_pangkat" name="_mkb_pangkat" onfocusin="inputFocus(this);">
                 <div class="help-block _mkb_pangkat"></div>
-            </div>
+            </div> -->
             <div class="mb-3">
                 <label for="_kgb" class="col-form-label">Pilih Pangkat KGB Terakhir:</label>
                 <select class="select2 form-control select2" id="_kgb" name="_kgb" style="width: 100%" data-placeholder="Pilih Pangkat KGB ...">
@@ -92,12 +92,12 @@
         $("#formEditKgbModalData").on("submit", function(e) {
             e.preventDefault();
             const id = document.getElementsByName('_id')[0].value;
-            const pangkat = document.getElementsByName('_pangkat')[0].value;
-            const no_sk_pangkat = document.getElementsByName('_no_sk_pangkat')[0].value;
-            const tgl_pangkat = document.getElementsByName('_tgl_pangkat')[0].value;
-            const tmt_pangkat = document.getElementsByName('_tmt_pangkat')[0].value;
-            const mkt_pangkat = document.getElementsByName('_mkt_pangkat')[0].value;
-            const mkb_pangkat = document.getElementsByName('_mkb_pangkat')[0].value;
+            // const pangkat = document.getElementsByName('_pangkat')[0].value;
+            // const no_sk_pangkat = document.getElementsByName('_no_sk_pangkat')[0].value;
+            // const tgl_pangkat = document.getElementsByName('_tgl_pangkat')[0].value;
+            // const tmt_pangkat = document.getElementsByName('_tmt_pangkat')[0].value;
+            // const mkt_pangkat = document.getElementsByName('_mkt_pangkat')[0].value;
+            // const mkb_pangkat = document.getElementsByName('_mkb_pangkat')[0].value;
             const kgb = document.getElementsByName('_kgb')[0].value;
             const no_sk_kgb = document.getElementsByName('_no_sk_kgb')[0].value;
             const tgl_kgb = document.getElementsByName('_tgl_kgb')[0].value;
@@ -105,42 +105,42 @@
             const mkt_kgb = document.getElementsByName('_mkt_kgb')[0].value;
             const mkb_kgb = document.getElementsByName('_mkb_kgb')[0].value;
 
-            if (pangkat === "") {
-                $("select#_pangkat").css("color", "#dc3545");
-                $("select#_pangkat").css("border-color", "#dc3545");
-                $('._pangkat').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih Pangkat.</li></ul>');
-                return false;
-            }
-            if (no_sk_pangkat === "") {
-                $("input#_no_sk_pangkat").css("color", "#dc3545");
-                $("input#_no_sk_pangkat").css("border-color", "#dc3545");
-                $('._no_sk_pangkat').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">No SK Pangkat tidak boleh kosong.</li></ul>');
-                return false;
-            }
-            if (tgl_pangkat === "") {
-                $("input#_tgl_pangkat").css("color", "#dc3545");
-                $("input#_tgl_pangkat").css("border-color", "#dc3545");
-                $('._tgl_pangkat').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Tanggal SK Pangkat tidak boleh kosong.</li></ul>');
-                return false;
-            }
-            if (tmt_pangkat === "") {
-                $("input#_tmt_pangkat").css("color", "#dc3545");
-                $("input#_tmt_pangkat").css("border-color", "#dc3545");
-                $('._tmt_pangkat').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">TMT SK Pangkat tidak boleh kosong.</li></ul>');
-                return false;
-            }
-            if (mkt_pangkat === "") {
-                $("input#_mkt_pangkat").css("color", "#dc3545");
-                $("input#_mkt_pangkat").css("border-color", "#dc3545");
-                $('._mkt_pangkat').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Masa Kerja Tahun Pangkat tidak boleh kosong.</li></ul>');
-                return false;
-            }
-            if (mkb_pangkat === "") {
-                $("input#_mkb_pangkat").css("color", "#dc3545");
-                $("input#_mkb_pangkat").css("border-color", "#dc3545");
-                $('._mkb_pangkat').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Masa Kerja Bulan Pangkat tidak boleh kosong.</li></ul>');
-                return false;
-            }
+            // if (pangkat === "") {
+            //     $("select#_pangkat").css("color", "#dc3545");
+            //     $("select#_pangkat").css("border-color", "#dc3545");
+            //     $('._pangkat').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih Pangkat.</li></ul>');
+            //     return false;
+            // }
+            // if (no_sk_pangkat === "") {
+            //     $("input#_no_sk_pangkat").css("color", "#dc3545");
+            //     $("input#_no_sk_pangkat").css("border-color", "#dc3545");
+            //     $('._no_sk_pangkat').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">No SK Pangkat tidak boleh kosong.</li></ul>');
+            //     return false;
+            // }
+            // if (tgl_pangkat === "") {
+            //     $("input#_tgl_pangkat").css("color", "#dc3545");
+            //     $("input#_tgl_pangkat").css("border-color", "#dc3545");
+            //     $('._tgl_pangkat').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Tanggal SK Pangkat tidak boleh kosong.</li></ul>');
+            //     return false;
+            // }
+            // if (tmt_pangkat === "") {
+            //     $("input#_tmt_pangkat").css("color", "#dc3545");
+            //     $("input#_tmt_pangkat").css("border-color", "#dc3545");
+            //     $('._tmt_pangkat').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">TMT SK Pangkat tidak boleh kosong.</li></ul>');
+            //     return false;
+            // }
+            // if (mkt_pangkat === "") {
+            //     $("input#_mkt_pangkat").css("color", "#dc3545");
+            //     $("input#_mkt_pangkat").css("border-color", "#dc3545");
+            //     $('._mkt_pangkat').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Masa Kerja Tahun Pangkat tidak boleh kosong.</li></ul>');
+            //     return false;
+            // }
+            // if (mkb_pangkat === "") {
+            //     $("input#_mkb_pangkat").css("color", "#dc3545");
+            //     $("input#_mkb_pangkat").css("border-color", "#dc3545");
+            //     $('._mkb_pangkat').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Masa Kerja Bulan Pangkat tidak boleh kosong.</li></ul>');
+            //     return false;
+            // }
             if (kgb === "") {
                 $("select#_kgb").css("color", "#dc3545");
                 $("select#_kgb").css("border-color", "#dc3545");
@@ -193,12 +193,12 @@
                         type: 'POST',
                         data: {
                             id: id,
-                            pangkat: pangkat,
-                            no_sk_pangkat: no_sk_pangkat,
-                            tgl_pangkat: tgl_pangkat,
-                            tmt_pangkat: tmt_pangkat,
-                            mkt_pangkat: mkt_pangkat,
-                            mkb_pangkat: mkb_pangkat,
+                            // pangkat: pangkat,
+                            // no_sk_pangkat: no_sk_pangkat,
+                            // tgl_pangkat: tgl_pangkat,
+                            // tmt_pangkat: tmt_pangkat,
+                            // mkt_pangkat: mkt_pangkat,
+                            // mkb_pangkat: mkb_pangkat,
                             kgb: kgb,
                             no_sk_kgb: no_sk_kgb,
                             tgl_kgb: tgl_kgb,
