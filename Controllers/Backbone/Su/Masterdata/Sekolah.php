@@ -71,6 +71,11 @@ class Sekolah extends BaseController
 
     public function index()
     {
+        return redirect()->to(base_url('backbone/su/masterdata/sekolah/data'));
+    }
+
+    public function data()
+    {
         $data['title'] = 'Sekolah';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
