@@ -11,6 +11,47 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting") ? ' active-menu-href' : '' ?>" href="javascript:;" id="topnav-setting" role="button">
+                                <i class="bx bx-cog me-2"></i><span key="t-setting">SETTING</span>
+                                <div class="arrow-down"></div>
+                            </a>
+
+                            <div class="dropdown-menu mega-dropdown-menu px-2 dropdown-mega-menu-xl" aria-labelledby="topnav-setting">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div>
+                                            <a href="<?= base_url('situgu/su/setting/informasi') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "informasi") ? ' active-menu-href' : '' ?>" key="t-setting-informasi">Informasi</a>
+                                            <a href="<?= base_url('situgu/su/setting/role') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "role") ? ' active-menu-href' : '' ?>" key="t-setting-role">Role Access</a>
+                                            <a href="<?= base_url('situgu/su/setting/grantedverifikasi') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "grantedverifikasi") ? ' active-menu-href' : '' ?>" key="t-setting-grantedverifikasi">Acess Verifikasi</a>
+                                            <a href="<?= base_url('situgu/su/setting/sptjm') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "sptjm") ? ' active-menu-href' : '' ?>" key="t-setting-sptjm">SPTJM</a>
+                                            <a href="<?= base_url('situgu/su/setting/verifikasi') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "verifikasi") ? ' active-menu-href' : '' ?>" key="t-setting-verifikasi">Verifikasi</a>
+                                            <a href="<?= base_url('situgu/su/setting/upspj') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "upspj") ? ' active-menu-href' : '' ?>" key="t-setting-upspj">Upload SPJ</a>
+                                            <a href="<?= base_url('situgu/su/setting/mt') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "mt") ? ' active-menu-href' : '' ?>" key="t-setting-mt">Maintenance</a>
+                                            <a href="<?= base_url('situgu/su/setting/accessmt') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "accessmt") ? ' active-menu-href' : '' ?>" key="t-setting-accessmt">Granted Access MT</a>
+                                            <a href="<?= base_url('situgu/su/setting/accesssyncronebackbone') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "accesssyncronebackbone") ? ' active-menu-href' : '' ?>" key="t-setting-accesssyncronebackbone">Cumtom Access Syncrone Backbone</a>
+                                            <a href="<?= base_url('situgu/su/setting/accesstugu') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "accesstugu") ? ' active-menu-href' : '' ?>" key="t-setting-accesstugu">Granted Access Admin Situgu</a>
+                                            <a href="<?= base_url('situgu/su/setting/accessbackbone') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "accessbackbone") ? ' active-menu-href' : '' ?>" key="t-setting-accessbackbone">Granted Access Backbone</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div>
+                                            <a href="<?= base_url('situgu/su/setting/accessgaji') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "accessgaji") ? ' active-menu-href' : '' ?>" key="t-setting-accessgaji">Granted Access Sigaji</a>
+                                            <a href="<?= base_url('situgu/su/setting/accessbank') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "accessbank") ? ' active-menu-href' : '' ?>" key="t-setting-accessbank">Granted Access Bank</a>
+                                            <a href="<?= base_url('situgu/su/setting/cantaccesssitupeng') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "cantaccesssitupeng") ? ' active-menu-href' : '' ?>" key="t-setting-cantaccesssitupeng">Cant Access Situpeng</a>
+                                            <a href="<?= base_url('situgu/su/setting/grantedsynbakbone') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "grantedsynbakbone") ? ' active-menu-href' : '' ?>" key="t-setting-grantsyncrone">Granted Access Syncrone Backbone & Edit Pangkat KGB</a>
+                                            <a href="<?= base_url('situgu/su/setting/grantedusulancustom') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "grantedusulancustom") ? ' active-menu-href' : '' ?>" key="t-setting-grantedusulancustom">Granted Create Usulan</a>
+                                            <a href="<?= base_url('situgu/su/setting/grantedverifikasicustom') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "grantedverifikasicustom") ? ' active-menu-href' : '' ?>" key="t-setting-grantedverifikasicustom">Granted Create Verifikasi Usulan</a>
+                                            <a href="<?= base_url('situgu/su/setting/grantedcreateaduan') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "grantedcreateaduan") ? ' active-menu-href' : '' ?>" key="t-setting-grantedcreateaduan">Granted Access Create Aduan</a>
+                                            <a href="<?= base_url('situgu/su/setting/granteduploadpangkatkgb') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "granteduploadpangkatkgb") ? ' active-menu-href' : '' ?>" key="t-setting-granteduploadpangkatkgb">Granted Upload Pangkat KGB</a>
+                                            <a href="<?= base_url('situgu/su/setting/granteduploadspj') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "granteduploadspj") ? ' active-menu-href' : '' ?>" key="t-setting-granteduploadspj">Granted Upload SPJ</a>
+                                            <a href="<?= base_url('situgu/su/setting/grantedverifikasispj') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "grantedverifikasispj") ? ' active-menu-href' : '' ?>" key="t-setting-grantedverifikasidspj">Granted Verifikasi SPJ</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "masterdata") ? ' active-menu-href' : '' ?>" href="#" id="topnav-masterdata" role="button">
                                 <i class="bx bx-layout me-2"></i><span key="t-masterdata">MASTER DATA</span>
                                 <div class="arrow-down"></div>
@@ -120,34 +161,6 @@
                             <div class="dropdown-menu" aria-labelledby="topnav-spj">
                                 <a href="<?= base_url('situgu/su/spj/tpg') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tpg") ? ' active-menu-href' : '' ?>" key="t-spj-tpg">Tunjangan Profesi Guru</a>
                                 <a href="<?= base_url('situgu/su/spj/tamsil') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tamsil") ? ' active-menu-href' : '' ?>" key="t-spj-tamsil">Tamsil</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting") ? ' active-menu-href' : '' ?>" href="#" id="topnav-setting" role="button">
-                                <i class="bx bx-cog me-2"></i><span key="t-setting">SETTING</span>
-                                <div class="arrow-down"></div>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="topnav-setting">
-                                <a href="<?= base_url('situgu/su/setting/informasi') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "informasi") ? ' active-menu-href' : '' ?>" key="t-setting-informasi">Informasi</a>
-                                <a href="<?= base_url('situgu/su/setting/role') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "role") ? ' active-menu-href' : '' ?>" key="t-setting-role">Role Access</a>
-                                <a href="<?= base_url('situgu/su/setting/grantedverifikasi') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "grantedverifikasi") ? ' active-menu-href' : '' ?>" key="t-setting-grantedverifikasi">Acess Verifikasi</a>
-                                <a href="<?= base_url('situgu/su/setting/sptjm') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "sptjm") ? ' active-menu-href' : '' ?>" key="t-setting-sptjm">SPTJM</a>
-                                <a href="<?= base_url('situgu/su/setting/verifikasi') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "verifikasi") ? ' active-menu-href' : '' ?>" key="t-setting-verifikasi">Verifikasi</a>
-                                <a href="<?= base_url('situgu/su/setting/upspj') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "upspj") ? ' active-menu-href' : '' ?>" key="t-setting-upspj">Upload SPJ</a>
-                                <a href="<?= base_url('situgu/su/setting/mt') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "mt") ? ' active-menu-href' : '' ?>" key="t-setting-mt">Maintenance</a>
-                                <a href="<?= base_url('situgu/su/setting/accessmt') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "accessmt") ? ' active-menu-href' : '' ?>" key="t-setting-accessmt">Granted Access MT</a>
-                                <a href="<?= base_url('situgu/su/setting/accesssyncronebackbone') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "accesssyncronebackbone") ? ' active-menu-href' : '' ?>" key="t-setting-accesssyncronebackbone">Cumtom Access Syncrone Backbone</a>
-                                <a href="<?= base_url('situgu/su/setting/accesstugu') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "accesstugu") ? ' active-menu-href' : '' ?>" key="t-setting-accessmt">Granted Access Admin Situgu</a>
-                                <a href="<?= base_url('situgu/su/setting/accessgaji') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "accessgaji") ? ' active-menu-href' : '' ?>" key="t-setting-accessgaji">Granted Access Sigaji</a>
-                                <a href="<?= base_url('situgu/su/setting/accessbank') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "accessbank") ? ' active-menu-href' : '' ?>" key="t-setting-accessbank">Granted Access Bank</a>
-                                <a href="<?= base_url('situgu/su/setting/cantaccesssitupeng') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "cantaccesssitupeng") ? ' active-menu-href' : '' ?>" key="t-setting-cantaccesssitupeng">Cant Access Situpeng</a>
-                                <a href="<?= base_url('situgu/su/setting/grantedsynbakbone') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "grantedsynbakbone") ? ' active-menu-href' : '' ?>" key="t-setting-grantsyncrone">Granted Access Syncrone Backbone & Edit Pangkat KGB</a>
-                                <a href="<?= base_url('situgu/su/setting/grantedusulancustom') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "grantedusulancustom") ? ' active-menu-href' : '' ?>" key="t-setting-grantedusulancustom">Granted Create Usulan</a>
-                                <a href="<?= base_url('situgu/su/setting/grantedverifikasicustom') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "grantedverifikasicustom") ? ' active-menu-href' : '' ?>" key="t-setting-grantedverifikasicustom">Granted Create Verifikasi Usulan</a>
-                                <a href="<?= base_url('situgu/su/setting/grantedcreateaduan') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "grantedcreateaduan") ? ' active-menu-href' : '' ?>" key="t-setting-grantedcreateaduan">Granted Access Create Aduan</a>
-                                <a href="<?= base_url('situgu/su/setting/granteduploadpangkatkgb') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "granteduploadpangkatkgb") ? ' active-menu-href' : '' ?>" key="t-setting-granteduploadpangkatkgb">Granted Upload Pangkat KGB</a>
-                                <a href="<?= base_url('situgu/su/setting/granteduploadspj') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "granteduploadspj") ? ' active-menu-href' : '' ?>" key="t-setting-granteduploadspj">Granted Upload SPJ</a>
-                                <a href="<?= base_url('situgu/su/setting/grantedverifikasispj') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "grantedverifikasispj") ? ' active-menu-href' : '' ?>" key="t-setting-grantedverifikasidspj">Granted Verifikasi SPJ</a>
                             </div>
                         </li>
                         <li class="nav-item">
