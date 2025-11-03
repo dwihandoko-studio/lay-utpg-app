@@ -191,21 +191,25 @@ class Ptk extends BaseController
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
-            $current = $this->_db->table('_ptk_tb a')
-                ->select("a.*, b.no_hp as nohpAkun, b.email as emailAkun, b.wa_verified, b.image, c.kecamatan as kecamatan_sekolah")
-                ->join('v_user b', 'a.id_ptk = b.ptk_id', 'left')
-                ->join('ref_sekolah c', 'a.npsn = c.npsn', 'left')
-                ->where('a.id', $id)->get()->getRowObject();
+            $current = $this->_db->table('_tbl_gtk a')
+                ->select("a.*, b.nama as nama_sekolah, b.bentuk_pendidikan, b.status_sekolah, b.kecamatan")
+                ->join('_tbl_sekolah b', 'a.npsn = b.npsn', 'left')
+                ->where('a.ptk_terdaftar_id', $id)->get()->getRowObject();
 
             if ($current) {
                 $data['data'] = $current;
-                $data['penugasans'] = $this->_db->table('_ptk_tb_dapodik a')
-                    ->select("a.*, b.npsn, b.nama as namaSekolah, b.kecamatan as kecamatan_sekolah, (SELECT SUM(jam_mengajar_per_minggu) FROM _pembelajaran_dapodik WHERE ptk_id = a.ptk_id AND sekolah_id = a.sekolah_id AND semester_id = a.semester_id) as jumlah_total_jam_mengajar_perminggu")
-                    ->join('ref_sekolah b', 'a.sekolah_id = b.id')
-                    ->where('a.ptk_id', $current->id_ptk)
-                    ->where("a.jenis_keluar IS NULL")
-                    ->orderBy('a.ptk_induk', 'DESC')->get()->getResult();
-                $data['igd'] = $this->_db->table('_info_gtk')->where('ptk_id', $current->id_ptk)->get()->getRowObject();
+                $data['pangkats'] = $this->_db->table('_tbl_rwy_kepangkatan a')
+                    ->select("a.*")
+                    ->where('a.ptk_id', $current->ptk_id)
+                    ->orderBy('a.tanggal_sk', 'DESC')->get()->getResult();
+                $data['pendidikans'] = $this->_db->table('_tbl_rwy_pendidikan_formal a')
+                    ->select("a.*")
+                    ->where('a.ptk_id', $current->ptk_id)
+                    ->orderBy('a.tahun_lulus', 'DESC')->get()->getResult();
+                $data['pembelajarans'] = $this->_db->table('_tbl_pembelajaran a')
+                    ->select("a.*")
+                    ->where('a.ptk_id', $current->ptk_id)
+                    ->orderBy('a.mata_pelajaran_id', 'ASC')->get()->getResult();
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
