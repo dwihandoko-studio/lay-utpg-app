@@ -12,7 +12,7 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript:actionUnlockAll(this);" class="btn btn-primary btn-rounded waves-effect waves-light">Unlock Semua Data PTK Untuk TW Baru</a></li>
+                            <!-- <li class="breadcrumb-item"><a href="javascript:actionUnlockAll(this);" class="btn btn-primary btn-rounded waves-effect waves-light">Unlock Semua Data PTK Untuk TW Baru</a></li> -->
                         </ol>
                     </div>
 
