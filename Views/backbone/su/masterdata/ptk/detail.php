@@ -24,7 +24,7 @@
             </div>
             <div class="col-lg-6">
                 <label class="col-form-label">Tanggal Lahir:</label>
-                <input type="text" class="form-control" value="<?= $data->tgl_lahir ?>" readonly />
+                <input type="text" class="form-control" value="<?= $data->tanggal_lahir ?>" readonly />
             </div>
             <div class="col-lg-6">
                 <label class="col-form-label">Jenis Kelamin:</label>
