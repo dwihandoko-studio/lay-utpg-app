@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 
 class SekolahModel extends Model
 {
-    protected $table = "ref_sekolah";
+    protected $table = "_tbl_sekolah";
     protected $column_order = array(null, null, 'npsn', 'nama', 'bentuk_pendidikan', 'status_sekolah', 'kecamatan');
     protected $column_search = array('npsn', 'nama', 'kecamatan');
     protected $order = array('kecamatan' => 'asc', 'bentuk_pendidikan' => 'asc');

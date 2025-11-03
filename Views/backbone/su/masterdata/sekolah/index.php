@@ -89,67 +89,10 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
-    function actionSync(id, nama, kecamatan) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin pembaharuan data sekolah ini dari backbone dapodik?',
-            text: "Tarik Data Dari Backbone Untuk Sekolah : " + nama,
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Syncrone Data!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "<?= base_url('situgu/su/masterdata/sekolah/sync') ?>",
-                    type: 'POST',
-                    data: {
-                        id: id,
-                        nama: nama,
-                        kecamatan: kecamatan,
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
-
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
-
     function actionHapus(event, title = "") {
         Swal.fire({
             title: 'Apakah anda yakin ingin menghapus data ini?',
-            text: "Hapus pengguna : " + title,
+            text: "Hapus Data : " + title,
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
@@ -158,7 +101,7 @@
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "<?= base_url('situgu/su/masterdata/sekolah/delete') ?>",
+                    url: "./delete",
                     type: 'POST',
                     data: {
                         id: event,
@@ -203,7 +146,7 @@
 
     function actionDetail(event, title) {
         $.ajax({
-            url: "<?= base_url('situgu/su/masterdata/sekolah/detail') ?>",
+            url: "./detail",
             type: 'POST',
             data: {
                 id: event,
@@ -286,7 +229,7 @@
             "serverSide": true,
             "order": [],
             "ajax": {
-                "url": "<?= base_url('situgu/su/masterdata/sekolah/getAll') ?>",
+                "url": "./getAll",
                 "type": "POST",
 
             },

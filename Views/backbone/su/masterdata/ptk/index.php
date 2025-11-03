@@ -102,516 +102,516 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
-    function actionSyncAll(event) {
-        Swal.fire({
-            title: 'Apakah anda yakin akan melakukan unlock data master semua PTK?',
-            text: "Unlock Data Master Semua PTK : ",
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Unlock Semua Data PTK!',
-            cancelButtonText: 'Tidak'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "./unlockAll",
-                    type: 'POST',
-                    data: {
-                        id: 'unlock',
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
+    // function actionSyncAll(event) {
+    //     Swal.fire({
+    //         title: 'Apakah anda yakin akan melakukan unlock data master semua PTK?',
+    //         text: "Unlock Data Master Semua PTK : ",
+    //         showCancelButton: true,
+    //         icon: 'question',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Ya, Unlock Semua Data PTK!',
+    //         cancelButtonText: 'Tidak'
+    //     }).then((result) => {
+    //         if (result.value) {
+    //             $.ajax({
+    //                 url: "./unlockAll",
+    //                 type: 'POST',
+    //                 data: {
+    //                     id: 'unlock',
+    //                 },
+    //                 dataType: 'JSON',
+    //                 beforeSend: function() {
+    //                     $('div.main-content').block({
+    //                         message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+    //                     });
+    //                 },
+    //                 success: function(resul) {
+    //                     $('div.main-content').unblock();
 
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
+    //                     if (resul.status !== 200) {
+    //                         Swal.fire(
+    //                             'Failed!',
+    //                             resul.message,
+    //                             'warning'
+    //                         );
+    //                     } else {
+    //                         Swal.fire(
+    //                             'SELAMAT!',
+    //                             resul.message,
+    //                             'success'
+    //                         ).then((valRes) => {
+    //                             reloadPage();
+    //                         })
+    //                     }
+    //                 },
+    //                 error: function() {
+    //                     $('div.main-content').unblock();
+    //                     Swal.fire(
+    //                         'Failed!',
+    //                         "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+    //                         'warning'
+    //                     );
+    //                 }
+    //             });
+    //         }
+    //     })
+    // }
 
-    function actionUnlockAll(event) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin membuka kunci untuk data ptk TW BARU?',
-            text: "Buka Kunci Semua Data PTK TW BARU",
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Unlock Semua PTK!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "./unlockallptk",
-                    type: 'POST',
-                    data: {
-                        id: "unclock-all",
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
+    // function actionUnlockAll(event) {
+    //     Swal.fire({
+    //         title: 'Apakah anda yakin ingin membuka kunci untuk data ptk TW BARU?',
+    //         text: "Buka Kunci Semua Data PTK TW BARU",
+    //         showCancelButton: true,
+    //         icon: 'question',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Ya, Unlock Semua PTK!'
+    //     }).then((result) => {
+    //         if (result.value) {
+    //             $.ajax({
+    //                 url: "./unlockallptk",
+    //                 type: 'POST',
+    //                 data: {
+    //                     id: "unclock-all",
+    //                 },
+    //                 dataType: 'JSON',
+    //                 beforeSend: function() {
+    //                     $('div.main-content').block({
+    //                         message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+    //                     });
+    //                 },
+    //                 success: function(resul) {
+    //                     $('div.main-content').unblock();
 
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
+    //                     if (resul.status !== 200) {
+    //                         Swal.fire(
+    //                             'Failed!',
+    //                             resul.message,
+    //                             'warning'
+    //                         );
+    //                     } else {
+    //                         Swal.fire(
+    //                             'SELAMAT!',
+    //                             resul.message,
+    //                             'success'
+    //                         ).then((valRes) => {
+    //                             reloadPage();
+    //                         })
+    //                     }
+    //                 },
+    //                 error: function() {
+    //                     $('div.main-content').unblock();
+    //                     Swal.fire(
+    //                         'Failed!',
+    //                         "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+    //                         'warning'
+    //                     );
+    //                 }
+    //             });
+    //         }
+    //     })
+    // }
 
-    function actionUnlockSpj(id, ptkId, nama, nuptk, npsn) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin membuka kunci upload spj ptk ini?',
-            text: "Buka Kunci Upload SPJ Untuk PTK : " + nama,
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Unlock Upload SPJ!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "./unlockuploadspj",
-                    type: 'POST',
-                    data: {
-                        id: id,
-                        ptk_id: ptkId,
-                        nama: nama,
-                        nuptk: nuptk,
-                        npsn: npsn,
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
+    // function actionUnlockSpj(id, ptkId, nama, nuptk, npsn) {
+    //     Swal.fire({
+    //         title: 'Apakah anda yakin ingin membuka kunci upload spj ptk ini?',
+    //         text: "Buka Kunci Upload SPJ Untuk PTK : " + nama,
+    //         showCancelButton: true,
+    //         icon: 'question',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Ya, Unlock Upload SPJ!'
+    //     }).then((result) => {
+    //         if (result.value) {
+    //             $.ajax({
+    //                 url: "./unlockuploadspj",
+    //                 type: 'POST',
+    //                 data: {
+    //                     id: id,
+    //                     ptk_id: ptkId,
+    //                     nama: nama,
+    //                     nuptk: nuptk,
+    //                     npsn: npsn,
+    //                 },
+    //                 dataType: 'JSON',
+    //                 beforeSend: function() {
+    //                     $('div.main-content').block({
+    //                         message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+    //                     });
+    //                 },
+    //                 success: function(resul) {
+    //                     $('div.main-content').unblock();
 
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
+    //                     if (resul.status !== 200) {
+    //                         Swal.fire(
+    //                             'Failed!',
+    //                             resul.message,
+    //                             'warning'
+    //                         );
+    //                     } else {
+    //                         Swal.fire(
+    //                             'SELAMAT!',
+    //                             resul.message,
+    //                             'success'
+    //                         ).then((valRes) => {
+    //                             reloadPage();
+    //                         })
+    //                     }
+    //                 },
+    //                 error: function() {
+    //                     $('div.main-content').unblock();
+    //                     Swal.fire(
+    //                         'Failed!',
+    //                         "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+    //                         'warning'
+    //                     );
+    //                 }
+    //             });
+    //         }
+    //     })
+    // }
 
-    function actionSyncDataPembenahan(id, ptkId, nama, nuptk, npsn) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin pembaharuan data atribut ptk ini dari master data ptk?',
-            text: "Pembaharuan Data Atribut Untuk PTK : " + nama,
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Pembaharuan dari Master!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "./syncpembenahan",
-                    type: 'POST',
-                    data: {
-                        id: id,
-                        ptk_id: ptkId,
-                        nama: nama,
-                        nuptk: nuptk,
-                        npsn: npsn,
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
+    // function actionSyncDataPembenahan(id, ptkId, nama, nuptk, npsn) {
+    //     Swal.fire({
+    //         title: 'Apakah anda yakin ingin pembaharuan data atribut ptk ini dari master data ptk?',
+    //         text: "Pembaharuan Data Atribut Untuk PTK : " + nama,
+    //         showCancelButton: true,
+    //         icon: 'question',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Ya, Pembaharuan dari Master!'
+    //     }).then((result) => {
+    //         if (result.value) {
+    //             $.ajax({
+    //                 url: "./syncpembenahan",
+    //                 type: 'POST',
+    //                 data: {
+    //                     id: id,
+    //                     ptk_id: ptkId,
+    //                     nama: nama,
+    //                     nuptk: nuptk,
+    //                     npsn: npsn,
+    //                 },
+    //                 dataType: 'JSON',
+    //                 beforeSend: function() {
+    //                     $('div.main-content').block({
+    //                         message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+    //                     });
+    //                 },
+    //                 success: function(resul) {
+    //                     $('div.main-content').unblock();
 
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
+    //                     if (resul.status !== 200) {
+    //                         Swal.fire(
+    //                             'Failed!',
+    //                             resul.message,
+    //                             'warning'
+    //                         );
+    //                     } else {
+    //                         Swal.fire(
+    //                             'SELAMAT!',
+    //                             resul.message,
+    //                             'success'
+    //                         ).then((valRes) => {
+    //                             reloadPage();
+    //                         })
+    //                     }
+    //                 },
+    //                 error: function() {
+    //                     $('div.main-content').unblock();
+    //                     Swal.fire(
+    //                         'Failed!',
+    //                         "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+    //                         'warning'
+    //                     );
+    //                 }
+    //             });
+    //         }
+    //     })
+    // }
 
-    function actionSync(id, ptkId, nama, nuptk, npsn) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin pembaharuan data ptk ini dari backbone dapodik?',
-            text: "Tarik Data Dari Backbone Untuk PTK : " + nama,
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Syncrone Data!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "./sync",
-                    type: 'POST',
-                    data: {
-                        id: id,
-                        ptk_id: ptkId,
-                        nama: nama,
-                        nuptk: nuptk,
-                        npsn: npsn,
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
+    // function actionSync(id, ptkId, nama, nuptk, npsn) {
+    //     Swal.fire({
+    //         title: 'Apakah anda yakin ingin pembaharuan data ptk ini dari backbone dapodik?',
+    //         text: "Tarik Data Dari Backbone Untuk PTK : " + nama,
+    //         showCancelButton: true,
+    //         icon: 'question',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Ya, Syncrone Data!'
+    //     }).then((result) => {
+    //         if (result.value) {
+    //             $.ajax({
+    //                 url: "./sync",
+    //                 type: 'POST',
+    //                 data: {
+    //                     id: id,
+    //                     ptk_id: ptkId,
+    //                     nama: nama,
+    //                     nuptk: nuptk,
+    //                     npsn: npsn,
+    //                 },
+    //                 dataType: 'JSON',
+    //                 beforeSend: function() {
+    //                     $('div.main-content').block({
+    //                         message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+    //                     });
+    //                 },
+    //                 success: function(resul) {
+    //                     $('div.main-content').unblock();
 
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
+    //                     if (resul.status !== 200) {
+    //                         Swal.fire(
+    //                             'Failed!',
+    //                             resul.message,
+    //                             'warning'
+    //                         );
+    //                     } else {
+    //                         Swal.fire(
+    //                             'SELAMAT!',
+    //                             resul.message,
+    //                             'success'
+    //                         ).then((valRes) => {
+    //                             reloadPage();
+    //                         })
+    //                     }
+    //                 },
+    //                 error: function() {
+    //                     $('div.main-content').unblock();
+    //                     Swal.fire(
+    //                         'Failed!',
+    //                         "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+    //                         'warning'
+    //                     );
+    //                 }
+    //             });
+    //         }
+    //     })
+    // }
 
-    function actionUnlockPtk(id, ptkId, nama, nuptk, npsn) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin mengunlock data PTK ini?',
-            text: "Unlock Data PTK Untuk PTK : " + nama,
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Unlock Data PTK!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "./unlockdataptk",
-                    type: 'POST',
-                    data: {
-                        id: id,
-                        ptk_id: ptkId,
-                        nama: nama,
-                        nuptk: nuptk,
-                        npsn: npsn,
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
+    // function actionUnlockPtk(id, ptkId, nama, nuptk, npsn) {
+    //     Swal.fire({
+    //         title: 'Apakah anda yakin ingin mengunlock data PTK ini?',
+    //         text: "Unlock Data PTK Untuk PTK : " + nama,
+    //         showCancelButton: true,
+    //         icon: 'question',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Ya, Unlock Data PTK!'
+    //     }).then((result) => {
+    //         if (result.value) {
+    //             $.ajax({
+    //                 url: "./unlockdataptk",
+    //                 type: 'POST',
+    //                 data: {
+    //                     id: id,
+    //                     ptk_id: ptkId,
+    //                     nama: nama,
+    //                     nuptk: nuptk,
+    //                     npsn: npsn,
+    //                 },
+    //                 dataType: 'JSON',
+    //                 beforeSend: function() {
+    //                     $('div.main-content').block({
+    //                         message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+    //                     });
+    //                 },
+    //                 success: function(resul) {
+    //                     $('div.main-content').unblock();
 
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
+    //                     if (resul.status !== 200) {
+    //                         Swal.fire(
+    //                             'Failed!',
+    //                             resul.message,
+    //                             'warning'
+    //                         );
+    //                     } else {
+    //                         Swal.fire(
+    //                             'SELAMAT!',
+    //                             resul.message,
+    //                             'success'
+    //                         ).then((valRes) => {
+    //                             reloadPage();
+    //                         })
+    //                     }
+    //                 },
+    //                 error: function() {
+    //                     $('div.main-content').unblock();
+    //                     Swal.fire(
+    //                         'Failed!',
+    //                         "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+    //                         'warning'
+    //                     );
+    //                 }
+    //             });
+    //         }
+    //     })
+    // }
 
-    function actionEditInpassing(id, ptkId, nama, nuptk, npsn) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin mendefaulkan inpassing PTK ini?',
-            text: "Defaul Data Inpassing Untuk PTK : " + nama,
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Defaul Data Inpassing!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "./editdefaulinpassing",
-                    type: 'POST',
-                    data: {
-                        id: id,
-                        ptk_id: ptkId,
-                        nama: nama,
-                        nuptk: nuptk,
-                        npsn: npsn,
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
+    // function actionEditInpassing(id, ptkId, nama, nuptk, npsn) {
+    //     Swal.fire({
+    //         title: 'Apakah anda yakin ingin mendefaulkan inpassing PTK ini?',
+    //         text: "Defaul Data Inpassing Untuk PTK : " + nama,
+    //         showCancelButton: true,
+    //         icon: 'question',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Ya, Defaul Data Inpassing!'
+    //     }).then((result) => {
+    //         if (result.value) {
+    //             $.ajax({
+    //                 url: "./editdefaulinpassing",
+    //                 type: 'POST',
+    //                 data: {
+    //                     id: id,
+    //                     ptk_id: ptkId,
+    //                     nama: nama,
+    //                     nuptk: nuptk,
+    //                     npsn: npsn,
+    //                 },
+    //                 dataType: 'JSON',
+    //                 beforeSend: function() {
+    //                     $('div.main-content').block({
+    //                         message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+    //                     });
+    //                 },
+    //                 success: function(resul) {
+    //                     $('div.main-content').unblock();
 
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
+    //                     if (resul.status !== 200) {
+    //                         Swal.fire(
+    //                             'Failed!',
+    //                             resul.message,
+    //                             'warning'
+    //                         );
+    //                     } else {
+    //                         Swal.fire(
+    //                             'SELAMAT!',
+    //                             resul.message,
+    //                             'success'
+    //                         ).then((valRes) => {
+    //                             reloadPage();
+    //                         })
+    //                     }
+    //                 },
+    //                 error: function() {
+    //                     $('div.main-content').unblock();
+    //                     Swal.fire(
+    //                         'Failed!',
+    //                         "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+    //                         'warning'
+    //                     );
+    //                 }
+    //             });
+    //         }
+    //     })
+    // }
 
-    function actionEditPendidikan(id, ptkId, nama, nuptk, npsn) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin mendefaulkan pendidikan PTK ini?',
-            text: "Defaul Data Pendidikan Untuk PTK : " + nama,
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Defaul Data Pendidikan!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "./editdefaulpendidikan",
-                    type: 'POST',
-                    data: {
-                        id: id,
-                        ptk_id: ptkId,
-                        nama: nama,
-                        nuptk: nuptk,
-                        npsn: npsn,
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
+    // function actionEditPendidikan(id, ptkId, nama, nuptk, npsn) {
+    //     Swal.fire({
+    //         title: 'Apakah anda yakin ingin mendefaulkan pendidikan PTK ini?',
+    //         text: "Defaul Data Pendidikan Untuk PTK : " + nama,
+    //         showCancelButton: true,
+    //         icon: 'question',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Ya, Defaul Data Pendidikan!'
+    //     }).then((result) => {
+    //         if (result.value) {
+    //             $.ajax({
+    //                 url: "./editdefaulpendidikan",
+    //                 type: 'POST',
+    //                 data: {
+    //                     id: id,
+    //                     ptk_id: ptkId,
+    //                     nama: nama,
+    //                     nuptk: nuptk,
+    //                     npsn: npsn,
+    //                 },
+    //                 dataType: 'JSON',
+    //                 beforeSend: function() {
+    //                     $('div.main-content').block({
+    //                         message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+    //                     });
+    //                 },
+    //                 success: function(resul) {
+    //                     $('div.main-content').unblock();
 
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
+    //                     if (resul.status !== 200) {
+    //                         Swal.fire(
+    //                             'Failed!',
+    //                             resul.message,
+    //                             'warning'
+    //                         );
+    //                     } else {
+    //                         Swal.fire(
+    //                             'SELAMAT!',
+    //                             resul.message,
+    //                             'success'
+    //                         ).then((valRes) => {
+    //                             reloadPage();
+    //                         })
+    //                     }
+    //                 },
+    //                 error: function() {
+    //                     $('div.main-content').unblock();
+    //                     Swal.fire(
+    //                         'Failed!',
+    //                         "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+    //                         'warning'
+    //                     );
+    //                 }
+    //             });
+    //         }
+    //     })
+    // }
 
-    function actionEdit(id, ptkId, nama, nuptk, npsn) {
-        $.ajax({
-            url: "./edit",
-            type: 'POST',
-            data: {
-                id: id,
-                nama: nama,
-                ptk_id: ptkId,
-                nuptk: nuptk,
-                npsn: npsn,
-            },
-            dataType: 'JSON',
-            beforeSend: function() {
-                $('div.main-content').block({
-                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                });
-            },
-            success: function(resul) {
-                $('div.main-content').unblock();
-                if (resul.status !== 200) {
-                    Swal.fire(
-                        'Failed!',
-                        resul.message,
-                        'warning'
-                    );
-                } else {
-                    $('#content-editModalLabel').html('UBAH DATA PTK ' + nama);
-                    $('.contentEditBodyModal').html(resul.data);
-                    $('.content-editModal').modal({
-                        backdrop: 'static',
-                        keyboard: false,
-                    });
-                    $('.content-editModal').modal('show');
-                }
-            },
-            error: function() {
-                $('div.main-content').unblock();
-                Swal.fire(
-                    'Failed!',
-                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                    'warning'
-                );
-            }
-        });
-    }
+    // function actionEdit(id, ptkId, nama, nuptk, npsn) {
+    //     $.ajax({
+    //         url: "./edit",
+    //         type: 'POST',
+    //         data: {
+    //             id: id,
+    //             nama: nama,
+    //             ptk_id: ptkId,
+    //             nuptk: nuptk,
+    //             npsn: npsn,
+    //         },
+    //         dataType: 'JSON',
+    //         beforeSend: function() {
+    //             $('div.main-content').block({
+    //                 message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+    //             });
+    //         },
+    //         success: function(resul) {
+    //             $('div.main-content').unblock();
+    //             if (resul.status !== 200) {
+    //                 Swal.fire(
+    //                     'Failed!',
+    //                     resul.message,
+    //                     'warning'
+    //                 );
+    //             } else {
+    //                 $('#content-editModalLabel').html('UBAH DATA PTK ' + nama);
+    //                 $('.contentEditBodyModal').html(resul.data);
+    //                 $('.content-editModal').modal({
+    //                     backdrop: 'static',
+    //                     keyboard: false,
+    //                 });
+    //                 $('.content-editModal').modal('show');
+    //             }
+    //         },
+    //         error: function() {
+    //             $('div.main-content').unblock();
+    //             Swal.fire(
+    //                 'Failed!',
+    //                 "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+    //                 'warning'
+    //             );
+    //         }
+    //     });
+    // }
 
     function actionHapus(id, nama, nuptk) {
         Swal.fire({
@@ -625,7 +625,7 @@
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "<?= base_url('situgu/su/masterdata/ptk/delete') ?>",
+                    url: "./delete",
                     type: 'POST',
                     data: {
                         id: id,
@@ -668,49 +668,49 @@
         })
     }
 
-    function actionDetailBackbone(id, nama, nuptk) {
-        $.ajax({
-            url: "./detailbackbone",
-            type: 'POST',
-            data: {
-                id: id,
-                nama: nama,
-                nuptk: nuptk,
-            },
-            dataType: 'JSON',
-            beforeSend: function() {
-                $('div.main-content').block({
-                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                });
-            },
-            success: function(resul) {
-                $('div.main-content').unblock();
-                if (resul.status !== 200) {
-                    Swal.fire(
-                        'Failed!',
-                        resul.message,
-                        'warning'
-                    );
-                } else {
-                    $('#content-detailModalLabel').html('DETAIL DATA BACKBONE PTK ' + title);
-                    $('.contentBodyModal').html(resul.data);
-                    $('.content-detailModal').modal({
-                        backdrop: 'static',
-                        keyboard: false,
-                    });
-                    $('.content-detailModal').modal('show');
-                }
-            },
-            error: function() {
-                $('div.main-content').unblock();
-                Swal.fire(
-                    'Failed!',
-                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                    'warning'
-                );
-            }
-        });
-    }
+    // function actionDetailBackbone(id, nama, nuptk) {
+    //     $.ajax({
+    //         url: "./detailbackbone",
+    //         type: 'POST',
+    //         data: {
+    //             id: id,
+    //             nama: nama,
+    //             nuptk: nuptk,
+    //         },
+    //         dataType: 'JSON',
+    //         beforeSend: function() {
+    //             $('div.main-content').block({
+    //                 message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+    //             });
+    //         },
+    //         success: function(resul) {
+    //             $('div.main-content').unblock();
+    //             if (resul.status !== 200) {
+    //                 Swal.fire(
+    //                     'Failed!',
+    //                     resul.message,
+    //                     'warning'
+    //                 );
+    //             } else {
+    //                 $('#content-detailModalLabel').html('DETAIL DATA BACKBONE PTK ' + title);
+    //                 $('.contentBodyModal').html(resul.data);
+    //                 $('.content-detailModal').modal({
+    //                     backdrop: 'static',
+    //                     keyboard: false,
+    //                 });
+    //                 $('.content-detailModal').modal('show');
+    //             }
+    //         },
+    //         error: function() {
+    //             $('div.main-content').unblock();
+    //             Swal.fire(
+    //                 'Failed!',
+    //                 "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+    //                 'warning'
+    //             );
+    //         }
+    //     });
+    // }
 
     function actionDetail(event, title) {
         $.ajax({
