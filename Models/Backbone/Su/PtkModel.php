@@ -7,10 +7,10 @@ use CodeIgniter\Model;
 
 class PtkModel extends Model
 {
-    protected $table = "_ptk_tb";
-    protected $column_order = array(null, null, 'nama', 'nik', 'nuptk', 'npsn', 'tempat_tugas', 'kecamatan', 'jenis_ptk');
-    protected $column_search = array('nik', 'nuptk', 'nama', 'npsn');
-    protected $order = array('kecamatan' => 'asc', 'jenis_ptk' => 'desc');
+    protected $table = "_tbl_gtk a";
+    protected $column_order = array(null, null, 'a.nama', 'a.nik', 'a.nuptk', 'a.npsn', 'b.nama', 'b.kecamatan', 'a.jenis_ptk');
+    protected $column_search = array('a.nik', 'a.nuptk', 'a.nama', 'a.npsn');
+    protected $order = array('a.npsn' => 'asc', 'a.jenis_ptk' => 'desc');
     protected $request;
     protected $db;
     protected $dt;
@@ -49,6 +49,11 @@ class PtkModel extends Model
     }
     function get_datatables()
     {
+        $select = "a.*, b.nama as nama_sekolah, b.kecamatan";
+
+        $this->dt->select($select);
+        $this->dt->join('_tbl_sekolah b', 'a.npsn = b.npsn', 'LEFT');
+
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
@@ -57,12 +62,20 @@ class PtkModel extends Model
     }
     function count_filtered()
     {
+        $select = "a.*, b.nama as nama_sekolah, b.kecamatan";
+
+        $this->dt->select($select);
+        $this->dt->join('_tbl_sekolah b', 'a.npsn = b.npsn', 'LEFT');
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
     public function count_all()
     {
+        $select = "a.*, b.nama as nama_sekolah, b.kecamatan";
+
+        $this->dt->select($select);
+        $this->dt->join('_tbl_sekolah b', 'a.npsn = b.npsn', 'LEFT');
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
