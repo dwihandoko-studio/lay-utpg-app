@@ -97,6 +97,26 @@ class Database extends Config
         'failover' => [],
     ];
 
+    public $backbone = [
+        'DSN'      => '',
+        'hostname' => '192.168.33.21',
+        'port'     => 33015,
+        'username' => 'dapo_local',
+        'password' => 'kominfo@2020',
+        'database' => 'dapo_local',
+        'DBDriver' => 'MySQLi',
+        'DBPrefix' => '',
+        'pConnect' => false,
+        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'charset'  => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swapPre'  => '',
+        'encrypt'  => false,
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => [],
+    ];
+
     public function __construct()
     {
         parent::__construct();

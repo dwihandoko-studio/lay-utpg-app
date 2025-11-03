@@ -295,6 +295,25 @@
                                         <?php } else { ?>
                                             <?php continue; ?>
                                         <?php } ?>
+                                    <?php } else if ($value['layanan_nama'] == "BACKBONE") { ?>
+                                        <?php if (grantAccessBackbone($user->id)) { ?>
+                                            <div class="col-xl-3 col-sm-6">
+                                                <div class="card text-center  _sorot-mouse">
+                                                    <a href="<?= $value['layanan_url'] ?>">
+                                                        <div class="card-body">
+                                                            <div class="mb-4">
+                                                                <img class="avatar-lg" src="<?= base_url('uploads/layanan/' . $value['layanan_image']) ?>" alt="">
+                                                            </div>
+                                                            <h5 class="font-size-15 mb-1"><a href="<?= $value['layanan_url'] ?>" style="color: rgba(var(--bs-dark-rgb),var(--bs-text-opacity));" class="_color-h-hover"><?= $value['layanan_nama'] ?></a></h5>
+                                                            <p><a class="_color-p-hover" style="color: #c3cbe4;" href="<?= $value['layanan_url'] ?>"><?= $value['layanan_deskripsi'] ?></a></p>
+
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        <?php } else { ?>
+                                            <?php continue; ?>
+                                        <?php } ?>
                                     <?php } else { ?>
                                         <?php if (($value['layanan_nama'] == "SITUGU" && $user->role_user == 8) || ($value['layanan_nama'] == "SITUGU" && $user->role_user == 9)) { ?>
                                             <?php continue; ?>

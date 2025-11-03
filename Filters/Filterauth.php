@@ -461,6 +461,71 @@ class Filterauth implements FilterInterface
                                         return redirect()->to(base_url('portal'));
                                     }
                                 }
+                            } else if ($uriMain === "backbone") {
+                                $uriLevel = $uri->getSegment(2);
+
+                                $mtLib = new Mtlib();
+                                if ($mtLib->get(3, '_tb_maintenance_backbone')) {
+
+                                    if (!$mtLib->getAccess($userId)) {
+                                        if ($uriLevel !== "maintenance") {
+                                            return redirect()->to(base_url('backbone/maintenance'));
+                                        }
+                                    } else {
+                                        if ($level == 1) { //SuperAdmin
+
+                                            if ($uriLevel === "" || $uriLevel === "index") {
+                                                return redirect()->to(base_url('backbone/su/home'));
+                                            }
+                                            if ($uriLevel != "su") {
+                                                return redirect()->to(base_url('backbone/su/home'));
+                                            }
+                                        } else if ($level == 2) { //Admin
+                                            if ($uriLevel === "" || $uriLevel === "index") {
+                                                return redirect()->to(base_url('backbone/adm/home'));
+                                            }
+                                            if ($uriLevel != "adm") {
+                                                return redirect()->to(base_url('backbone/adm/home'));
+                                            }
+                                        } else if ($level == 3) { //Opk
+                                            if ($uriLevel === "" || $uriLevel === "index") {
+                                                return redirect()->to(base_url('backbone/opk/home'));
+                                            }
+                                            if ($uriLevel != "opk") {
+                                                return redirect()->to(base_url('backbone/opk/home'));
+                                            }
+                                        } else {
+                                            return redirect()->to(base_url('portal'));
+                                        }
+                                    }
+                                } else {
+
+                                    if ($level == 1) { //SuperAdmin
+
+                                        if ($uriLevel === "" || $uriLevel === "index") {
+                                            return redirect()->to(base_url('backbone/su/home'));
+                                        }
+                                        if ($uriLevel != "su") {
+                                            return redirect()->to(base_url('backbone/su/home'));
+                                        }
+                                    } else if ($level == 2) { //Admin
+                                        if ($uriLevel === "" || $uriLevel === "index") {
+                                            return redirect()->to(base_url('backbone/adm/home'));
+                                        }
+                                        if ($uriLevel != "adm") {
+                                            return redirect()->to(base_url('backbone/adm/home'));
+                                        }
+                                    } else if ($level == 3) { //OPK
+                                        if ($uriLevel === "" || $uriLevel === "index") {
+                                            return redirect()->to(base_url('backbone/opk/home'));
+                                        }
+                                        if ($uriLevel != "opk") {
+                                            return redirect()->to(base_url('backbone/opk/home'));
+                                        }
+                                    } else {
+                                        return redirect()->to(base_url('portal'));
+                                    }
+                                }
                             } else {
                                 return redirect()->to(base_url('portal'));
                             }
