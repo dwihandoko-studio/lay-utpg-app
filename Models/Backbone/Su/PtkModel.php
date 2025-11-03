@@ -10,7 +10,7 @@ class PtkModel extends Model
     protected $table = "_tbl_gtk a";
     protected $column_order = array(null, null, 'a.nama', 'a.nik', 'a.nuptk', 'a.npsn', 'b.nama', 'b.kecamatan', 'a.jenis_ptk');
     protected $column_search = array('a.nik', 'a.nuptk', 'a.nama', 'a.npsn');
-    protected $order = array('a.npsn' => 'asc', 'a.jenis_ptk' => 'desc');
+    // protected $order = array('a.npsn' => 'asc', 'a.jenis_ptk' => 'desc');
     protected $request;
     protected $db;
     protected $dt;
@@ -40,12 +40,12 @@ class PtkModel extends Model
             $i++;
         }
 
-        if ($this->request->getPost('order')) {
-            $this->dt->orderBy($this->column_order[$this->request->getPost('order')['0']['column']], $this->request->getPost('order')['0']['dir']);
-        } else if (isset($this->order)) {
-            $order = $this->order;
-            $this->dt->orderBy(key($order), $order[key($order)]);
-        }
+        // if ($this->request->getPost('order')) {
+        //     $this->dt->orderBy($this->column_order[$this->request->getPost('order')['0']['column']], $this->request->getPost('order')['0']['dir']);
+        // } else if (isset($this->order)) {
+        //     $order = $this->order;
+        //     $this->dt->orderBy(key($order), $order[key($order)]);
+        // }
     }
     function get_datatables()
     {
